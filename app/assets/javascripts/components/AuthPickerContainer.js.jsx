@@ -1,5 +1,7 @@
 var AuthPickerContainer = React.createClass({
-
+  propTypes: {
+    authAction: React.PropTypes.string.isRequired
+  },
 
   getInitialState: function () {
     return {

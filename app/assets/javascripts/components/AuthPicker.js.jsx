@@ -8,7 +8,7 @@ var AuthPicker = React.createClass({
         <button type="button" className="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalSignUp">
           Launch demo modal
         </button>
-        <div className="modal" id="modalSignUp" data-backdrop="static" data-keyboard={false}>
+        <div className="modal" id="modalSignUp" data-backdrop="static" data-keyboard={false}  data-show={true}>
           <div className="modal-dialog" role="document">
             <div className="modal-content">
               <div className="modal-header">
@@ -16,7 +16,7 @@ var AuthPicker = React.createClass({
                 <h4 className="modal-title">Sign Up</h4>
               </div>
               <div className="modal-body">
-                <h1>Hi!</h1>
+                <SignUpContainer onFormChange={this.props.onFormChange} shouldRedirect={false}/>
               </div>
             </div>
           </div>
