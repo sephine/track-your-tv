@@ -1,0 +1,29 @@
+<%= form_for(:user, :url => session_path(:user)) do |f| %>
+  <div class="form-group">
+    <%= f.text_field :email, placeholder: "email", class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.password_field :password, placeholder: "password", class: "form-control" %>
+  </div>
+
+  <div class="form-inline clearfix">
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" value=1 name="user[remember_me]" id="user_remember_me">
+        <b>Remember me</b>
+      </label>
+    </div>
+    <%= f.submit 'Log In', class: "btn btn-default pull-right" %>
+  </div>
+  <hr/>
+
+  <a href="/sign_up" class="sign-up-link">
+    Sign up
+  </a>
+  </br>
+  <a href="/password/new" class="forgot-password-link">
+    Forgot your password?
+  </a>
+
+<% end %>

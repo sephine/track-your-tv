@@ -1,0 +1,62 @@
+<div class="intro-image">
+  <a href="#howItWorks" class="arrow-wrap">
+    <div class="arrow">
+      <span class="glyphicon glyphicon-chevron-down" />
+    </div>
+    <div class="circle hidden-xs">
+    </div>
+  </a>
+</div>
+<div id="howItWorks" class="howItWorks_image">
+    <h1>This is hopefully</h1>
+    <h1>really big text that</h1>
+    <h1>will take up a lot of space</h1>
+    <h1>so that I can check where</h1>
+    <h1>the scroll button scrolls</h1>
+    <h1>down to easily.</h1>
+</div>
+<h1>It goes here!</h1>
+<%= react_component('TestComponent') %>
+
+<%= render 'authentication/modal_login' %>
+<%= render 'authentication/modal_sign_up' %>
+<%= render 'authentication/modal_password' %>
+
+<script>
+$(document).ready(function() {
+  $('.login-link').click(function(e) {
+    if ($(window).width() >= 480) {
+      e.preventDefault();
+      $('#modalSignUp').modal('hide');
+      $('#modalPassword').modal('hide');
+      $('#modalLogin').modal('show');
+    }
+  })
+  $('.sign-up-link').click(function(e) {
+    if ($(window).width() >= 480) {
+      e.preventDefault();
+      $('#modalLogin').modal('hide');
+      $('#modalPassword').modal('hide');
+      $('#modalSignUp').modal('show');
+    }
+  })
+  $('.forgot-password-link').click(function(e) {
+    if ($(window).width() >= 480) {
+      e.preventDefault();
+      $('#modalLogin').modal('hide');
+      $('#modalSignUp').modal('hide');
+      $('#modalPassword').modal('show');
+    }
+  })
+});
+</script>
+
+<script>
+$(document).ready(function() {
+  $('.arrow-wrap').click(function(e) {
+    e.preventDefault();
+    var length = $('#howItWorks').offset().top;
+    $('html, body').animate({ scrollTop: length}, 1000);
+  })
+});
+</script>
