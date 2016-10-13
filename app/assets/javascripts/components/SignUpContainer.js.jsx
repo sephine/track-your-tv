@@ -9,21 +9,19 @@ var SignUpContainer = React.createClass({
   },
 
   submitData: function (data) {
-    alert("entered");
-    console.log(data);
     var modified_data = {
       "user[email]": data.email,
       "user[password]": data.password,
       "user[password_confirmation]": data.password_confirmation
     };
-    console.log(modified_data);
     $.ajax({
       type: "POST",
-      url: "/",
+      url: "/users",
       data: modified_data,
       success: function(msg) {
         console.log(msg);
-      },
+        this.setState({errors: msg});
+      }.bind(this),
       error: function() {
         alert("failure");
       }
