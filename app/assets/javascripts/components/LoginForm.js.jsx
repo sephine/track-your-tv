@@ -2,7 +2,7 @@ var LoginForm = React.createClass({
   propTypes: {
     loginFailed: React.PropTypes.bool.isRequired,
     onSubmit: React.PropTypes.func.isRequired,
-    onFormChange: React.PropTypes.func.isRequired,
+    onFormChange: React.PropTypes.func,
     shouldRedirect: React.PropTypes.bool.isRequired
   },
 

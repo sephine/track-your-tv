@@ -2,7 +2,7 @@ var SignUpForm = React.createClass({
   propTypes: {
     errors: React.PropTypes.object.isRequired,
     onSubmit: React.PropTypes.func.isRequired,
-    onFormChange: React.PropTypes.func.isRequired,
+    onFormChange: React.PropTypes.func,
     shouldRedirect: React.PropTypes.bool.isRequired
   },
 
@@ -15,13 +15,11 @@ var SignUpForm = React.createClass({
   },
 
   handleSubmit: function (e) {
-    if (!this.props.shouldRedirect && e.target.className == "login-link") {
-      this.props.onSubmit(this.state);
-    }
+    this.props.onSubmit(this.state);
   },
 
   handleLoginClicked: function (e) {
-    if (!this.props.shouldRedirect) {
+    if (!this.props.shouldRedirect && e.target.className == "login-link") {
       e.preventDefault();
       this.props.onFormChange("Login");
     }

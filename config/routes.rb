@@ -4,8 +4,22 @@ Rails.application.routes.draw do
   end
   root to: redirect('/welcome')
 
-  match "/welcome", to: "welcome#index", :via => 'get'
+  get '/welcome', to: 'welcome#index'
 
-  devise_for :users, controllers: { sessions: 'users/sessions', passwords: 'users/passwords', registrations: 'users/registrations' }
+  as :user do
+    get 'login' => 'users/sessions#new', :as => :new_user_session
+    post 'login' => 'users/sessions#create', :as => :user_session
+    delete 'logout' => 'users/sessions#destroy', :as => :destroy_user_session
+
+    get 'users/cancel' => 'users/registrations#cancel', :as => :cancel_user_registration
+    post 'sign_up' => 'users/registrations#create', :as => :user_registration
+    get 'sign_up' => 'users/registrations#new', :as => :new_user_registration
+    get 'users/edit' => 'users/registrations#edit', :as => :edit_user_registration
+    patch 'users' => 'users/registrations#update'
+    put 'users' => 'users/registrations#update'
+    delete 'users' => 'users/registrations#destroy'
+  end
+
+  devise_for :users, {controllers: { sessions: 'users/sessions', passwords: 'users/passwords', registrations: 'users/registrations' }, skip: [:sessions, :registrations]}
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

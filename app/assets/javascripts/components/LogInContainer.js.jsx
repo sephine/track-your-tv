@@ -1,6 +1,6 @@
 var LoginContainer = React.createClass({
   propTypes: {
-    onFormChange: React.PropTypes.func.isRequired,
+    onFormChange: React.PropTypes.func,
     shouldRedirect: React.PropTypes.bool.isRequired
   },
 
@@ -17,7 +17,7 @@ var LoginContainer = React.createClass({
     console.log(modified_data);
     $.ajax({
       type: "POST",
-      url: "/users/sign_in",
+      url: "/login",
       headers: {
         'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
       },

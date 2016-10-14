@@ -1,6 +1,6 @@
 var SignUpContainer = React.createClass({
   propTypes: {
-    onFormChange: React.PropTypes.func.isRequired,
+    onFormChange: React.PropTypes.func,
     shouldRedirect: React.PropTypes.bool.isRequired
   },
 
@@ -14,9 +14,10 @@ var SignUpContainer = React.createClass({
       "user[password]": data.password,
       "user[password_confirmation]": data.password_confirmation
     };
+    console.log(modified_data);
     $.ajax({
       type: "POST",
-      url: "/users",
+      url: "/sign_up",
       data: modified_data,
       success: function(msg) {
         console.log(msg);
