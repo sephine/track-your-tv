@@ -3,10 +3,10 @@ var AuthPickerContainer = React.createClass({
     authAction: React.PropTypes.string.isRequired
   },
 
-  getInitialState: function () {
-    return {
-      fromToShow: ""
-    };
+  componentWillMount: function () {
+    this.setState({
+      formToShow: this.props.authAction
+    });
   },
 
   componentWillReceiveProps: function (nextProps) {
