@@ -5,7 +5,7 @@ var LoginContainer = React.createClass({
   },
 
   getInitialState: function () {
-    return { error: "" };
+    return { loginFailed: false };
   },
 
   submitData: function (data) {
@@ -22,14 +22,8 @@ var LoginContainer = React.createClass({
         'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
       },
       data: modified_data,
-      success: function(msg) {
-        console.log("success");
-        console.log(msg);
-      }.bind(this),
       error: function(msg) {
-        console.log("error");
-        console.log(msg);
-        this.setState({error: msg.responseText});
+        this.setState({loginFailed: true});
       }.bind(this)
     });
   },
@@ -37,7 +31,7 @@ var LoginContainer = React.createClass({
   render: function () {
     return (
       <div>
-        <LoginForm error={this.state.error} onSubmit={this.submitData} onFormChange={this.props.onFormChange} shouldRedirect={this.props.shouldRedirect}/>
+        <LoginForm loginFailed={this.state.loginFailed} onSubmit={this.submitData} onFormChange={this.props.onFormChange} shouldRedirect={this.props.shouldRedirect}/>
       </div>
     );
   }

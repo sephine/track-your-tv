@@ -3,6 +3,10 @@
 <br/>
 <br/>
 <br/>
-<br/>
-<br/>
-<%= react_component('AuthPickerContainer', authAction: 'Login') %>
+<div class="panel panel-default auth-panel">
+  <div class="panel-body">
+    <h3>Log In</h3>
+    </br>
+    <%= react_component('LoginContainer', shouldRedirect: true) %>
+  </div>
+</div>

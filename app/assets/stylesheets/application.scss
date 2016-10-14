@@ -20,6 +20,10 @@
 
  $header-black: rgba(28, 28, 28, 0.7);
 
+ html,body {
+   height:100%;
+ }
+
  .navbar-custom {
    background-color: $header-black;
    border-radius: 0;
