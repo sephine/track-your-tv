@@ -22,7 +22,7 @@ var LoginForm = React.createClass({
     if (!this.props.shouldRedirect && (e.target.className == "sign-up-link"
         || e.target.className == "forgot-password-link")) {
       e.preventDefault();
-      var newForm = e.target.className == "sign-up-link" ? "SignUp" : "ForgotPassword";
+      var newForm = e.target.className == "sign-up-link" ? "SignUp" : "Password";
       this.props.onFormChange(newForm);
     }
   },
@@ -56,7 +56,7 @@ var LoginForm = React.createClass({
           Sign up
         </a>
         <br />
-        <a href="/password/new" onClick={this.handleLinkClicked} className="forgot-password-link">
+        <a href="users/password/new" onClick={this.handleLinkClicked} className="forgot-password-link">
           Forgot your password?
         </a>
       </div>

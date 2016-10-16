@@ -57,6 +57,23 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "tv-tracker2_#{Rails.env}"
   config.action_mailer.perform_caching = false
 
+  config.action_mailer.default_url_options = { :host => 'secret-waters-53594.herokuapp.com' }
+
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.default :charset => "utf-8"
+
+  config.action_mailer.smtp_settings = {
+    address: 'mail.gandi.net',
+    port: 587,
+    domain: ENV['GANDI_DOMAIN'],
+    authentication: 'plain',
+    enable_starttls_auto: true,
+    user_name: ENV['GANDI_USERNAME'],
+    password: ENV['GANDI_PASSWORD']
+}
+
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
