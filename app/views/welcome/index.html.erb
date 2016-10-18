@@ -17,4 +17,14 @@
 </div>
 
 <h1>It goes here!</h1>
-<%= react_component('AuthPickerContainer', authAction: 'SignUp') %>
+<%= react_component('AuthPickerContainer', authAction: 'Login') %>
+
+<script>
+$(document).ready(function() {
+  $('.arrow-wrap').click(function(e) {
+    e.preventDefault();
+    var length = $('#howItWorks').offset().top;
+    $('html, body').animate({ scrollTop: length}, 1000);
+  })
+});
+</script>

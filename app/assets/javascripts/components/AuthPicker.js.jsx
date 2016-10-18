@@ -20,10 +20,10 @@ var AuthPicker = React.createClass({
 
     return (
       <div>
-      <button type="button" className="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalSignUp">
-        Launch demo modal
-      </button>
-      <div className="modal" id="modalSignUp" data-backdrop="static" data-keyboard={false}  data-show={true}>
+      <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalAuth">
+  Launch demo modal
+</button>
+      <div className="modal" id="modalAuth" data-backdrop="static" data-keyboard={false}>
         <div className="modal-dialog" role="document">
           <div className="modal-content">
             <div className="modal-header">
