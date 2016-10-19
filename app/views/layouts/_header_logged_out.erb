@@ -15,12 +15,12 @@
           aria-expanded="false" style="height: 1px;">
       <ul class="nav navbar-nav navbar-right">
         <li>
-          <a href="/sign_up" class="sign-up-link">
+          <a onclick="AuthActions.showSignUpModal()" class="sign-up-link">
             Sign Up
           </a>
         </li>
         <li>
-          <a href="/login" class="login-link">
+          <a onclick="AuthActions.showLoginModal()" class="login-link">
             Log In
           </a>
         </li>
@@ -28,3 +28,5 @@
     </div>
   </div>
 </nav>
+
+<%= react_component('AuthPickerContainer') %>

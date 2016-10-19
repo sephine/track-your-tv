@@ -1,7 +1,7 @@
 var AuthPicker = React.createClass({
   propTypes: {
     formToShow: React.PropTypes.string.isRequired,
-    onFormChange: React.PropTypes.func.isRequired
+    onFormChange: React.PropTypes.func.isRequired,
   },
 
   render: function () {
@@ -19,10 +19,6 @@ var AuthPicker = React.createClass({
     }
 
     return (
-      <div>
-      <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalAuth">
-  Launch demo modal
-</button>
       <div className="modal" id="modalAuth" data-backdrop="static" data-keyboard={false}>
         <div className="modal-dialog" role="document">
           <div className="modal-content">
@@ -35,7 +31,6 @@ var AuthPicker = React.createClass({
             </div>
           </div>
         </div>
-      </div>
       </div>
     );
   }
