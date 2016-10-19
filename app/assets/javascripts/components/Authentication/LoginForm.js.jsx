@@ -1,7 +1,7 @@
 var LoginForm = React.createClass({
   propTypes: {
     loginFailed: React.PropTypes.bool.isRequired,
-    onSubmit: React.PropTypes.func.isRequired,
+    onSubmitForm: React.PropTypes.func.isRequired,
     onFormChange: React.PropTypes.func,
     shouldRedirect: React.PropTypes.bool.isRequired
   },
@@ -15,7 +15,8 @@ var LoginForm = React.createClass({
   },
 
   handleSubmit: function (e) {
-    this.props.onSubmit(this.state);
+    e.preventDefault();
+    this.props.onSubmitForm(this.state);
   },
 
   handleLinkClicked: function (e) {
@@ -30,25 +31,27 @@ var LoginForm = React.createClass({
   render: function () {
     return (
       <div>
-        <div className="form-group">
-          <input type="email" value={this.state.email} onChange={ (e) => this.setState({ email: e.target.value }) } className="form-control" placeholder="email" />
-        </div>
-
-        <div className="form-group">
-          <input type="password" value={this.state.password} onChange={ (e) => this.setState({ password: e.target.value }) } className="form-control" placeholder="password" />
-          {this.props.loginFailed &&
-            <label className="error-message">Invalid password or email</label>}
-        </div>
-
-        <div className="form-inline clearfix">
-          <div className="checkbox">
-            <label>
-              <input type="checkbox" value={this.state.remember_me} onChange={ (e) => this.setState({ remember_me: e.target.value }) } />
-              <b> Remember me</b>
-            </label>
+        <form className="formLogin" onSubmit={ (e) => this.handleSubmit(e) }>
+          <div className="form-group">
+            <input type="email" value={this.state.email} onChange={ (e) => this.setState({ email: e.target.value }) } className="form-control" placeholder="email" />
           </div>
-          <button type="submit" onClick={this.handleSubmit} className="btn btn-default pull-right">Log In</button>
-        </div>
+
+          <div className="form-group">
+            <input type="password" value={this.state.password} onChange={ (e) => this.setState({ password: e.target.value }) } className="form-control" placeholder="password" />
+            {this.props.loginFailed &&
+              <label className="error-message">Invalid password or email</label>}
+          </div>
+
+          <div className="form-inline clearfix">
+            <div className="checkbox">
+              <label>
+                <input type="checkbox" value={this.state.remember_me} onChange={ (e) => this.setState({ remember_me: e.target.value }) } />
+                <b> Remember me</b>
+              </label>
+            </div>
+            <button type="submit" className="btn btn-default pull-right">Log In</button>
+          </div>
+        </form>
 
         <hr/>
 

@@ -1,7 +1,7 @@
 var PasswordForm = React.createClass({
   propTypes: {
     errors: React.PropTypes.object.isRequired,
-    onSubmit: React.PropTypes.func.isRequired,
+    onSubmitForm: React.PropTypes.func.isRequired,
     onFormChange: React.PropTypes.func,
     shouldRedirect: React.PropTypes.bool.isRequired
   },
@@ -13,7 +13,8 @@ var PasswordForm = React.createClass({
   },
 
   handleSubmit: function (e) {
-    this.props.onSubmit(this.state);
+    e.preventDefault();
+    this.props.onSubmitForm(this.state);
   },
 
   handleLinkClicked: function (e) {
@@ -28,15 +29,18 @@ var PasswordForm = React.createClass({
   render: function () {
     return (
       <div>
-        <div className="form-group">
-          <input type="email" value={this.state.email} onChange={ (e) => this.setState({ email: e.target.value }) } className="form-control" placeholder="email" />
-          {this.props.errors.hasOwnProperty('email') &&
-            <label className="error-message">email {this.props.errors.email}</label>}
-        </div>
+        <form className="formPassword" onSubmit={ (e) => this.handleSubmit(e) }>
+          <div className="form-group">
+            <input type="email" value={this.state.email} onChange={ (e) => this.setState({ email: e.target.value }) } className="form-control" placeholder="email" />
+            {this.props.errors.hasOwnProperty('email') &&
+              <label className="error-message">email {this.props.errors.email}</label>}
+          </div>
 
-        <div className="form-group clearfix">
-          <button type="submit" onClick={this.handleSubmit} className="btn btn-default pull-right">Send me reset password instructions</button>
-        </div>
+          <div className="form-group clearfix">
+            <button type="submit" className="btn btn-default pull-right">Send me reset password instructions</button>
+          </div>
+        </form>
+
         <hr/>
 
         <a href="/login" onClick={this.handleLinkClicked} className="login-link">

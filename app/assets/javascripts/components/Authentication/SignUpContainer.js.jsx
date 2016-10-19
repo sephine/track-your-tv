@@ -32,7 +32,7 @@ var SignUpContainer = React.createClass({
   render: function () {
     return (
       <div>
-        <SignUpForm errors={this.state.errors} onSubmit={this.submitData} onFormChange={this.props.onFormChange} shouldRedirect={this.props.shouldRedirect}/>
+        <SignUpForm errors={this.state.errors} onSubmitForm={this.submitData} onFormChange={this.props.onFormChange} shouldRedirect={this.props.shouldRedirect}/>
       </div>
     );
   }

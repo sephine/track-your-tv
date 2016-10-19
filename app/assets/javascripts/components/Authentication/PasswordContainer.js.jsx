@@ -31,7 +31,7 @@ var PasswordContainer = React.createClass({
   render: function () {
     return (
       <div>
-        <PasswordForm errors={this.state.errors} onSubmit={this.submitData} onFormChange={this.props.onFormChange} shouldRedirect={this.props.shouldRedirect}/>
+        <PasswordForm errors={this.state.errors} onSubmitForm={this.submitData} onFormChange={this.props.onFormChange} shouldRedirect={this.props.shouldRedirect}/>
       </div>
     );
   }

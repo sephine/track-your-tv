@@ -19,7 +19,7 @@ var AuthPicker = React.createClass({
     }
 
     return (
-      <div className="modal" id="modalAuth" data-backdrop="static" data-keyboard={false}>
+      <div className="modal" id="modalAuth" data-backdrop="static">
         <div className="modal-dialog" role="document">
           <div className="modal-content">
             <div className="modal-header">

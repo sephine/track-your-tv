@@ -31,7 +31,7 @@ var LoginContainer = React.createClass({
   render: function () {
     return (
       <div>
-        <LoginForm loginFailed={this.state.loginFailed} onSubmit={this.submitData} onFormChange={this.props.onFormChange} shouldRedirect={this.props.shouldRedirect}/>
+        <LoginForm loginFailed={this.state.loginFailed} onSubmitForm={this.submitData} onFormChange={this.props.onFormChange} shouldRedirect={this.props.shouldRedirect}/>
       </div>
     );
   }
