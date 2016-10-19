@@ -8,6 +8,7 @@ var SignUpForm = React.createClass({
 
   getInitialState: function () {
     return {
+      name: "",
       email: "",
       password: "",
       password_confirmation: ""
@@ -34,6 +35,12 @@ var SignUpForm = React.createClass({
             <input type="email" value={this.state.email} onChange={ (e) => this.setState({ email: e.target.value }) } className="form-control" placeholder="email" />
             {this.props.errors.hasOwnProperty('email') &&
               <label className="error-message">email {this.props.errors.email}</label>}
+          </div>
+
+          <div className="form-group">
+            <input type="name" value={this.state.name} onChange={ (e) => this.setState({ name: e.target.value }) } className="form-control" placeholder="name" />
+            {this.props.errors.hasOwnProperty('name') &&
+              <label className="error-message">name {this.props.errors.email}</label>}
           </div>
 
           <div className="form-group">

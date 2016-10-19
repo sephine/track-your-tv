@@ -10,6 +10,7 @@ var SignUpContainer = React.createClass({
 
   submitData: function (data) {
     var modified_data = {
+      "user[name]": data.name,
       "user[email]": data.email,
       "user[password]": data.password,
       "user[password_confirmation]": data.password_confirmation
