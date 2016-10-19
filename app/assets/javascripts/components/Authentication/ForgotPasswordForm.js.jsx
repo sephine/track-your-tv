@@ -1,4 +1,4 @@
-var PasswordForm = React.createClass({
+var ForgotPasswordForm = React.createClass({
   propTypes: {
     errors: React.PropTypes.object.isRequired,
     onSubmitForm: React.PropTypes.func.isRequired,
@@ -29,7 +29,7 @@ var PasswordForm = React.createClass({
   render: function () {
     return (
       <div>
-        <form className="formPassword" onSubmit={ (e) => this.handleSubmit(e) }>
+        <form className="formForgotPassword" onSubmit={ (e) => this.handleSubmit(e) }>
           <div className="form-group">
             <input type="email" value={this.state.email} onChange={ (e) => this.setState({ email: e.target.value }) } className="form-control" placeholder="email" />
             {this.props.errors.hasOwnProperty('email') &&

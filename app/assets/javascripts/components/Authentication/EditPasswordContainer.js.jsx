@@ -1,7 +1,6 @@
-var SignUpContainer = React.createClass({
+var EditPasswordContainer = React.createClass({
   propTypes: {
-    onFormChange: React.PropTypes.func,
-    shouldRedirect: React.PropTypes.bool.isRequired
+    resetPasswordToken: React.PropTypes.string.isRequired
   },
 
   getInitialState: function () {
@@ -10,15 +9,14 @@ var SignUpContainer = React.createClass({
 
   submitData: function (data) {
     var modified_data = {
-      "user[name]": data.name,
-      "user[email]": data.email,
       "user[password]": data.password,
-      "user[password_confirmation]": data.password_confirmation
+      "user[password_confirmation]": data.password_confirmation,
+      "user[reset_password_token]": this.props.resetPasswordToken
     };
     console.log(modified_data);
     $.ajax({
-      type: "POST",
-      url: "/sign_up",
+      type: "PUT",
+      url: "/users/password",
       headers: {
         'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
       },
@@ -27,8 +25,9 @@ var SignUpContainer = React.createClass({
         console.log(msg);
         this.setState({errors: msg});
       }.bind(this),
-      error: function() {
-        alert("Error: failed to create new user.");
+      error: function(msg) {
+        console.log(msg);
+        alert("Error: failed to edit password.");
       }
     });
   },
@@ -36,7 +35,7 @@ var SignUpContainer = React.createClass({
   render: function () {
     return (
       <div>
-        <SignUpForm errors={this.state.errors} onSubmitForm={this.submitData} onFormChange={this.props.onFormChange} shouldRedirect={this.props.shouldRedirect}/>
+        <EditPasswordForm errors={this.state.errors} onSubmitForm={this.submitData} />
       </div>
     );
   }

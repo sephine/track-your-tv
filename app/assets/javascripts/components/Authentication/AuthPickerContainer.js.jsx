@@ -6,11 +6,13 @@ var AuthPickerContainer = React.createClass({
   },
 
   onShowLoginModal: function () {
+    this.setState({ formToShow: "" });
     this.setState({ formToShow: "Login" });
     this.showModal();
   },
 
   onShowSignUpModal: function () {
+    this.setState({ formToShow: "" });
     this.setState({ formToShow: "SignUp" });
     this.showModal();
   },

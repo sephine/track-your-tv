@@ -40,7 +40,7 @@ var SignUpForm = React.createClass({
           <div className="form-group">
             <input type="name" value={this.state.name} onChange={ (e) => this.setState({ name: e.target.value }) } className="form-control" placeholder="name" />
             {this.props.errors.hasOwnProperty('name') &&
-              <label className="error-message">name {this.props.errors.email}</label>}
+              <label className="error-message">name {this.props.errors.name}</label>}
           </div>
 
           <div className="form-group">

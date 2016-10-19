@@ -1,4 +1,4 @@
-var PasswordContainer = React.createClass({
+var ForgotPasswordContainer = React.createClass({
   propTypes: {
     onFormChange: React.PropTypes.func,
     shouldRedirect: React.PropTypes.bool.isRequired
@@ -16,6 +16,9 @@ var PasswordContainer = React.createClass({
     $.ajax({
       type: "POST",
       url: "/users/password",
+      headers: {
+        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+      },
       data: modified_data,
       success: function(msg) {
         console.log(msg);
@@ -31,7 +34,7 @@ var PasswordContainer = React.createClass({
   render: function () {
     return (
       <div>
-        <PasswordForm errors={this.state.errors} onSubmitForm={this.submitData} onFormChange={this.props.onFormChange} shouldRedirect={this.props.shouldRedirect}/>
+        <ForgotPasswordForm errors={this.state.errors} onSubmitForm={this.submitData} onFormChange={this.props.onFormChange} shouldRedirect={this.props.shouldRedirect}/>
       </div>
     );
   }

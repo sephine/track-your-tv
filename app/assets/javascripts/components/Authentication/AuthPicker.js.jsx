@@ -15,7 +15,7 @@ var AuthPicker = React.createClass({
       modalBody = <LoginContainer onFormChange={this.props.onFormChange} shouldRedirect={false}/>;
     } else if (this.props.formToShow == "Password") {
       modalTitle = "Forgot your password?"
-      modalBody = <PasswordContainer onFormChange={this.props.onFormChange} shouldRedirect={false}/>;
+      modalBody = <ForgotPasswordContainer onFormChange={this.props.onFormChange} shouldRedirect={false}/>;
     }
 
     return (
