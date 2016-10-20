@@ -15,9 +15,9 @@ Rails.application.routes.draw do
     post 'sign_up' => 'users/registrations#create', :as => :user_registration
     get 'sign_up' => 'users/registrations#new', :as => :new_user_registration
     get 'users/edit' => 'users/registrations#edit', :as => :edit_user_registration
-    patch 'users' => 'users/registrations#update'
-    put 'users' => 'users/registrations#update'
-    delete 'users' => 'users/registrations#destroy'
+    patch 'sign_up' => 'users/registrations#update'
+    put 'sign_up' => 'users/registrations#update'
+    delete 'sign_up' => 'users/registrations#destroy'
   end
 
   devise_for :users, {controllers: { sessions: 'users/sessions', passwords: 'users/passwords', registrations: 'users/registrations' }, skip: [:sessions, :registrations]}

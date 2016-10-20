@@ -38,9 +38,37 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # PUT /resource
-  # def update
-  #   super
-  # end
+  def update
+      self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)
+      prev_unconfirmed_email = resource.unconfirmed_email if resource.respond_to?(:unconfirmed_email)
+
+      resource_updated = update_resource(resource, account_update_params)
+      yield resource if block_given?
+      if resource_updated
+        if is_flashing_format?
+          flash_key = update_needs_confirmation?(resource, prev_unconfirmed_email) ?
+            :update_needs_confirmation : :updated
+          set_flash_message :notice, flash_key
+        end
+        if params[:user].include?(:password) && params[:user][:password].blank?
+          resource.errors.add(:password, ["can't be blank"])
+          respond_to do |format|
+            format.json { render :json => resource.errors }
+          end
+        else
+          bypass_sign_in resource, scope: resource_name
+          respond_with resource, location: after_update_path_for(resource)
+        end
+      else
+        clean_up_passwords resource
+        if params[:user].include?(:password) && params[:user][:password].blank?
+          resource.errors.add(:password, ["can't be blank"])
+        end
+        respond_to do |format|
+          format.json { render :json => resource.errors }
+        end
+      end
+    end
 
   # DELETE /resource
   # def destroy

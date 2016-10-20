@@ -29,7 +29,7 @@ var AuthPickerContainer = React.createClass({
 
   render: function () {
     return (
-      <AuthPicker formToShow={this.state.formToShow} visible={this.state.visible} onFormChange={this.changeFormToShow} onCloseModal={this.hideModal}/>
+      <AuthPicker formToShow={this.state.formToShow} onFormChange={this.changeFormToShow} />
     );
   }
 });
