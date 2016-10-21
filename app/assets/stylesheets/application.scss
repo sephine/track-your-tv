@@ -32,6 +32,20 @@
    height: 51px;
  }
 
+ .navbar-search-form {
+   width:  250px;
+   border: none;
+   margin-left: 0;
+   margin-right: 15px;
+   padding-top: 0;
+   padding-bottom: 0;
+   float: left;
+   box-shadow: none;
+   .form-control {
+     width: 250px;
+   }
+ }
+
  .navbar-custom {
    background-color: $header-black;
    border-radius: 0;
