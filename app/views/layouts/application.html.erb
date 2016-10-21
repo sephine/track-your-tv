@@ -14,13 +14,6 @@
     <% else %>
       <%= render 'layouts/header_logged_out' %>
     <% end %>
-
-    <% if notice %>
-      <p class="alert alert-success"><%= notice %></p>
-    <% end %>
-    <% if alert %>
-      <p class="alert alert-danger"><%= alert %></p>
-    <% end %>
     <%= yield %>
   </body>
 </html>

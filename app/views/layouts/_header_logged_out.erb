@@ -28,5 +28,18 @@
     </div>
   </div>
 </nav>
+<div class="header-filler"></div>
+<% if current_page?(welcome_path) %>
+  <% if notice || alert %>
+    <p class="alert hidden"><%= notice %><%= alert %></p>
+  <% end %>
+<% else %>
+  <% if notice %>
+    <p class="alert alert-success alert-custom"><%= notice %></p>
+  <% end %>
+  <% if alert %>
+    <p class="alert alert-danger alert-custom"><%= alert %></p>
+  <% end %>
+<% end %>
 
 <%= react_component('AuthPickerContainer') %>
