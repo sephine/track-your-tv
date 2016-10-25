@@ -23,6 +23,7 @@ gem 'autoprefixer-rails'
 gem 'devise'
 gem 'react-rails'
 gem 'figaro'
+gem 'httparty'
 gem 'rails-assets-reflux', source: 'https://rails-assets.org'
 
 # Use jquery as the JavaScript library

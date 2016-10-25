@@ -6,6 +6,18 @@ var SearchContainer = React.createClass({
 
   performSearch: function (searchText) {
     alert("performing api call");
+    $.ajax({
+      type: "POST",
+      url: "/tvdb/login",
+      success: function(msg) {
+        console.log("success");
+        console.log(msg);
+      }.bind(this),
+      error: function(msg) {
+        console.log("error");
+        console.log(msg);
+      }
+    });
   },
 
   render: function () {

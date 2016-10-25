@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   root to: redirect('/welcome')
 
   get '/welcome', to: 'welcome#index'
+  post 'tvdb/login', to: 'tvdb#login'
 
   as :user do
     get 'login' => 'users/sessions#new', :as => :new_user_session
