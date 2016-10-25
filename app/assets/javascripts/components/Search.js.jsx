@@ -12,6 +12,10 @@ var Search = React.createClass({
     };
   },
 
+  componentWillMount: function () {
+    this.debouncedPassSearchText = this.passSearchText.debounce(250);
+  },
+
   componentWillReceiveProps: function(newProps) {
     this.setState({
       visibleResults: newProps.results.length != 0
@@ -35,13 +39,17 @@ var Search = React.createClass({
     e.preventDefault();
   },
 
+  passSearchText: function () {
+    this.props.performSearch(this.state.searchInput);
+  },
+
   handleChange: function (e) {
     if (this.state.searchInput == this.state.searchDisplay) {
       this.setState({
         searchInput: e.target.value,
         searchDisplay: e.target.value
       });
-      this.props.performSearch(e.target.value);
+      this.debouncedPassSearchText();
     }
   },
 

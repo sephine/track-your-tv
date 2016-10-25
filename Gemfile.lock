@@ -121,6 +121,7 @@ GEM
       railties (= 5.0.0.1)
       sprockets-rails (>= 2.0.0)
     rails-assets-reflux (0.4.1)
+    rails-assets-sugarjs (2.0.0)
     rails-dom-testing (2.0.1)
       activesupport (>= 4.2.0, < 6.0)
       nokogiri (~> 1.6.0)
@@ -203,6 +204,7 @@ DEPENDENCIES
   puma (~> 3.0)
   rails (~> 5.0.0)
   rails-assets-reflux!
+  rails-assets-sugarjs!
   react-rails
   sass-rails (~> 5.0)
   spring

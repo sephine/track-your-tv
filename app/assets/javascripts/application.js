@@ -10,6 +10,8 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require sugarjs
+//= require sugar_setup
 //= require reflux
 //= require jquery
 //= require jquery_ujs
