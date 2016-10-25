@@ -5,17 +5,26 @@ var SearchContainer = React.createClass({
   },
 
   performSearch: function (searchText) {
-    alert("performing api call");
     $.ajax({
-      type: "POST",
-      url: "/tvdb/login",
+      type: "GET",
+      url: "/tvdb/search",
+      data: {
+        "search_text": searchText,
+      },
       success: function(msg) {
-        console.log("success");
         console.log(msg);
+        if (msg.hasOwnProperty('data')) {
+          this.setState({
+            results: msg.data.slice(0, 5).map(function(entry){
+              return entry.seriesName;
+            })
+          });
+        } else {
+          this.setState({results: []});
+        }
       }.bind(this),
-      error: function(msg) {
-        console.log("error");
-        console.log(msg);
+      error: function() {
+        alert("Error: failed to perform search.");
       }
     });
   },

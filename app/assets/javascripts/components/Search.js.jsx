@@ -7,8 +7,15 @@ var Search = React.createClass({
   getInitialState: function () {
     return {
       searchInput: "",
-      searchDisplay: ""
+      searchDisplay: "",
+      visibleResults: false
     };
+  },
+
+  componentWillReceiveProps: function(newProps) {
+    this.setState({
+      visibleResults: newProps.results.length != 0
+    });
   },
 
   handleMouseOver: function (e) {
@@ -43,6 +50,12 @@ var Search = React.createClass({
     e.preventDefault();
   },
 
+  handleBlur: function (e) {
+    this.setState({
+      visibleResults: false
+    });
+  },
+
   createListItems: function () {
     var _this = this;
     return this.props.results.map(function(string, index){
@@ -61,7 +74,7 @@ var Search = React.createClass({
   },
 
   render: function () {
-    var show = this.props.results.length == 0 ? "dropdown" : " dropdown open"
+    var show = this.state.visibleResults ? "dropdown open" : " dropdown"
     return (
       <div className="navbar-right clearfix">
         <div className={show} style={{float: "left"}}>
@@ -71,6 +84,7 @@ var Search = React.createClass({
                 value={this.state.searchDisplay}
                 onChange={this.handleChange}
                 onSubmit={this.handleSubmit}
+                onBlur={this.handleBlur}
                 className="form-control dropdown-toggle"
                 data-toggle="dropdown"
                 placeholder="Search" />
