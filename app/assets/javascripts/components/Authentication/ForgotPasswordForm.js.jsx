@@ -27,13 +27,14 @@ var ForgotPasswordForm = React.createClass({
   },
 
   render: function () {
+    var emailDivClass = this.props.errors.hasOwnProperty('email') ? "form-group has-error" : "form-group";
     return (
       <div>
         <form className="formForgotPassword" onSubmit={ (e) => this.handleSubmit(e) }>
-          <div className="form-group">
+          <div className={emailDivClass}>
             <input type="email" value={this.state.email} onChange={ (e) => this.setState({ email: e.target.value }) } className="form-control" placeholder="email" />
             {this.props.errors.hasOwnProperty('email') &&
-              <label className="error-message">email {this.props.errors.email}</label>}
+              <span className="help-block">email {this.props.errors.email}</span>}
           </div>
 
           <div className="form-group clearfix">

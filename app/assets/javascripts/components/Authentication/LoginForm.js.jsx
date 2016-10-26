@@ -29,17 +29,18 @@ var LoginForm = React.createClass({
   },
 
   render: function () {
+    var formGroupDivClass = this.props.loginFailed ? "form-group has-error" : "form-group";
     return (
       <div>
         <form className="formLogin" onSubmit={ (e) => this.handleSubmit(e) }>
-          <div className="form-group">
+          <div className={formGroupDivClass}>
             <input type="email" value={this.state.email} onChange={ (e) => this.setState({ email: e.target.value }) } className="form-control" placeholder="email" />
           </div>
 
-          <div className="form-group">
+          <div className={formGroupDivClass}>
             <input type="password" value={this.state.password} onChange={ (e) => this.setState({ password: e.target.value }) } className="form-control" placeholder="password" />
             {this.props.loginFailed &&
-              <label className="error-message">Invalid password or email</label>}
+              <span className="help-block">Invalid password or email</span>}
           </div>
 
           <div className="form-inline clearfix">

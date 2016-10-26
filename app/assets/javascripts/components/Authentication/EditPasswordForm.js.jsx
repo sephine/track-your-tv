@@ -17,19 +17,21 @@ var EditPasswordForm = React.createClass({
   },
 
   render: function () {
+    var passwordDivClass = this.props.errors.hasOwnProperty('password') ? "form-group has-error" : "form-group";
+    var passwordConfirmationDivClass = this.props.errors.hasOwnProperty('password_confirmation') ? "form-group has-error" : "form-group";
     return (
       <div>
         <form className="formEditPassword" onSubmit={ (e) => this.handleSubmit(e) }>
-          <div className="form-group">
+          <div className={passwordDivClass}>
             <input type="password" value={this.state.password} onChange={ (e) => this.setState({ password: e.target.value }) } className="form-control" placeholder="new password" />
             {this.props.errors.hasOwnProperty('password') &&
-              <label className="error-message">password {this.props.errors.password}</label>}
+              <span className="help-block">password {this.props.errors.password}</span>}
           </div>
 
-          <div className="form-group">
+          <div className={passwordConfirmationDivClass}>
             <input type="password" value={this.state.password_confirmation} onChange={ (e) => this.setState({ password_confirmation: e.target.value }) } className="form-control" placeholder="confirm new password" />
             {this.props.errors.hasOwnProperty('password_confirmation') &&
-              <label className="error-message">password confirmation {this.props.errors.password_confirmation}</label>}
+              <span className="help-block">password confirmation {this.props.errors.password_confirmation}</span>}
           </div>
 
           <div className="form-group clearfix">

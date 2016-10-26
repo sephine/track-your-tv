@@ -28,31 +28,35 @@ var SignUpForm = React.createClass({
   },
 
   render: function () {
+    var emailDivClass = this.props.errors.hasOwnProperty('email') ? "form-group has-error" : "form-group";
+    var nameDivClass = this.props.errors.hasOwnProperty('name') ? "form-group has-error" : "form-group";
+    var passwordDivClass = this.props.errors.hasOwnProperty('password') ? "form-group has-error" : "form-group";
+    var passwordConfirmationDivClass = this.props.errors.hasOwnProperty('password_confirmation') ? "form-group has-error" : "form-group";
     return (
       <div>
         <form className="formSignUp" onSubmit={ (e) => this.handleSubmit(e) }>
-          <div className="form-group">
+          <div className={emailDivClass}>
             <input type="email" value={this.state.email} onChange={ (e) => this.setState({ email: e.target.value }) } className="form-control" placeholder="email" />
             {this.props.errors.hasOwnProperty('email') &&
-              <label className="error-message">email {this.props.errors.email}</label>}
+              <span className="help-block">email {this.props.errors.email}</span>}
           </div>
 
-          <div className="form-group">
+          <div className={nameDivClass}>
             <input type="name" value={this.state.name} onChange={ (e) => this.setState({ name: e.target.value }) } className="form-control" placeholder="name" />
             {this.props.errors.hasOwnProperty('name') &&
-              <label className="error-message">name {this.props.errors.name}</label>}
+              <span className="help-block">name {this.props.errors.name}</span>}
           </div>
 
-          <div className="form-group">
+          <div className={passwordDivClass}>
             <input type="password" value={this.state.password} onChange={ (e) => this.setState({ password: e.target.value }) } className="form-control" placeholder="password" />
             {this.props.errors.hasOwnProperty('password') &&
-              <label className="error-message">password {this.props.errors.password}</label>}
+              <span className="help-block">password {this.props.errors.password}</span>}
           </div>
 
-          <div className="form-group">
+          <div className={passwordConfirmationDivClass}>
             <input type="password" value={this.state.password_confirmation} onChange={ (e) => this.setState({ password_confirmation: e.target.value }) } className="form-control" placeholder="confirm password" />
             {this.props.errors.hasOwnProperty('password_confirmation') &&
-              <label className="error-message">password confirmation {this.props.errors.password_confirmation}</label>}
+              <span className="help-block">password confirmation {this.props.errors.password_confirmation}</span>}
           </div>
 
           <div className="form-group clearfix">
