@@ -32,6 +32,11 @@
    height: 51px;
  }
 
+.navbar-collapse.in,
+.navbar-collapse.collapsing {
+    clear: left;
+}
+
  .navbar-search-form {
    width:  250px;
    border: none;

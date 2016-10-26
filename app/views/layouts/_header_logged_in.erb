@@ -14,7 +14,7 @@
     </div>
     <div id="navbar1" class="navbar-right navbar-collapse collapse"
           aria-expanded="false" style="height: 1px;">
-      <ul class="nav navbar-nav navbar-right">
+      <ul class="nav navbar-nav pull-right">
         <li class="dropdown">
           <a href="#" class="dropdown-toggle hidden-xs" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             <%= current_user.name.split.first %>
@@ -32,9 +32,9 @@
       </ul>
     </div>
     <%= react_component('SearchContainer') %>
-    <div id="navbar2" class="navbar-right navbar-collapse collapse"
+    <div id="navbar2" class="navbar-collapse collapse"
           aria-expanded="false" style="height: 1px;">
-      <ul class="nav navbar-nav navbar-right">
+      <ul class="nav navbar-nav">
         <li class="visible-xs">
           <%= link_to 'Account', edit_user_registration_path %>
         </li>

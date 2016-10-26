@@ -85,8 +85,8 @@ var Search = React.createClass({
   render: function () {
     var show = this.state.visibleResults ? "dropdown open" : " dropdown"
     return (
-      <div className="navbar-right clearfix">
-        <div className={show} style={{float: "left"}}>
+      <div className="navbar-header pull-right">
+        <div className={show}>
         <form className="navbar-form navbar-search-form" onSubmit={this.handleSubmit}>
           <div className="form-group">
             <input type="text"
