@@ -73,7 +73,8 @@ var Search = React.createClass({
               onMouseOver={_this.handleMouseOver}
               onMouseOut={_this.handleMouseOut}
               onClick={_this.handleClick}
-              id={"search-result-id-"+index}>
+              id={"search-result-id-"+index}
+              style={{'whiteSpace': 'normal'}}>
             {string}
           </a>
         </li>
@@ -98,7 +99,7 @@ var Search = React.createClass({
                 placeholder="Search" />
           </div>
         </form>
-            <ul className="dropdown-menu" role="menu">
+            <ul className="dropdown-menu" role="menu" style={{width: '270px'}}>
               {this.createListItems()}
             </ul>
             </div>
