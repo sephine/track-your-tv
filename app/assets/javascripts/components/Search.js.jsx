@@ -97,6 +97,9 @@ var Search = React.createClass({
                 className="form-control dropdown-toggle"
                 data-toggle="dropdown"
                 placeholder="Search" />
+            <a href="#" onClick={this.handleSubmit} id="search-icon">
+              <span className="glyphicon glyphicon-search"></span>
+            </a>
           </div>
         </form>
             <ul className="dropdown-menu" role="menu" style={{width: '270px'}}>

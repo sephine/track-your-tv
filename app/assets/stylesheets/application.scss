@@ -32,10 +32,10 @@
    height: 51px;
  }
 
-.navbar-collapse.in,
-.navbar-collapse.collapsing {
-    clear: left;
-}
+ .navbar-collapse.in,
+ .navbar-collapse.collapsing {
+   clear: left;
+ }
 
  .navbar-search-form {
    width:  250px;
@@ -48,6 +48,20 @@
    box-shadow: none;
    .form-control {
      width: 250px;
+     padding-right: 30px;
+   }
+ }
+
+ #search-icon {
+   position: absolute;
+   border: none;
+   background-color: transparent;
+   width: 20px;
+   height: 20px;
+   right: 15px;
+   top: 8px;
+   span {
+     color: grey;
    }
  }
 
