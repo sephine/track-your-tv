@@ -5,7 +5,9 @@ Rails.application.routes.draw do
   root to: redirect('/welcome')
 
   get '/welcome', to: 'welcome#index'
-  get 'tvdb/search', to: 'tvdb#search'
+  get '/tvdb/search', to: 'tvdb#search'
+  get '/tvdb/series', to: 'tvdb#series'
+  get '/search', to: 'programmes#search'
 
   as :user do
     get 'login' => 'users/sessions#new', :as => :new_user_session

@@ -1,4 +1,4 @@
-var SearchContainer = React.createClass({
+var SearchBoxContainer = React.createClass({
 
   getInitialState: function () {
     return { results: [] };
@@ -24,7 +24,7 @@ var SearchContainer = React.createClass({
         }
       }.bind(this),
       error: function() {
-        alert("Error: failed to perform search.");
+        alert("Error: failed to perform search on input.");
       }
     });
   },
@@ -32,7 +32,7 @@ var SearchContainer = React.createClass({
   render: function () {
     return (
       <div>
-        <Search results={this.state.results} performSearch={this.performSearch} />
+        <SearchBox results={this.state.results} performSearch={this.performSearch} />
       </div>
     );
   }

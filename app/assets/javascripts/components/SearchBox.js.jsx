@@ -1,4 +1,4 @@
-var Search = React.createClass({
+var SearchBox = React.createClass({
   propTypes: {
     results: React.PropTypes.array.isRequired,
     performSearch: React.PropTypes.func.isRequired,
@@ -54,8 +54,10 @@ var Search = React.createClass({
   },
 
   handleSubmit: function (e) {
-    alert("submit");
     e.preventDefault();
+    if (this.state.searchInput.length != 0) {
+      window.location.href = "/search?q=" + this.state.searchInput;
+    }
   },
 
   handleBlur: function (e) {
@@ -69,8 +71,7 @@ var Search = React.createClass({
     return this.props.results.map(function(string, index){
       return (
         <li key={"search-result-id-"+index}>
-          <a className="search-result-link"
-              onMouseOver={_this.handleMouseOver}
+          <a onMouseOver={_this.handleMouseOver}
               onMouseOut={_this.handleMouseOut}
               onClick={_this.handleClick}
               id={"search-result-id-"+index}
