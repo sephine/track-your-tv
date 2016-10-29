@@ -1,4 +1,4 @@
-<nav class="navbar-custom navbar">
+<nav class="navbar-custom navbar" id="logged-in-navbar">
   <div class="container-fluid">
     <div class="navbar-left">
       <button type="button" class="navbar-toggle pull-left collapsed"
@@ -52,3 +52,15 @@
 <% if alert %>
   <p class="alert alert-danger alert-custom"><%= alert %></p>
 <% end %>
+
+<script>
+$(document).ready(function() {
+  $(window).scroll(function() {
+    if ($(this).scrollTop() > 20) {
+      $('#logged-in-navbar').css('background-color', 'rgba(0, 0, 0, 0.7)')
+    } else {
+      $('#logged-in-navbar').css('background-color', 'rgba(0, 0, 0, 1.0)')
+    }
+  })
+});
+</script>

@@ -1,4 +1,4 @@
-<nav class="navbar-custom navbar">
+<nav class="navbar-custom navbar" id="logged-out-navbar">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle pull-left collapsed"
@@ -28,7 +28,6 @@
     </div>
   </div>
 </nav>
-<div class="header-filler"></div>
 <% if current_page?(welcome_path) %>
   <% if notice || alert %>
     <p class="alert hidden"><%= notice %><%= alert %></p>
@@ -43,3 +42,15 @@
 <% end %>
 
 <%= react_component('AuthPickerContainer') %>
+
+<script>
+$(document).ready(function() {
+  $(window).scroll(function() {
+    if ($(this).scrollTop() > 20) {
+      $('#logged-out-navbar').css('background-color', 'rgba(0, 0, 0, 0.7)')
+    } else {
+      $('#logged-out-navbar').css('background-color', 'rgba(0, 0, 0, 0.0)')
+    }
+  })
+});
+</script>
