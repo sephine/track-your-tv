@@ -9,7 +9,6 @@ var SearchResults = React.createClass({
 
   componentWillMount: function () {
     window.addEventListener("scroll", this.handleScroll);
-    
   },
 
   componentDidUpdate: function () {
@@ -48,7 +47,7 @@ var SearchResults = React.createClass({
         }
         return (
           <div className="container top-pick">
-            <span className="hidden-xs col-sm-1 col-md-1" />
+            <span className="col-xs-3 col-sm-1 col-md-1" />
             <div className="col-xs-6 col-sm-4 col-md-3">
               <a href="#"
                   onClick={this.handleClick}
@@ -58,7 +57,8 @@ var SearchResults = React.createClass({
                 </div>
               </a>
             </div>
-            <div className="col-xs-6 col-sm-6 col-md-7">
+            <span className="col-xs-3 hidden-sm" />
+            <div className="col-xs-12 col-sm-6 col-md-7">
               <h2>{item.seriesName}</h2>
               <p><b>{item.genre.join(", ")}</b></p>
               <p>{item.overview.truncateOnWord(500)}</p>
@@ -72,12 +72,20 @@ var SearchResults = React.createClass({
   },
 
   createThumbnails: function () {
+    if (this.props.completed && this.props.results.length == 0) {
+      return (
+        "No Results Found"
+      );
+    }
     if (this.props.results.length < this.props.count) {
       return null;
     }
+
     var _this = this;
-    return this.props.results.map(function(item, index){
+    var hasTopPick = false;
+    var inner = this.props.results.map(function(item, index){
       if (item.id == _this.props.topPickID && item.posters.length != 0) {
+        hasTopPick = true;
         return null;
       }
       var bestRating = -1
@@ -94,38 +102,49 @@ var SearchResults = React.createClass({
           <a href="#"
               onClick={_this.handleClick}
               id={"search-result-id-"+index}>
-              {bestThumbnail &&
-                  <div className="thumbnail">
-                    <img src={"http://thetvdb.com/banners/" + bestThumbnail} alt={item.seriesName} />
-                  </div>}
-              {!bestThumbnail &&
-                  <div className="no-image-div thumbnail">
-                    <img src="/assets/NoThumbnailSearchImage.jpg" alt="no image" />
-                    <div className="no-image-inner">
-                      <h4>{item.seriesName}</h4>
-                      <p>{item.overview}</p>
-                    </div>
-                  </div>}
+            {bestThumbnail &&
+                <div className="thumbnail">
+                  <img src={"http://thetvdb.com/banners/" + bestThumbnail} alt={item.seriesName} />
+                </div>}
+            {!bestThumbnail &&
+                <div className="no-image-div thumbnail">
+                  <img src="/assets/NoThumbnailSearchImage.jpg" alt="no image" />
+                  <div className="no-image-inner">
+                    <h4>{item.seriesName}</h4>
+                    <p>{item.overview}</p>
+                  </div>
+                </div>}
           </a>
         </div>
       );
     });
+
+    if (hasTopPick && this.props.results.length == 1) {
+      return null;
+    }
+
+    var mainResultsClass = hasTopPick ? "other-results" : "all-results";
+    return (
+      <div className={mainResultsClass}>
+        <div className="container">
+          <div className="row">
+            {inner}
+          </div>
+        </div>
+      </div>
+    );
   },
 
   render: function () {
-    var noResults = this.props.completed && this.props.results.length == 0
     return (
       <div>
         <div className="search-header">
-          <h3>Search Results for <b>{this.props.searchText}</b></h3>
+          <div className="container">
+            <h3>Search Results for <b>{this.props.searchText}</b></h3>
+          </div>
         </div>
         {this.createTopPick()}
-        <div className="container search-results">
-          <div className="row">
-            {this.createThumbnails()}
-          </div>
-          {noResults && "No Results Found"}
-        </div>
+        {this.createThumbnails()}
       </div>
     );
   }

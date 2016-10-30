@@ -18,20 +18,30 @@
 }
 
 .search-header {
-  background-color: grey;
+  background-color: #dcdfe1;
   position: fixed;
   height: 50px;
   width: 100%;
   z-index: 99;
   h3 {
-    margin-left: 30px;
     line-height: 15px;
   }
 }
 
-.top-pick, .search-results {
-  padding-top: 10px;
+.top-pick, .other-results, .all-results {
   padding-bottom: 20px;
   position: relative;
-  top: 80px;
+}
+
+.top-pick {
+  padding-top: 90px;
+}
+
+.other-results {
+  padding-top: 40px;
+  background-color: #dcdfe1;
+}
+
+.all-results {
+  padding-top: 90px;
 }
