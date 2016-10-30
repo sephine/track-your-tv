@@ -2,7 +2,8 @@ var SearchResults = React.createClass({
   propTypes: {
     searchText: React.PropTypes.string.isRequired,
     results: React.PropTypes.array.isRequired,
-    topPickID: React.PropTypes.string.isRequired,
+    count: React.PropTypes.number.isRequired,
+    topPickID: React.PropTypes.number.isRequired,
     completed: React.PropTypes.bool.isRequired
   },
 
@@ -65,6 +66,9 @@ var SearchResults = React.createClass({
   },
 
   createThumbnails: function () {
+    if (this.props.results.length < this.props.count) {
+      return null;
+    }
     var _this = this;
     return this.props.results.map(function(item, index){
       if (item.id == _this.props.topPickID && item.posters.length != 0) {

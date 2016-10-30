@@ -6,6 +6,7 @@ var SearchResultsContainer = React.createClass({
   getInitialState: function () {
     return {
       results: [],
+      count: 0,
       topPickID: "",
       completed: false
     };
@@ -24,6 +25,9 @@ var SearchResultsContainer = React.createClass({
       },
       success: function(msg) {
         if (msg.hasOwnProperty('data')) {
+          this.setState({
+            count: msg.data.length
+          });
           var bestMatchID;
           for (let item of msg.data) {
             if (item.seriesName.toLowerCase() == searchText.toLowerCase()) {
@@ -100,6 +104,7 @@ var SearchResultsContainer = React.createClass({
       <div>
         <SearchResults searchText={this.props.searchText}
             results={this.state.results}
+            count={this.state.count}
             topPickID={this.state.topPickID}
             completed={this.state.completed} />
       </div>
