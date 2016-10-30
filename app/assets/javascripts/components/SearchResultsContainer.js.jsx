@@ -6,6 +6,7 @@ var SearchResultsContainer = React.createClass({
   getInitialState: function () {
     return {
       results: [],
+      topPickID: "",
       completed: false
     };
   },
@@ -23,12 +24,24 @@ var SearchResultsContainer = React.createClass({
       },
       success: function(msg) {
         if (msg.hasOwnProperty('data')) {
+          var bestMatchID;
           for (let item of msg.data) {
-            this.getSeriesInfo(item);
+            if (item.seriesName.toLowerCase() == searchText.toLowerCase()) {
+              bestMatchID = item.id;
+              this.getSeriesInfo(item);
+              this.setState({
+                topPickID: item.id
+              });
+              break;
+            }
+          }
+          for (let item of msg.data) {
+            if (item.id != this.state.topPickID) {
+              this.getSeriesInfo(item);
+            }
           }
         } else {
           this.setState({
-            results: [],
             completed: true
           });
         }
@@ -85,7 +98,10 @@ var SearchResultsContainer = React.createClass({
   render: function () {
     return (
       <div>
-        <SearchResults searchText={this.props.searchText} results={this.state.results} completed={this.state.completed} />
+        <SearchResults searchText={this.props.searchText}
+            results={this.state.results}
+            topPickID={this.state.topPickID}
+            completed={this.state.completed} />
       </div>
     );
   }

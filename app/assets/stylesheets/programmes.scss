@@ -29,7 +29,9 @@
   }
 }
 
-.search-results {
+.top-pick, .search-results {
+  padding-top: 10px;
+  padding-bottom: 20px;
   position: relative;
   top: 80px;
 }
