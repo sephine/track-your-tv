@@ -9,6 +9,12 @@ var SearchResults = React.createClass({
 
   componentWillMount: function () {
     window.addEventListener("scroll", this.handleScroll);
+    
+  },
+
+  componentDidUpdate: function () {
+    var proportionDone = this.props.results.length/this.props.count;
+    NProgress.set(proportionDone);
   },
 
   componentWillUnmount() {

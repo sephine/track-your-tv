@@ -20,4 +20,5 @@
 //= require react
 //= require react_ujs
 //= require components
+//= require nprogress
 //= require_tree .

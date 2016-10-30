@@ -7,7 +7,7 @@ var SearchResultsContainer = React.createClass({
     return {
       results: [],
       count: 0,
-      topPickID: "",
+      topPickID: 0,
       completed: false
     };
   },

@@ -103,6 +103,7 @@ GEM
     nio4r (1.2.1)
     nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
+    nprogress-rails (0.2.0.2)
     orm_adapter (0.5.0)
     puma (3.6.0)
     rack (2.0.1)
@@ -178,7 +179,7 @@ GEM
       execjs (>= 0.3.0, < 3)
     warden (1.2.6)
       rack (>= 1.0)
-    web-console (3.3.1)
+    web-console (3.4.0)
       actionview (>= 5.0)
       activemodel (>= 5.0)
       debug_inspector
@@ -201,6 +202,7 @@ DEPENDENCIES
   jbuilder (~> 2.5)
   jquery-rails
   listen (~> 3.0.5)
+  nprogress-rails
   puma (~> 3.0)
   rails (~> 5.0.0)
   rails-assets-reflux!
