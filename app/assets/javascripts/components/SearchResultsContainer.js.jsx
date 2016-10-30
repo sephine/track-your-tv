@@ -28,17 +28,26 @@ var SearchResultsContainer = React.createClass({
           this.setState({
             count: msg.data.length
           });
-          var bestMatchID;
+          var bestMatch;
           for (let item of msg.data) {
             if (item.seriesName.toLowerCase() == searchText.toLowerCase()) {
-              bestMatchID = item.id;
-              this.getSeriesInfo(item);
-              this.setState({
-                topPickID: item.id
-              });
+              bestMatch = item;
               break;
             }
+            for (let otherName of item.aliases) {
+              if (otherName.toLowerCase() == searchText.toLowerCase()) {
+                bestMatch = item;
+                break;
+              }
+            }
           }
+          if (bestMatch) {
+            this.getSeriesInfo(bestMatch);
+            this.setState({
+              topPickID: bestMatch.id
+            });
+          }
+
           for (let item of msg.data) {
             if (item.id != this.state.topPickID) {
               this.getSeriesInfo(item);
