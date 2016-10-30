@@ -5,9 +5,12 @@
 .no-image-div {
   position: relative;
   text-align: center;
+  img {
+    opacity: 0.2;
+  }
 }
 
-.no-image-inner {
+.no-image-title {
   top: 0%;
   left: 10%;
   height: 90%;

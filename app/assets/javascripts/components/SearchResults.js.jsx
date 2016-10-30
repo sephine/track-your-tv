@@ -108,10 +108,9 @@ var SearchResults = React.createClass({
                 </div>}
             {!bestThumbnail &&
                 <div className="no-image-div thumbnail">
-                  <img src="/assets/NoThumbnailSearchImage.jpg" alt="no image" />
-                  <div className="no-image-inner">
+                  <img src="/assets/NoThumbnailSearchImage.jpg" alt="no image" className="no-image-img" />
+                  <div className="no-image-title">
                     <h4>{item.seriesName}</h4>
-                    <p>{item.overview}</p>
                   </div>
                 </div>}
           </a>
