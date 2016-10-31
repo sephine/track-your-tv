@@ -19,8 +19,7 @@
  @import "bootstrap-sprockets";
  @import "bootstrap";
  @import "bootstrap/theme";
-
- $header-black: rgba(0, 0, 0, 1.0);
+ @import "colors";
 
  html,body {
    height:100%;
@@ -83,7 +82,10 @@
      color: white;
      text-shadow: none;
      &:hover {
-       color: blue;
+       color: $red;
+     }
+     &:focus {
+       background-color: transparent;
      }
  }
 
@@ -91,15 +93,16 @@
      background-color: black;
  }
  .navbar-custom .navbar-brand {
-     color: white;
+     color: $red;
+     text-shadow: none;
  }
 
  #logged-out-navbar {
-   background-color: rgba(0, 0, 0, 0.0)
+   background-color: transparent;
  }
 
  #logged-in-navbar {
-   background-color: rgba(0, 0, 0, 1.0)
+   background-color: $dark-grey;
  }
 
  .footer {
@@ -107,6 +110,6 @@
    bottom: 0;
    width: 100%;
    height: 50px;
-   background-color: $header-black;
+   background-color: $dark-grey;
    line-height: 50px;
  }
