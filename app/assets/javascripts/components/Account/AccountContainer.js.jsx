@@ -17,7 +17,7 @@ var AccountContainer = React.createClass({
   },
 
   cancelAccount: function () {
-    var cancel = confirm("Are you sure you want to cancel your account?");
+    var cancel = confirm("Are you sure you want to close your account?");
     if (cancel) {
       $.ajax({
         type: "DELETE",
