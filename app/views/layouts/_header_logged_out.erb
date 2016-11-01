@@ -15,12 +15,20 @@
           aria-expanded="false" style="height: 1px;">
       <ul class="nav navbar-nav navbar-right">
         <li>
-          <a href="javascript:void(0);" onclick="AuthActions.showSignUpModal()" class="sign-up-link" title="Sign Up">
+          <% if current_page?(welcome_path) %>
+            <a href="javascript:void(0);" onclick="AuthActions.showSignUpModal()" class="sign-up-link" title="Sign Up">
+          <% else %>
+            <a href="/sign_up" class="sign-up-link" title="Sign Up">
+          <% end %>
             Sign Up
           </a>
         </li>
         <li>
-          <a href="javascript:void(0);" onclick="AuthActions.showLoginModal()" class="login-link" title="Login">
+          <% if current_page?(welcome_path) %>
+            <a href="javascript:void(0);" onclick="AuthActions.showLoginModal()" class="login-link" title="Login">
+          <% else %>
+            <a href="/login" class="login-link" title="Login">
+          <% end %>
             Log In
           </a>
         </li>
