@@ -35,6 +35,10 @@
    min-height: calc(100% - 101px);
  }
 
+ .list-background {
+   background-color: $really-light-grey;
+ }
+
  .alert-custom {
    margin-bottom: 0px;
  }
@@ -93,7 +97,7 @@
      color: white;
      text-shadow: none;
      &:hover {
-       color: $red;
+       color: $lilac;
      }
      &:focus {
        background-color: transparent;
@@ -104,7 +108,7 @@
      background-color: $dark-grey;
  }
  .navbar-custom .navbar-brand {
-     color: $red;
+     color: $lilac;
      text-shadow: none;
  }
 

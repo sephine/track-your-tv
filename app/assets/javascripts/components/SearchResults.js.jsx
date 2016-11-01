@@ -46,24 +46,26 @@ var SearchResults = React.createClass({
           }
         }
         return (
-          <div className="container top-pick">
-            <span className="col-xs-3 col-sm-1 col-md-1" />
-            <div className="col-xs-6 col-sm-4 col-md-3">
-              <a href="#"
-                  onClick={this.handleClick}
-                  id={"search-result-id-"+i}>
-                <div className="thumbnail">
-                  <img src={"http://thetvdb.com/banners/" + bestThumbnail} alt={item.seriesName} />
-                </div>
-              </a>
+          <div className="top-pick">
+            <div className="container">
+              <span className="col-xs-3 col-sm-1 col-md-1" />
+              <div className="col-xs-6 col-sm-4 col-md-3">
+                <a href="#"
+                    onClick={this.handleClick}
+                    id={"search-result-id-"+i}>
+                  <div className="thumbnail">
+                    <img src={"http://thetvdb.com/banners/" + bestThumbnail} alt={item.seriesName} />
+                  </div>
+                </a>
+              </div>
+              <span className="col-xs-3 hidden-sm" />
+              <div className="col-xs-12 col-sm-6 col-md-7">
+                <h2>{item.seriesName}</h2>
+                <p><b>{item.genre.join(", ")}</b></p>
+                <p>{item.overview.truncateOnWord(500)}</p>
+              </div>
+              <span className="hidden-xs col-sm-1 col-md-1" />
             </div>
-            <span className="col-xs-3 hidden-sm" />
-            <div className="col-xs-12 col-sm-6 col-md-7">
-              <h2>{item.seriesName}</h2>
-              <p><b>{item.genre.join(", ")}</b></p>
-              <p>{item.overview.truncateOnWord(500)}</p>
-            </div>
-            <span className="hidden-xs col-sm-1 col-md-1" />
           </div>
         );
       }
@@ -120,6 +122,12 @@ var SearchResults = React.createClass({
 
     if (hasTopPick && this.props.results.length == 1) {
       return null;
+    }
+
+    var mainResultsClass = "all-results";
+    if (hasTopPick) {
+      mainResultsClass = "other-results";
+      $('.page-filler').addClass("list-background");
     }
 
     var mainResultsClass = hasTopPick ? "other-results" : "all-results";
