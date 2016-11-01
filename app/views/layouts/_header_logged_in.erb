@@ -55,11 +55,12 @@
 
 <script>
 $(document).ready(function() {
+  $('#logged-in-navbar').css('background-color', 'rgba(38, 38, 38, 1.0)');
   $(window).scroll(function() {
     if ($(this).scrollTop() > 20) {
-      $('#logged-in-navbar').css('background-color', 'rgba(38, 38, 38, 0.8)')
+      $('#logged-in-navbar').css('background-color', 'rgba(38, 38, 38, 0.8)');
     } else {
-      $('#logged-in-navbar').css('background-color', 'rgba(38, 38, 38, 1.0)')
+      $('#logged-in-navbar').css('background-color', 'rgba(38, 38, 38, 1.0)');
     }
   })
 });
