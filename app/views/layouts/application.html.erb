@@ -14,7 +14,21 @@
     <% else %>
       <%= render 'layouts/header_logged_out' %>
     <% end %>
-    <%= yield %>
+    
+    <% if current_page?(welcome_path) %>
+      <p class="alert hidden"><%= notice %><%= alert %></p>
+      <%= yield %>
+    <% else %>
+      <div class="page-filler">
+        <% if notice %>
+          <p class="alert alert-success alert-custom"><%= notice %></p>
+        <% end %>
+        <% if alert %>
+          <p class="alert alert-danger alert-custom"><%= alert %></p>
+        <% end %>
+        <%= yield %>
+      </div>
+    <% end %>
     <%= render 'layouts/footer' %>
   </body>
 </html>
