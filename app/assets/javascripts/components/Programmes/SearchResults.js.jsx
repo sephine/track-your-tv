@@ -28,11 +28,6 @@ var SearchResults = React.createClass({
     }
   },
 
-  handleClick: function (e) {
-    alert("click " + e.target.text);
-    e.preventDefault();
-  },
-
   createTopPick: function () {
     for (let i = 0; i < this.props.results.length; i++) {
       let item = this.props.results[i];
@@ -45,13 +40,13 @@ var SearchResults = React.createClass({
             bestThumbnail = poster.thumbnail;
           }
         }
+        var hyphenName = item.seriesName.split(" ").join("-").toLowerCase();
         return (
           <div className="top-pick">
             <div className="container">
               <span className="col-xs-3 col-sm-1 col-md-1" />
               <div className="col-xs-6 col-sm-4 col-md-3">
-                <a href="#"
-                    onClick={this.handleClick}
+                <a href={"/" + item.id + "/" + hyphenName}
                     id={"search-result-id-"+i}>
                   <div className="thumbnail">
                     <img src={"http://thetvdb.com/banners/" + bestThumbnail} alt={item.seriesName} />
@@ -98,11 +93,11 @@ var SearchResults = React.createClass({
           bestThumbnail = poster.thumbnail;
         }
       }
+      var hyphenName = item.seriesName.split(" ").join("-").toLowerCase();
       return (
         <div className="col-xs-4 col-sm-3 col-md-2"
             key={"search-result-id-"+index}>
-          <a href="#"
-              onClick={_this.handleClick}
+          <a href={"/" + item.id + "/" + hyphenName}
               id={"search-result-id-"+index}>
             {bestThumbnail &&
                 <div className="thumbnail">
