@@ -8,7 +8,6 @@ var SearchBox = React.createClass({
     return {
       searchInput: "",
       searchDisplay: "",
-      visibleResults: false
     };
   },
 
@@ -17,9 +16,11 @@ var SearchBox = React.createClass({
   },
 
   componentWillReceiveProps: function(newProps) {
-    this.setState({
-      visibleResults: newProps.results.length != 0
-    });
+    if (newProps.results.length != 0) {
+      $('#search-box-dropdown').addClass('open');
+    } else {
+      $('#search-box-dropdown').removeClass('open');
+    }
   },
 
   handleMouseOver: function (e) {
@@ -32,11 +33,6 @@ var SearchBox = React.createClass({
     this.setState({
       searchDisplay: this.state.searchInput
     });
-  },
-
-  handleClick: function (e) {
-    alert("click " + e.target.text);
-    e.preventDefault();
   },
 
   passSearchText: function () {
@@ -60,23 +56,18 @@ var SearchBox = React.createClass({
     }
   },
 
-  handleBlur: function (e) {
-    this.setState({
-      visibleResults: false
-    });
-  },
-
   createListItems: function () {
     var _this = this;
-    return this.props.results.map(function(string, index){
+    return this.props.results.map(function(data, index){
+      var hyphenName = data.seriesName.split(" ").join("-").toLowerCase();
       return (
         <li key={"search-result-id-"+index}>
-          <a onMouseOver={_this.handleMouseOver}
+          <a href={"/" + data.id + "/" + hyphenName}
+              onMouseOver={_this.handleMouseOver}
               onMouseOut={_this.handleMouseOut}
-              onClick={_this.handleClick}
               id={"search-result-id-"+index}
               style={{'whiteSpace': 'normal'}}>
-            {string}
+            {data.seriesName}
           </a>
         </li>
       );
@@ -84,29 +75,27 @@ var SearchBox = React.createClass({
   },
 
   render: function () {
-    var show = this.state.visibleResults ? "dropdown open" : " dropdown"
     return (
       <div className="navbar-header pull-right">
-        <div className={show}>
-        <form className="navbar-form navbar-search-form" onSubmit={this.handleSubmit}>
-          <div className="form-group">
-            <input type="text"
-                value={this.state.searchDisplay}
-                onChange={this.handleChange}
-                onSubmit={this.handleSubmit}
-                onBlur={this.handleBlur}
-                className="form-control dropdown-toggle"
-                data-toggle="dropdown"
-                placeholder="Search" />
-            <a href="#" onClick={this.handleSubmit} id="search-icon">
-              <span className="glyphicon glyphicon-search"></span>
-            </a>
-          </div>
-        </form>
-            <ul className="dropdown-menu" role="menu" style={{width: '270px'}}>
-              {this.createListItems()}
-            </ul>
+        <div className="dropdown" id="search-box-dropdown">
+          <form className="navbar-form navbar-search-form" onSubmit={this.handleSubmit}>
+            <div className="form-group">
+              <input type="text"
+                  value={this.state.searchDisplay}
+                  onChange={this.handleChange}
+                  onSubmit={this.handleSubmit}
+                  className="form-control"
+                  placeholder="Search" />
+              <a href="#" onClick={this.handleSubmit} id="search-icon">
+                <span className="glyphicon glyphicon-search"></span>
+              </a>
             </div>
+          </form>
+          <a className="hidden" data-toggle="dropdown" />
+          <ul className="dropdown-menu" role="menu" style={{width: '270px'}}>
+            {this.createListItems()}
+          </ul>
+        </div>
       </div>
     );
   }

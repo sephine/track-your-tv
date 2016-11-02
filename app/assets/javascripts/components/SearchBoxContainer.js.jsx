@@ -15,9 +15,7 @@ var SearchBoxContainer = React.createClass({
         console.log(msg);
         if (msg.hasOwnProperty('data')) {
           this.setState({
-            results: msg.data.slice(0, 5).map(function(entry){
-              return entry.seriesName;
-            })
+            results: msg.data.slice(0, 5)
           });
         } else {
           this.setState({results: []});

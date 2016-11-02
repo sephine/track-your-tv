@@ -16,7 +16,7 @@ var SearchResults = React.createClass({
     NProgress.set(proportionDone);
   },
 
-  componentWillUnmount() {
+  componentWillUnmount: function() {
     window.removeEventListener("scroll", this.handleScroll);
   },
 

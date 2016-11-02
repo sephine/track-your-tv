@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   end
   root to: redirect('/welcome')
 
+  get '/:id/:name', to: 'programmes#show', constraints: {id: /\d+/}
   get '/welcome', to: 'welcome#index'
   get '/tvdb/search', to: 'tvdb#search'
   get '/tvdb/series', to: 'tvdb#series'
