@@ -10,11 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161025054817) do
+ActiveRecord::Schema.define(version: 20161108023512) do
+
+  create_table "episodes", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "tvdb_ref"
+    t.boolean  "watched"
+    t.integer  "programme_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["programme_id"], name: "index_episodes_on_programme_id"
+  end
 
   create_table "programmes", force: :cascade do |t|
     t.string   "name"
-    t.decimal  "tvdb_ref"
+    t.integer  "tvdb_ref"
     t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

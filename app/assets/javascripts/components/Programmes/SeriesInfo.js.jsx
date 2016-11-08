@@ -1,6 +1,20 @@
 var SeriesInfo = React.createClass({
   propTypes: {
     info: React.PropTypes.object.isRequired,
+    onTrackClicked: React.PropTypes.func.isRequired
+  },
+
+  getInitialState: function () {
+    return {
+      trackingRequested: false
+    };
+  },
+
+  handleTrackClicked: function () {
+    this.setState({
+      trackingRequested: true
+    });
+    this.props.onTrackClicked();
   },
 
   render: function () {
@@ -24,6 +38,11 @@ var SeriesInfo = React.createClass({
                 <p>{this.props.info.network} (ended)</p>}
             <p>Premiered {formattedDate}</p>
             <p>{this.props.info.overview.truncateOnWord(500)}</p>
+            {!this.props.info.tracked &&
+                <button className="btn btn-default" disabled={this.state.trackingRequested} onClick={this.handleTrackClicked}>Track</button>}
+
+            {this.props.info.tracked &&
+                <h4 style={{color: 'green'}}>Tracked</h4>}
           </div>
           <span className="hidden-xs col-sm-1 col-md-1" />
         </div>

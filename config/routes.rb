@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   get '/tvdb/series', to: 'tvdb#series'
   get '/tvdb/episodes', to: 'tvdb#episodes'
   get '/search', to: 'programmes#search'
+  post 'programmes/create', to: 'programmes#create'
+  post 'episodes/update', to: 'episodes#update'
 
   as :user do
     get 'login' => 'users/sessions#new', :as => :new_user_session

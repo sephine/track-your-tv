@@ -3,7 +3,9 @@ var ShowSeries = React.createClass({
     info: React.PropTypes.object,
     infoCompleted: React.PropTypes.bool.isRequired,
     episodes: React.PropTypes.object,
-    episodesCompleted: React.PropTypes.bool.isRequired
+    episodesCompleted: React.PropTypes.bool.isRequired,
+    onTrackClicked: React.PropTypes.func.isRequired,
+    onEpisodeClicked: React.PropTypes.func.isRequired
   },
 
   componentWillMount: function () {
@@ -26,9 +28,9 @@ var ShowSeries = React.createClass({
       return (
         <div>
           {this.props.info != null &&
-              <SeriesInfo info={this.props.info} />}
+              <SeriesInfo info={this.props.info} onTrackClicked={this.props.onTrackClicked}/>}
           {this.props.episodes != null &&
-              <SeasonList episodes={this.props.episodes} />}
+              <SeasonList info={this.props.info} episodes={this.props.episodes} onEpisodeClicked={this.props.onEpisodeClicked} />}
         </div>
       );
     }

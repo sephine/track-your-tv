@@ -1,18 +1,18 @@
 var SeasonList = React.createClass({
   propTypes: {
+    info: React.PropTypes.object.isRequired,
     episodes: React.PropTypes.object.isRequired,
+    onEpisodeClicked: React.PropTypes.func.isRequired
   },
 
-  getInitialState: function () {
-    return {
-      checked: false
-    };
-  },
   handleCheckboxChange: function (e) {
-    alert('clicked');
-    this.setState({
-      checked: !this.state.checked
-    });
+    parts = e.target.id.split("-")
+    seasonID = parts[1];
+    episodeID = parts[2];
+    data = this.props.episodes[seasonID][episodeID]
+    name = data.episodeName;
+    data.watched = !data.watched;
+    this.props.onEpisodeClicked(name, seasonID, episodeID, data.watched);
   },
 
   createSortedSeasons: function () {
@@ -28,6 +28,7 @@ var SeasonList = React.createClass({
   },
 
   createSeason: function (seasonID, index, count) {
+    var watched = this.allSeasonWatched(seasonID);
     var seasonNumber = this.props.episodes[seasonID][Object.keys(this.props.episodes[seasonID])[0]].airedSeason;
     var aClass = index == 0 ? "" : "collapsed";
     var divClass = index == 0 ? "panel-collapse collapse in" : "panel-collapse collapse"
@@ -41,10 +42,11 @@ var SeasonList = React.createClass({
               {index == count-1 &&
                   "Specials"}
             </a>
-            <div className="season-checkbox">
-              <span className="text-muted">Mark as watched &nbsp;</span>
-              <input type="checkbox" />
-            </div>
+            {this.props.info.tracked &&
+                <div className="season-checkbox">
+                  <span className="text-muted">Mark as watched &nbsp;</span>
+                  <input type="checkbox" checked={watched} onChange={this.handleCheckboxChange} />
+                </div>}
           </h4>
         </div>
         <div id={"collapse" + index} className={divClass} role="tabpanel" aria-labelledby={"heading" + index}>
@@ -54,6 +56,15 @@ var SeasonList = React.createClass({
         </div>
       </div>
     );
+  },
+
+  allSeasonWatched: function (seasonID) {
+    for (let episode of Object.values(this.props.episodes[seasonID])) {
+      if (!episode.watched) {
+        return false;
+      }
+    }
+    return true;
   },
 
   createSortedEpisodes: function (seasonID) {
@@ -70,15 +81,32 @@ var SeasonList = React.createClass({
 
   createEpisode: function (seasonID, episodeID, index) {
     var data = this.props.episodes[seasonID][episodeID];
+    var splitDate = data.firstAired.split("-");
+    var dateObject = new Date(splitDate[0], splitDate[1], splitDate[2]);
+    var formattedDate = dateObject.medium();
+    var dateString = null;
+    if (dateObject <= new Date()) {
+      dateString = <span style={{color: 'green'}}>{"First Aired: " + formattedDate}</span>
+    } else {
+      dateString = <span style={{color: 'red'}}>{"Will Air: " + formattedDate}</span>
+    }
+
     return (
       <div className="episode-section" key={"episode-section-" + index}>
-      <a className="list-group-item collapsed" style={{'paddingRight': '40px'}} data-toggle="collapse" href={"#episode-collapse-" + index}>
+      <a className="list-group-item collapsed" style={{'paddingRight': '40px'}} data-toggle="collapse" href={"#season" + data.airedSeason + "episodecollapse" + index}>
         <b>{"Episode " + data.airedEpisodeNumber + ": " + data.episodeName}</b>
-        <div id={"episode-collapse-" + index} className="panel-collapse collapse" role="tabpanel">
-          {data.overview}
+        <div id={"season" + data.airedSeason + "episodecollapse" + index} className="panel-collapse collapse" role="tabpanel">
+          {data.firstAired == "" && data.overview == null &&
+              "No details available yet"}
+          {data.firstAired != "" &&
+              dateString}
+          <br />
+          {data.overview != null &&
+              data.overview}
         </div>
       </a>
-      <input className="episode-checkbox" type="checkbox" checked={this.state.checked} onChange={this.handleCheckboxChange} />
+      {this.props.info.tracked &&
+          <input className="episode-checkbox" id={"checkbox-" + seasonID + "-" + episodeID} type="checkbox" checked={data.watched} onChange={this.handleCheckboxChange} />}
       </div>
     );
   },
