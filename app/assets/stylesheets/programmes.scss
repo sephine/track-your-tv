@@ -33,7 +33,7 @@
   }
 }
 
-.top-pick, .other-results, .all-results {
+.top-pick, .other-results, .all-results, .episode-list {
   padding-bottom: 20px;
   position: relative;
 }
@@ -43,10 +43,34 @@
   background-color: white;
 }
 
-.other-results {
+.other-results, .episode-list {
   padding-top: 40px;
 }
 
 .all-results {
   padding-top: 90px;
+}
+
+.series-info {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: white;
+}
+
+.season-checkbox {
+  float: right;
+  font-weight: normal;
+}
+
+.episode-section {
+  position: relative;
+  border-bottom: 1px solid #ddd;
+}
+
+.episode-checkbox {
+  height: 14px;
+  width: 14px;
+  position: absolute;
+  top: 9px;
+  right: 16px;
 }

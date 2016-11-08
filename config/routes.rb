@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get '/welcome', to: 'welcome#index'
   get '/tvdb/search', to: 'tvdb#search'
   get '/tvdb/series', to: 'tvdb#series'
+  get '/tvdb/episodes', to: 'tvdb#episodes'
   get '/search', to: 'programmes#search'
 
   as :user do

@@ -16,4 +16,11 @@ class TvdbController < ApplicationController
       format.json { render :json => tvdb_response }
     end
   end
+
+  def episodes
+    tvdb_response = TheTVDB.episodes(params[:series_id])
+    respond_to do |format|
+      format.json { render :json => tvdb_response }
+    end
+  end
 end

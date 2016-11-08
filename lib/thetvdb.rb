@@ -29,6 +29,20 @@ class TheTVDB
     response
   end
 
+  def self.episodes(series_id)
+    token_text = get_token.text
+    headers = {"Authorization" => "Bearer #{token_text}", 'Content-Type' => 'application/json'}
+    response = get("/series/#{series_id}/episodes", {headers: headers})
+    raise AuthorizationError, 'TheTVDB: Not Authorized' if response.code == 401
+    return response unless response.include?('data')
+    (2..(response['links']['last'].to_i)).each do |page|
+      query = {page: "#{page}"}
+      new_response = get("/series/#{series_id}/episodes", {query: query, headers: headers})
+      response['data'] << new_response['data']
+    end
+    response
+  end
+
   class << self
     private
       def get_token
