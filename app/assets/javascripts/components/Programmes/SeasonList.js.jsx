@@ -37,9 +37,9 @@ var SeasonList = React.createClass({
         <div className="panel-heading" role="tab" id={"heading" + index}>
           <h4 className="panel-title">
             <a className={aClass} role="button" data-toggle="collapse" href={"#collapse" + index} aria-expanded="true" aria-controls={"collapse" + index}>
-              {index != count-1 &&
+              {seasonNumber != 0 &&
                   "Season " + seasonNumber}
-              {index == count-1 &&
+              {seasonNumber == 0 &&
                   "Specials"}
             </a>
             {this.props.info.tracked &&
