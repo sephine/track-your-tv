@@ -3,23 +3,27 @@ class EpisodesController < ApplicationController
 
   def update
     success = false
-    search = current_user.programmes.where(tvdb_ref: params[:series_id])
+    search = current_user.programmes.where(tvdb_ref: episode_params[:series_id])
     if search.length > 0
       programme = search.first
-      search = programme.episodes.where(tvdb_ref: params[:episode][:tvdb_ref])
-      if search.length == 0
-        episode = programme.episodes.new(episode_params)
-        if episode.save
-          success = true
+      episode_params[:episode_array].each do |index, epObj|
+        search = programme.episodes.where(tvdb_ref: epObj[:tvdb_ref])
+        if search.length == 0
+          episode = programme.episodes.new(epObj)
+          if episode.save
+            success = true
+          else
+            success = false
+            break
+          end
         else
-          success = false
-        end
-      else
-        episode = search.first
-        if episode.update(episode_params)
-          success = true
-        else
-          success = false
+          episode = search.first
+          if episode.update(epObj)
+            success = true
+          else
+            success = false
+            break
+          end
         end
       end
     end
@@ -37,6 +41,6 @@ class EpisodesController < ApplicationController
 
   private
     def episode_params
-      params.require(:episode).permit(:name, :tvdb_ref, :watched)
+      params.permit(:series_id, episode_array: [:name, :tvdb_ref, :watched])
     end
 end

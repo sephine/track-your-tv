@@ -59,8 +59,7 @@ var ShowSeriesContainer = React.createClass({
           })
         }
       }.bind(this),
-      error: function(msg) {
-        console.log(msg);
+      error: function() {
         alert("Error: failed to get episodes");
       }
     });
@@ -91,10 +90,9 @@ var ShowSeriesContainer = React.createClass({
       url: "/programmes/create",
       data: data,
       success: function(msg) {
-        newInfo = this.state.info;
-        newInfo.tracked = true;
+        this.state.info.tracked = true;
         this.setState({
-          info: newInfo
+          info: this.state.info
         });
       }.bind(this),
       error: function(msg) {
@@ -103,12 +101,18 @@ var ShowSeriesContainer = React.createClass({
     });
   },
 
-  updateEpisode: function (name, seasonID, episodeID, watched) {
+  updateEpisode: function (episodes, watched) {
+    var episodeArray = []
+    for (let episode of episodes) {
+      episodeArray.append({
+        "name": episode.name,
+        "tvdb_ref": episode.id,
+        "watched": watched,
+      });
+    }
     var data = {
-      "episode[name]": name,
-      "episode[tvdb_ref]": episodeID,
-      "episode[watched]": watched,
-      "series_id": this.props.seriesID
+      "series_id": this.props.seriesID,
+      "episode_array": episodeArray
     }
     $.ajax({
       type: "POST",
@@ -116,14 +120,10 @@ var ShowSeriesContainer = React.createClass({
       data: data,
       success: function(msg) {
         console.log("update episode success");
-        newEpisodes = this.state.episodes;
-        newEpisodes[seasonID][episodeID].watched = watched;
-        this.setState({
-          episodes: newEpisodes
-        });
       }.bind(this),
       error: function(msg) {
-        alert("Error: failed to track series");
+        alert("Error: failed to update episodes");
+        this.getSeriesInfo(this.props.seriesID);
       }.bind(this)
     });
   },

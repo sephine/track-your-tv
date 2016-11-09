@@ -5,14 +5,62 @@ var SeasonList = React.createClass({
     onEpisodeClicked: React.PropTypes.func.isRequired
   },
 
-  handleCheckboxChange: function (e) {
+  getInitialState: function () {
+    return {
+      checkboxState: {}
+    };
+  },
+
+  componentWillMount: function () {
+    this.updateStateForProps(this.props);
+  },
+
+  componentWillReceiveProps: function(nextProps) {
+    if (nextProps.episodes != this.props.episodes) {
+      this.updateStateForProps(nextProps);
+    }
+  },
+
+  updateStateForProps: function(nextProps) {
+    var newCheckboxState = {};
+    for (let seasonID of Object.keys(nextProps.episodes)) {
+      var episodes = {};
+      for (let epObj of Object.values(nextProps.episodes[seasonID])) {
+        episodes[epObj.id] = epObj.watched;
+      }
+      newCheckboxState[seasonID] = episodes;
+    }
+    this.setState({
+      checkboxState: newCheckboxState
+    });
+  },
+
+  handleEpisodeCheckboxChange: function (e) {
     parts = e.target.id.split("-")
     seasonID = parts[1];
     episodeID = parts[2];
+    watched = e.target.checked;
     data = this.props.episodes[seasonID][episodeID]
-    name = data.episodeName;
-    data.watched = !data.watched;
-    this.props.onEpisodeClicked(name, seasonID, episodeID, data.watched);
+    this.state.checkboxState[seasonID][episodeID] = watched;
+    this.setState({
+      checkboxState: this.state.checkboxState
+    });
+    this.props.onEpisodeClicked([{name: data.episodeName, id: episodeID}], watched);
+  },
+
+  handleSeasonCheckboxChange: function (e) {
+    parts = e.target.id.split("-");
+    seasonID = parts[1];
+    watched = e.target.checked;
+    episodeArray = [];
+    for (let data of Object.values(this.props.episodes[seasonID])) {
+      episodeArray.append({name: data.episodeName, id: data.id});
+      this.state.checkboxState[seasonID][data.id] = watched;
+    }
+    this.setState({
+      checkboxState: this.state.checkboxState
+    });
+    this.props.onEpisodeClicked(episodeArray, watched);
   },
 
   createSortedSeasons: function () {
@@ -45,7 +93,10 @@ var SeasonList = React.createClass({
             {this.props.info.tracked &&
                 <div className="season-checkbox">
                   <span className="text-muted">Mark as watched &nbsp;</span>
-                  <input type="checkbox" checked={watched} onChange={this.handleCheckboxChange} />
+                  <input type="checkbox"
+                      id={"checkbox-" + seasonID}
+                      checked={watched}
+                      onChange={this.handleSeasonCheckboxChange} />
                 </div>}
           </h4>
         </div>
@@ -59,8 +110,8 @@ var SeasonList = React.createClass({
   },
 
   allSeasonWatched: function (seasonID) {
-    for (let episode of Object.values(this.props.episodes[seasonID])) {
-      if (!episode.watched) {
+    for (let watched of Object.values(this.state.checkboxState[seasonID])) {
+      if (!watched) {
         return false;
       }
     }
@@ -90,7 +141,6 @@ var SeasonList = React.createClass({
     } else {
       dateString = <span style={{color: 'red'}}>{"Will Air: " + formattedDate}</span>
     }
-
     return (
       <div className="episode-section" key={"episode-section-" + index}>
       <a className="list-group-item collapsed" style={{'paddingRight': '40px'}} data-toggle="collapse" href={"#season" + data.airedSeason + "episodecollapse" + index}>
@@ -106,7 +156,11 @@ var SeasonList = React.createClass({
         </div>
       </a>
       {this.props.info.tracked &&
-          <input className="episode-checkbox" id={"checkbox-" + seasonID + "-" + episodeID} type="checkbox" checked={data.watched} onChange={this.handleCheckboxChange} />}
+          <input className="episode-checkbox"
+              id={"checkbox-" + seasonID + "-" + episodeID}
+              type="checkbox"
+              checked={this.state.checkboxState[seasonID][episodeID]}
+              onChange={this.handleEpisodeCheckboxChange} />}
       </div>
     );
   },
