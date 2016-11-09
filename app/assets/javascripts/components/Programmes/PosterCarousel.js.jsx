@@ -3,16 +3,9 @@ var PosterCarousel = React.createClass({
     posters: React.PropTypes.array.isRequired
   },
 
-  sortPosters: function () {
-    return this.props.posters.concat().sort(function (a, b) {
-      return b.ratingsInfo.average - a.ratingsInfo.average;
-    });
-  },
-
   createItems: function () {
     var _this = this;
-    var sortedPosters = this.sortPosters();
-    return sortedPosters.map(function(data, index){
+    return this.props.posters.map(function(data, index){
       var activeClass = index == 0 ? "item active" : "item";
       return (
         <div key={"item-id-"+index}

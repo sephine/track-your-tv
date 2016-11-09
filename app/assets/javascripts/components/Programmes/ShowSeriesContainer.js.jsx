@@ -80,10 +80,11 @@ var ShowSeriesContainer = React.createClass({
     });
   },
 
-  trackSeries: function () {
+  trackSeries: function (image) {
     var data = {
       "programme[name]": this.state.info.seriesName,
-      "programme[tvdb_ref]": this.props.seriesID
+      "programme[tvdb_ref]": this.props.seriesID,
+      "programme[image]": image
     }
     $.ajax({
       type: "POST",

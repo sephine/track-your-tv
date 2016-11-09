@@ -14,19 +14,27 @@ var SeriesInfo = React.createClass({
     this.setState({
       trackingRequested: true
     });
-    this.props.onTrackClicked();
+    var sortedPosters = this.sortPosters();
+    this.props.onTrackClicked(sortedPosters[0].thumbnail);
+  },
+
+  sortPosters: function () {
+    return this.props.info.posters.concat().sort(function (a, b) {
+      return b.ratingsInfo.average - a.ratingsInfo.average;
+    });
   },
 
   render: function () {
     var splitDate = this.props.info.firstAired.split("-");
     var dateObject = new Date(splitDate[0], splitDate[1], splitDate[2]);
     var formattedDate = dateObject.medium();
+    var sortedPosters = this.sortPosters();
     return (
       <div className="series-info">
         <div className="container">
           <span className="col-xs-3 col-sm-1 col-md-1" />
           <div className="col-xs-6 col-sm-5 col-md-4 col-lg-3">
-            <PosterCarousel posters={this.props.info.posters} />
+            <PosterCarousel posters={sortedPosters} />
           </div>
           <span className="col-xs-3 hidden-sm" />
           <div className="col-xs-12 col-sm-5 col-md-6 col-lg-7">
