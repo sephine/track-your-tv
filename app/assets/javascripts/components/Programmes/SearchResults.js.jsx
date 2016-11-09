@@ -56,8 +56,10 @@ var SearchResults = React.createClass({
               <span className="col-xs-3 hidden-sm" />
               <div className="col-xs-12 col-sm-6 col-md-7">
                 <h2>{item.seriesName}</h2>
-                <p><b>{item.genre.join(", ")}</b></p>
-                <p>{item.overview.truncateOnWord(500)}</p>
+                {item.genre != null && item.genre.length > 0 &&
+                    <p><b>{item.genre.join(", ")}</b></p>}
+                {item.overview != null && item.overview != "" &&
+                    <p>{item.overview.truncateOnWord(500)}</p>}
               </div>
               <span className="hidden-xs col-sm-1 col-md-1" />
             </div>

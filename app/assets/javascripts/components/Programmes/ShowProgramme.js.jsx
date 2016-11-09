@@ -1,4 +1,4 @@
-var ShowSeries = React.createClass({
+var ShowProgramme = React.createClass({
   propTypes: {
     info: React.PropTypes.object,
     infoCompleted: React.PropTypes.bool.isRequired,
@@ -28,7 +28,7 @@ var ShowSeries = React.createClass({
       return (
         <div>
           {this.props.info != null &&
-              <SeriesInfo info={this.props.info} onTrackClicked={this.props.onTrackClicked}/>}
+              <ProgrammeInfo info={this.props.info} onTrackClicked={this.props.onTrackClicked}/>}
           {this.props.episodes != null &&
               <SeasonList info={this.props.info} episodes={this.props.episodes} onEpisodeClicked={this.props.onEpisodeClicked} />}
         </div>

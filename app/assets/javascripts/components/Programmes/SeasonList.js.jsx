@@ -133,7 +133,7 @@ var SeasonList = React.createClass({
   createEpisode: function (seasonID, episodeID, index) {
     var data = this.props.episodes[seasonID][episodeID];
     var splitDate = data.firstAired.split("-");
-    var dateObject = new Date(splitDate[0], splitDate[1], splitDate[2]);
+    var dateObject = new Date(splitDate[0], splitDate[1]-1, splitDate[2]);
     var formattedDate = dateObject.medium();
     var dateString = null;
     if (dateObject <= new Date()) {
@@ -144,7 +144,10 @@ var SeasonList = React.createClass({
     return (
       <div className="episode-section" key={"episode-section-" + index}>
       <a className="list-group-item collapsed" style={{'paddingRight': '40px'}} data-toggle="collapse" href={"#season" + data.airedSeason + "episodecollapse" + index}>
-        <b>{"Episode " + data.airedEpisodeNumber + ": " + data.episodeName}</b>
+        {data.episodeName != null && data.episodeName != "" &&
+            <b>{"Episode " + data.airedEpisodeNumber + ": " + data.episodeName}</b>}
+        {(data.episodeName == null || data.episodeName == "") &&
+            <b>{"Episode " + data.airedEpisodeNumber}</b>}
         <div id={"season" + data.airedSeason + "episodecollapse" + index} className="panel-collapse collapse" role="tabpanel">
           {data.firstAired == "" && data.overview == null &&
               "No details available yet"}

@@ -1,4 +1,4 @@
-var ShowSeriesContainer = React.createClass({
+var ShowProgrammeContainer = React.createClass({
   propTypes: {
     seriesID: React.PropTypes.string.isRequired
   },
@@ -13,10 +13,10 @@ var ShowSeriesContainer = React.createClass({
   },
 
   componentDidMount: function () {
-    this.getSeriesInfo(this.props.seriesID);
+    this.getProgrammeInfo(this.props.seriesID);
   },
 
-  getSeriesInfo: function (seriesID) {
+  getProgrammeInfo: function (seriesID) {
     $.ajax({
       type: "GET",
       url: "/tvdb/series",
@@ -80,7 +80,7 @@ var ShowSeriesContainer = React.createClass({
     });
   },
 
-  trackSeries: function (image) {
+  trackProgramme: function (image) {
     var data = {
       "programme[name]": this.state.info.seriesName,
       "programme[tvdb_ref]": this.props.seriesID,
@@ -124,7 +124,7 @@ var ShowSeriesContainer = React.createClass({
       }.bind(this),
       error: function(msg) {
         alert("Error: failed to update episodes");
-        this.getSeriesInfo(this.props.seriesID);
+        this.getProgrammeInfo(this.props.seriesID);
       }.bind(this)
     });
   },
@@ -132,11 +132,11 @@ var ShowSeriesContainer = React.createClass({
   render: function () {
     return (
       <div>
-        <ShowSeries info={this.state.info}
+        <ShowProgramme info={this.state.info}
             infoCompleted={this.state.infoCompleted}
             episodes={this.state.episodes}
             episodesCompleted={this.state.episodesCompleted}
-            onTrackClicked={this.trackSeries}
+            onTrackClicked={this.trackProgramme}
             onEpisodeClicked={this.updateEpisode} />
       </div>
     );

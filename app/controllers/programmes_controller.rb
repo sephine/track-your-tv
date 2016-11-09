@@ -2,7 +2,11 @@ class ProgrammesController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @programmes = Programme.all
+    programmes = current_user.programmes.all
+    respond_to do |format|
+      format.json { render :json => programmes }
+      format.html { render :index }
+    end
   end
 
   def search

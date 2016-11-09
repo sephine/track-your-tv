@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get '/tvdb/series', to: 'tvdb#series'
   get '/tvdb/episodes', to: 'tvdb#episodes'
   get '/search', to: 'programmes#search'
+  get '/programmes/index', to: 'programmes#index'
   post 'programmes/create', to: 'programmes#create'
   post 'episodes/update', to: 'episodes#update'
 
