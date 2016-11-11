@@ -37,15 +37,13 @@ var SeasonList = React.createClass({
 
   handleEpisodeCheckboxChange: function (e) {
     parts = e.target.id.split("-")
-    seasonID = parts[1];
     episodeID = parts[2];
     watched = e.target.checked;
-    data = this.props.episodes[seasonID][episodeID]
     this.state.checkboxState[seasonID][episodeID] = watched;
     this.setState({
       checkboxState: this.state.checkboxState
     });
-    this.props.onEpisodeClicked([{name: data.episodeName, id: episodeID}], watched);
+    this.props.onEpisodeClicked([{id: episodeID}], watched);
   },
 
   handleSeasonCheckboxChange: function (e) {
@@ -54,7 +52,7 @@ var SeasonList = React.createClass({
     watched = e.target.checked;
     episodeArray = [];
     for (let data of Object.values(this.props.episodes[seasonID])) {
-      episodeArray.append({name: data.episodeName, id: data.id});
+      episodeArray.append({id: data.id});
       this.state.checkboxState[seasonID][data.id] = watched;
     }
     this.setState({

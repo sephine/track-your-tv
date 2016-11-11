@@ -33,6 +33,6 @@ class ProgrammesController < ApplicationController
 
   private
     def programme_params
-      params.require(:programme).permit(:name, :tvdb_ref, :image)
+      params.require(:programme).permit(:tvdb_ref, :image)
     end
 end

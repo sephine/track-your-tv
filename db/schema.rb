@@ -10,10 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161109022038) do
+ActiveRecord::Schema.define(version: 20161111005912) do
 
   create_table "episodes", force: :cascade do |t|
-    t.string   "name"
     t.integer  "tvdb_ref"
     t.boolean  "watched"
     t.integer  "programme_id"
@@ -23,7 +22,6 @@ ActiveRecord::Schema.define(version: 20161109022038) do
   end
 
   create_table "programmes", force: :cascade do |t|
-    t.string   "name"
     t.integer  "tvdb_ref"
     t.integer  "user_id"
     t.datetime "created_at", null: false

@@ -41,6 +41,6 @@ class EpisodesController < ApplicationController
 
   private
     def episode_params
-      params.permit(:series_id, episode_array: [:name, :tvdb_ref, :watched])
+      params.permit(:series_id, episode_array: [:tvdb_ref, :watched])
     end
 end

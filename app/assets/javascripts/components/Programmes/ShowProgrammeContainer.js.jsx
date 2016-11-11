@@ -82,7 +82,6 @@ var ShowProgrammeContainer = React.createClass({
 
   trackProgramme: function (image) {
     var data = {
-      "programme[name]": this.state.info.seriesName,
       "programme[tvdb_ref]": this.props.seriesID,
       "programme[image]": image
     }
@@ -106,7 +105,6 @@ var ShowProgrammeContainer = React.createClass({
     var episodeArray = []
     for (let episode of episodes) {
       episodeArray.append({
-        "name": episode.name,
         "tvdb_ref": episode.id,
         "watched": watched,
       });
