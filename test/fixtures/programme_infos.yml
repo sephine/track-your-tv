@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  tvdb_ref: 1
+  seriesName: MyString
+  status: MyString
+  firstAired: MyString
+  network: MyString
+  runtime: MyString
+  genre: MyString
+  overview: MyText
+  lastUpdated: 1
+  airsDayOfWeek: MyString
+  airsTime: MyString
+  imdbID: MyString
+
+two:
+  tvdb_ref: 1
+  seriesName: MyString
+  status: MyString
+  firstAired: MyString
+  network: MyString
+  runtime: MyString
+  genre: MyString
+  overview: MyText
+  lastUpdated: 1
+  airsDayOfWeek: MyString
+  airsTime: MyString
+  imdbID: MyString

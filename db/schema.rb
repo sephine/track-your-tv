@@ -10,23 +10,68 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161111005912) do
+ActiveRecord::Schema.define(version: 20161111034515) do
+
+  create_table "episode_infos", force: :cascade do |t|
+    t.integer  "tvdb_ref"
+    t.integer  "episode_number"
+    t.integer  "season_number"
+    t.string   "episodeName"
+    t.string   "firstAired"
+    t.text     "overview"
+    t.integer  "programme_info_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.index ["programme_info_id"], name: "index_episode_infos_on_programme_info_id"
+    t.index ["tvdb_ref"], name: "index_episode_infos_on_tvdb_ref", unique: true
+  end
 
   create_table "episodes", force: :cascade do |t|
-    t.integer  "tvdb_ref"
     t.boolean  "watched"
     t.integer  "programme_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.integer  "episode_info_id"
+    t.index ["episode_info_id"], name: "index_episodes_on_episode_info_id"
     t.index ["programme_id"], name: "index_episodes_on_programme_id"
   end
 
-  create_table "programmes", force: :cascade do |t|
+  create_table "posters", force: :cascade do |t|
     t.integer  "tvdb_ref"
+    t.string   "thumbnail"
+    t.float    "rating_average"
+    t.integer  "programme_info_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.index ["programme_info_id"], name: "index_posters_on_programme_info_id"
+    t.index ["tvdb_ref"], name: "index_posters_on_tvdb_ref", unique: true
+  end
+
+  create_table "programme_infos", force: :cascade do |t|
+    t.integer  "tvdb_ref"
+    t.string   "seriesName"
+    t.string   "status"
+    t.string   "firstAired"
+    t.string   "network"
+    t.string   "runtime"
+    t.string   "genre"
+    t.text     "overview"
+    t.integer  "lastUpdated"
+    t.string   "airsDayOfWeek"
+    t.string   "airsTime"
+    t.string   "imdbID"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["tvdb_ref"], name: "index_programme_infos_on_tvdb_ref", unique: true
+  end
+
+  create_table "programmes", force: :cascade do |t|
     t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
     t.string   "image"
+    t.integer  "programme_info_id"
+    t.index ["programme_info_id"], name: "index_programmes_on_programme_info_id"
     t.index ["user_id"], name: "index_programmes_on_user_id"
   end
 

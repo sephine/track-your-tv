@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  tvdb_ref: 1
+  thumbnail: MyString
+  rating_average: 1.5
+
+two:
+  tvdb_ref: 1
+  thumbnail: MyString
+  rating_average: 1.5

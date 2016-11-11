@@ -1,5 +1,6 @@
 class Episode < ApplicationRecord
   belongs_to :programme
-  validates :programme, :tvdb_ref, presence: true
-  validates :tvdb_ref, uniqueness: { scope: :programme_id, message: "You have already tracked this series." }
+  belongs_to :episode_info
+  validates :programme, :episode_info, presence: true
+  validates :episode_info_id, uniqueness: { scope: :programme_id, message: "This episode is already being tracked." }
 end
