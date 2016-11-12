@@ -11,15 +11,18 @@ class TvdbController < ApplicationController
   end
 
   def series
-    tvdb_response = TheTVDB.series(params[:series_id])
-    if current_user.programmes.exists?(tvdb_ref: params[:series_id])
-      tvdb_response['data']['tracked'] = true
-    else
-      tvdb_response['data']['tracked'] = false
+    response = TheTVDB.series(params[:series_id])
+    if response.include?('data')
+      poster_response = TheTVDB.posters(params[:series_id])
+      if poster_response.include?('data')
+        response['data']['posters'] = poster_response['data']
+      else
+        response['data']['posters'] = []
+      end
     end
 
     respond_to do |format|
-      format.json { render :json => tvdb_response }
+      format.json { render :json => response }
     end
   end
 

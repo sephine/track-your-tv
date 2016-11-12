@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   authenticated :user do
-    root to: 'programmes#index', as: :authenticated_root
+    root to: 'react_entry#index', as: :authenticated_root
   end
   root to: redirect('/welcome')
 

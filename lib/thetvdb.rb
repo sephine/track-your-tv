@@ -18,14 +18,6 @@ class TheTVDB
     headers = {"Authorization" => "Bearer #{token_text}", 'Content-Type' => 'application/json'}
     response = get("/series/#{series_id}", {headers: headers})
     raise AuthorizationError, 'TheTVDB: Not Authorized' if response.code == 401
-    if response.include?('data')
-      poster_response = posters(series_id)
-      if poster_response.include?('data')
-        response['data']['posters'] = poster_response['data']
-      else
-        response['data']['posters'] = []
-      end
-    end
     response
   end
 
@@ -40,6 +32,15 @@ class TheTVDB
       new_response = get("/series/#{series_id}/episodes", {query: query, headers: headers})
       response['data'] << new_response['data']
     end
+    response
+  end
+
+  def self.posters(series_id)
+    token_text = get_token.text
+    headers = {"Authorization" => "Bearer #{token_text}", 'Content-Type' => 'application/json'}
+    query = {keyType: "poster"}
+    response = get("/series/#{series_id}/images/query", {query: query, headers: headers})
+    raise AuthorizationError, 'TheTVDB: Not Authorized' if response.code == 401
     response
   end
 
@@ -72,15 +73,6 @@ class TheTVDB
         return get_new_token if response.code == 401
         token.update(text: response['token'], refreshed: DateTime.now)
         return token
-      end
-
-      def posters(series_id)
-        token_text = get_token.text
-        headers = {"Authorization" => "Bearer #{token_text}", 'Content-Type' => 'application/json'}
-        query = {keyType: "poster"}
-        response = get("/series/#{series_id}/images/query", {query: query, headers: headers})
-        raise AuthorizationError, 'TheTVDB: Not Authorized' if response.code == 401
-        response
       end
   end
 end
