@@ -7,8 +7,6 @@ var ShowProgrammeContainer = React.createClass({
     return {
       info: null,
       infoCompleted: false,
-      episodes: null,
-      episodesCompleted: false
     };
   },
 
@@ -19,23 +17,13 @@ var ShowProgrammeContainer = React.createClass({
   getProgrammeInfo: function (seriesID) {
     $.ajax({
       type: "GET",
-      url: "/tvdb/series",
+      url: "/tracked_programmes/show",
       data: {
         "series_id": seriesID,
       },
       success: function(msg) {
-        if (msg.hasOwnProperty('data')) {
-          console.log(msg.data);
-          this.setState({
-            info: msg.data,
-            infoCompleted: true
-          })
-          this.getEpisodes(seriesID);
-        } else {
-          this.setState({
-            infoCompleted: true
-          })
-        }
+        console.log(msg);
+        this.organizeEpisodes(msg);
       }.bind(this),
       error: function() {
         alert("Error: failed to get series info");
@@ -43,51 +31,30 @@ var ShowProgrammeContainer = React.createClass({
     });
   },
 
-  getEpisodes: function (seriesID) {
-    $.ajax({
-      type: "GET",
-      url: "/tvdb/episodes",
-      data: {
-        "series_id": seriesID,
-      },
-      success: function(msg) {
-        if (msg.hasOwnProperty('data')) {
-          this.organizeEpisodes(msg.data);
-        } else {
-          this.setState({
-            episodesCompleted: true
-          })
-        }
-      }.bind(this),
-      error: function() {
-        alert("Error: failed to get episodes");
-      }
-    });
-  },
-
-  organizeEpisodes: function (episodeArray) {
-    result = {};
+  organizeEpisodes: function (data) {
+    var episodeArray = data.episodes;
+    var episodeObject = {}
     for (let episode of episodeArray) {
-      if (!result.hasOwnProperty(episode.airedSeasonID)) {
-        result[episode.airedSeasonID] = {}
+      if (!episodeObject.hasOwnProperty(episode.season_number)) {
+        episodeObject[episode.season_number] = {}
       }
-      result[episode.airedSeasonID][episode.id] = episode;
+      episodeObject[episode.season_number][episode.tvdb_ref] = episode;
     }
-    console.log(result);
+    data.episodes = episodeObject;
     this.setState({
-      episodes: result,
-      episodesCompleted: true
+      info: data,
+      infoCompleted: true
     });
   },
 
   trackProgramme: function (image) {
     var data = {
-      "programme[tvdb_ref]": this.props.seriesID,
-      "programme[image]": image
+      "series_id": this.props.seriesID,
+      "image": image
     }
     $.ajax({
       type: "POST",
-      url: "/programmes/create",
+      url: "/tracked_programmes/create",
       data: data,
       success: function(msg) {
         this.state.info.tracked = true;
@@ -115,7 +82,7 @@ var ShowProgrammeContainer = React.createClass({
     }
     $.ajax({
       type: "POST",
-      url: "/episodes/update",
+      url: "/watched_episodes/update",
       data: data,
       success: function(msg) {
         console.log("update episode success");
@@ -132,8 +99,6 @@ var ShowProgrammeContainer = React.createClass({
       <div>
         <ShowProgramme info={this.state.info}
             infoCompleted={this.state.infoCompleted}
-            episodes={this.state.episodes}
-            episodesCompleted={this.state.episodesCompleted}
             onTrackClicked={this.trackProgramme}
             onEpisodeClicked={this.updateEpisode} />
       </div>

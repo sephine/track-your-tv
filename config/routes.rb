@@ -1,19 +1,23 @@
 Rails.application.routes.draw do
   authenticated :user do
-    root to: 'react_entry#index', as: :authenticated_root
+    root to: 'programmes#index', as: :authenticated_root
   end
   root to: redirect('/welcome')
 
+  #HTML
   get '/:id', to: 'programmes#show', constraints: {id: /\d+/}
   get '/:id/:name', to: 'programmes#show', constraints: {id: /\d+/}
-  get '/welcome', to: 'welcome#index'
-  get '/tvdb/search', to: 'tvdb#search'
-  get '/tvdb/series', to: 'tvdb#series'
-  get '/tvdb/episodes', to: 'tvdb#episodes'
   get '/search', to: 'programmes#search'
   get '/programmes/index', to: 'programmes#index'
-  post 'programmes/create', to: 'programmes#create'
-  post 'episodes/update', to: 'episodes#update'
+  get '/welcome', to: 'welcome#index'
+
+  #JSON
+  get '/programme_infos/search', to: 'programme_infos#search'
+  get '/programme_infos/full_search', to: 'programme_infos#full_search'
+  get '/tracked_programmes/show', to: 'tracked_programmes#show'
+  get '/tracked_programmes/index', to: 'tracked_programmes#index'
+  post 'tracked_programmes/create', to: 'tracked_programmes#create'
+  post 'watched_episodes/update', to: 'watched_episodes#update'
 
   as :user do
     get 'login' => 'users/sessions#new', :as => :new_user_session

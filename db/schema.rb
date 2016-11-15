@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161111034515) do
+ActiveRecord::Schema.define(version: 20161114062617) do
 
   create_table "episode_infos", force: :cascade do |t|
     t.integer  "tvdb_ref"
@@ -24,16 +24,6 @@ ActiveRecord::Schema.define(version: 20161111034515) do
     t.datetime "updated_at",        null: false
     t.index ["programme_info_id"], name: "index_episode_infos_on_programme_info_id"
     t.index ["tvdb_ref"], name: "index_episode_infos_on_tvdb_ref", unique: true
-  end
-
-  create_table "episodes", force: :cascade do |t|
-    t.boolean  "watched"
-    t.integer  "programme_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.integer  "episode_info_id"
-    t.index ["episode_info_id"], name: "index_episodes_on_episode_info_id"
-    t.index ["programme_id"], name: "index_episodes_on_programme_id"
   end
 
   create_table "posters", force: :cascade do |t|
@@ -62,17 +52,8 @@ ActiveRecord::Schema.define(version: 20161111034515) do
     t.string   "imdbID"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.integer  "ratingCount"
     t.index ["tvdb_ref"], name: "index_programme_infos_on_tvdb_ref", unique: true
-  end
-
-  create_table "programmes", force: :cascade do |t|
-    t.integer  "user_id"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-    t.string   "image"
-    t.integer  "programme_info_id"
-    t.index ["programme_info_id"], name: "index_programmes_on_programme_info_id"
-    t.index ["user_id"], name: "index_programmes_on_user_id"
   end
 
   create_table "tokens", force: :cascade do |t|
@@ -80,6 +61,16 @@ ActiveRecord::Schema.define(version: 20161111034515) do
     t.datetime "refreshed"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "tracked_programmes", force: :cascade do |t|
+    t.integer  "user_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.string   "image"
+    t.integer  "programme_info_id"
+    t.index ["programme_info_id"], name: "index_tracked_programmes_on_programme_info_id"
+    t.index ["user_id"], name: "index_tracked_programmes_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -98,6 +89,16 @@ ActiveRecord::Schema.define(version: 20161111034515) do
     t.string   "name"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "watched_episodes", force: :cascade do |t|
+    t.boolean  "watched"
+    t.integer  "tracked_programme_id"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.integer  "episode_info_id"
+    t.index ["episode_info_id"], name: "index_watched_episodes_on_episode_info_id"
+    t.index ["tracked_programme_id"], name: "index_watched_episodes_on_tracked_programme_id"
   end
 
 end

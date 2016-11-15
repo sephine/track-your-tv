@@ -1,7 +1,6 @@
 var SeasonList = React.createClass({
   propTypes: {
     info: React.PropTypes.object.isRequired,
-    episodes: React.PropTypes.object.isRequired,
     onEpisodeClicked: React.PropTypes.func.isRequired
   },
 
@@ -16,19 +15,19 @@ var SeasonList = React.createClass({
   },
 
   componentWillReceiveProps: function(nextProps) {
-    if (nextProps.episodes != this.props.episodes) {
+    if (nextProps.info != this.props.info) {
       this.updateStateForProps(nextProps);
     }
   },
 
   updateStateForProps: function(nextProps) {
     var newCheckboxState = {};
-    for (let seasonID of Object.keys(nextProps.episodes)) {
+    for (let seasonNumber of Object.keys(nextProps.info.episodes)) {
       var episodes = {};
-      for (let epObj of Object.values(nextProps.episodes[seasonID])) {
-        episodes[epObj.id] = epObj.watched;
+      for (let epObj of Object.values(nextProps.info.episodes[seasonNumber])) {
+        episodes[epObj.tvdb_ref] = epObj.watched;
       }
-      newCheckboxState[seasonID] = episodes;
+      newCheckboxState[seasonNumber] = episodes;
     }
     this.setState({
       checkboxState: newCheckboxState
@@ -37,9 +36,10 @@ var SeasonList = React.createClass({
 
   handleEpisodeCheckboxChange: function (e) {
     parts = e.target.id.split("-")
+    seasonNumber = parts[1]
     episodeID = parts[2];
     watched = e.target.checked;
-    this.state.checkboxState[seasonID][episodeID] = watched;
+    this.state.checkboxState[seasonNumber][episodeID] = watched;
     this.setState({
       checkboxState: this.state.checkboxState
     });
@@ -48,12 +48,12 @@ var SeasonList = React.createClass({
 
   handleSeasonCheckboxChange: function (e) {
     parts = e.target.id.split("-");
-    seasonID = parts[1];
+    seasonNumber = parts[1];
     watched = e.target.checked;
     episodeArray = [];
-    for (let data of Object.values(this.props.episodes[seasonID])) {
-      episodeArray.append({id: data.id});
-      this.state.checkboxState[seasonID][data.id] = watched;
+    for (let data of Object.values(this.props.info.episodes[seasonNumber])) {
+      episodeArray.append({id: data.tvdb_ref});
+      this.state.checkboxState[seasonNumber][data.tvdb_ref] = watched;
     }
     this.setState({
       checkboxState: this.state.checkboxState
@@ -63,19 +63,16 @@ var SeasonList = React.createClass({
 
   createSortedSeasons: function () {
     var _this = this;
-    var sortedSeasonIDs = Object.keys(this.props.episodes).sort(function (a, b) {
-      var seasonNumberA = _this.props.episodes[a][Object.keys(_this.props.episodes[a])[0]].airedSeason;
-      var seasonNumberB = _this.props.episodes[b][Object.keys(_this.props.episodes[b])[0]].airedSeason;
-      return seasonNumberB - seasonNumberA;
+    var sortedSeasonNumbers = Object.keys(this.props.info.episodes).sort(function (a, b) {
+      return b - a;
     });
-    return sortedSeasonIDs.map(function(id, index) {
-      return _this.createSeason(id, index, sortedSeasonIDs.length);
+    return sortedSeasonNumbers.map(function(number, index) {
+      return _this.createSeason(number, index);
     });
   },
 
-  createSeason: function (seasonID, index, count) {
-    var watched = this.allSeasonWatched(seasonID);
-    var seasonNumber = this.props.episodes[seasonID][Object.keys(this.props.episodes[seasonID])[0]].airedSeason;
+  createSeason: function (seasonNumber, index) {
+    var watched = this.allSeasonWatched(seasonNumber);
     var aClass = index == 0 ? "" : "collapsed";
     var divClass = index == 0 ? "panel-collapse collapse in" : "panel-collapse collapse"
     return (
@@ -92,7 +89,7 @@ var SeasonList = React.createClass({
                 <div className="season-checkbox">
                   <span className="text-muted">Mark as watched &nbsp;</span>
                   <input type="checkbox"
-                      id={"checkbox-" + seasonID}
+                      id={"checkbox-" + seasonNumber}
                       checked={watched}
                       onChange={this.handleSeasonCheckboxChange} />
                 </div>}
@@ -100,15 +97,15 @@ var SeasonList = React.createClass({
         </div>
         <div id={"collapse" + index} className={divClass} role="tabpanel" aria-labelledby={"heading" + index}>
           <div className="list-group">
-            {this.createSortedEpisodes(seasonID)}
+            {this.createSortedEpisodes(seasonNumber)}
           </div>
         </div>
       </div>
     );
   },
 
-  allSeasonWatched: function (seasonID) {
-    for (let watched of Object.values(this.state.checkboxState[seasonID])) {
+  allSeasonWatched: function (seasonNumber) {
+    for (let watched of Object.values(this.state.checkboxState[seasonNumber])) {
       if (!watched) {
         return false;
       }
@@ -116,20 +113,20 @@ var SeasonList = React.createClass({
     return true;
   },
 
-  createSortedEpisodes: function (seasonID) {
+  createSortedEpisodes: function (seasonNumber) {
     var _this = this;
-    var sortedEpisodeIDs = Object.keys(this.props.episodes[seasonID]).sort(function (a, b) {
-      var episodeNumberA = _this.props.episodes[seasonID][a].airedEpisodeNumber;
-      var episodeNumberB = _this.props.episodes[seasonID][b].airedEpisodeNumber;
+    var sortedEpisodeIDs = Object.keys(this.props.info.episodes[seasonNumber]).sort(function (a, b) {
+      var episodeNumberA = _this.props.info.episodes[seasonNumber][a].episode_number;
+      var episodeNumberB = _this.props.info.episodes[seasonNumber][b].episode_number;
       return episodeNumberB - episodeNumberA;
     });
     return sortedEpisodeIDs.map(function (episodeID, index) {
-      return _this.createEpisode(seasonID, episodeID, index);
+      return _this.createEpisode(seasonNumber, episodeID, index);
     });
   },
 
-  createEpisode: function (seasonID, episodeID, index) {
-    var data = this.props.episodes[seasonID][episodeID];
+  createEpisode: function (seasonNumber, episodeID, index) {
+    var data = this.props.info.episodes[seasonNumber][episodeID];
     var splitDate = data.firstAired.split("-");
     var dateObject = new Date(splitDate[0], splitDate[1]-1, splitDate[2]);
     var formattedDate = dateObject.medium();
@@ -141,12 +138,12 @@ var SeasonList = React.createClass({
     }
     return (
       <div className="episode-section" key={"episode-section-" + index}>
-      <a className="list-group-item collapsed" style={{'paddingRight': '40px'}} data-toggle="collapse" href={"#season" + data.airedSeason + "episodecollapse" + index}>
+      <a className="list-group-item collapsed" style={{'paddingRight': '40px'}} data-toggle="collapse" href={"#season" + seasonNumber + "episodecollapse" + index}>
         {data.episodeName != null && data.episodeName != "" &&
-            <b>{"Episode " + data.airedEpisodeNumber + ": " + data.episodeName}</b>}
+            <b>{"Episode " + data.episode_number + ": " + data.episodeName}</b>}
         {(data.episodeName == null || data.episodeName == "") &&
-            <b>{"Episode " + data.airedEpisodeNumber}</b>}
-        <div id={"season" + data.airedSeason + "episodecollapse" + index} className="panel-collapse collapse" role="tabpanel">
+            <b>{"Episode " + data.episode_number}</b>}
+        <div id={"season" + seasonNumber + "episodecollapse" + index} className="panel-collapse collapse" role="tabpanel">
           {data.firstAired == "" && data.overview == null &&
               "No details available yet"}
           {data.firstAired != "" &&
@@ -158,16 +155,16 @@ var SeasonList = React.createClass({
       </a>
       {this.props.info.tracked &&
           <input className="episode-checkbox"
-              id={"checkbox-" + seasonID + "-" + episodeID}
+              id={"checkbox-" + seasonNumber + "-" + episodeID}
               type="checkbox"
-              checked={this.state.checkboxState[seasonID][episodeID]}
+              checked={this.state.checkboxState[seasonNumber][episodeID]}
               onChange={this.handleEpisodeCheckboxChange} />}
       </div>
     );
   },
 
   render: function () {
-    if (this.props.episodes.length == 0) {
+    if (this.props.info.episodes.length == 0) {
       return null;
     }
     return (

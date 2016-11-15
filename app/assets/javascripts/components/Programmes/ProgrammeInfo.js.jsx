@@ -20,7 +20,7 @@ var ProgrammeInfo = React.createClass({
 
   sortPosters: function () {
     return this.props.info.posters.concat().sort(function (a, b) {
-      return b.ratingsInfo.average - a.ratingsInfo.average;
+      return b.rating_average - a.rating_average;
     });
   },
 
@@ -28,6 +28,7 @@ var ProgrammeInfo = React.createClass({
     var splitDate = this.props.info.firstAired.split("-");
     var dateObject = new Date(splitDate[0], splitDate[1]-1, splitDate[2]);
     var formattedDate = dateObject.medium();
+    var firstAiredText = dateObject <= new Date() ? "Premiered " + formattedDate : "Premiers " + formattedDate;
     var sortedPosters = this.sortPosters();
     var whereToWatch = null;
     if (this.props.info.status != "Ended") {
@@ -61,12 +62,12 @@ var ProgrammeInfo = React.createClass({
           <span className="col-xs-3 hidden-sm" />
           <div className="col-xs-12 col-sm-5 col-md-6 col-lg-7">
             <h2>{this.props.info.seriesName}</h2>
-            {this.props.info.genre != null && this.props.info.genre.length > 0 &&
-                <p><b>{this.props.info.genre.join(", ")}</b></p>}
+            {this.props.info.genre != null && this.props.info.genre != "" &&
+                <p><b>{this.props.info.genre}</b></p>}
             {whereToWatch != null &&
                 whereToWatch}
             {this.props.info.firstAired != null && this.props.info.firstAired != "" &&
-                <p>Premiered {formattedDate}</p>}
+                <p>{firstAiredText}</p>}
             {this.props.info.overview != null && this.props.info.overview != "" &&
                 <p>{this.props.info.overview.truncateOnWord(500)}</p>}
             {!this.props.info.tracked &&

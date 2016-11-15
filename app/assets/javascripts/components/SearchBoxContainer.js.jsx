@@ -7,7 +7,7 @@ var SearchBoxContainer = React.createClass({
   performSearch: function (searchText) {
     $.ajax({
       type: "GET",
-      url: "/tvdb/search",
+      url: "/programme_infos/search",
       data: {
         "search_text": searchText,
       },

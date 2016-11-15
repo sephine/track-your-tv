@@ -13,7 +13,7 @@ var IndexProgrammeContainer = React.createClass({
   getProgrammes: function () {
     $.ajax({
       type: "GET",
-      url: "/programmes/index",
+      url: "/tracked_programmes/index",
       success: function(msg) {
         console.log(msg);
         this.setState({

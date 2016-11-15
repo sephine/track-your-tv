@@ -25,6 +25,7 @@ gem 'react-rails'
 gem 'figaro'
 gem 'httparty'
 gem 'nprogress-rails'
+gem 'activerecord-import'
 gem 'rails-assets-reflux', source: 'https://rails-assets.org'
 gem 'rails-assets-sugarjs', source: 'https://rails-assets.org'
 
