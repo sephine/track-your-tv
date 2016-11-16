@@ -7,21 +7,28 @@ class TrackedProgrammesController < ApplicationController
       programmeJSON[:image] = programmeObject[:image]
       unwatchedEpisodes = 0
       nextAirDate = nil
-      nextAirDateString = nil
       programmeObject.programme_info.episode_infos.each do |episodeInfo|
         search = programmeObject.watched_episodes.where(episode_info_id: episodeInfo.id)
         if search.length == 0 && episodeInfo.firstAired != nil && episodeInfo.firstAired != ""
-          dateObject = Date.parse(episodeInfo.firstAired)
-          if dateObject <= Date.today
+          dateObject = nil
+          begin
+            dateObject = DateTime.parse(episodeInfo.firstAired + " " + programmeObject.programme_info.airsTime)
+          rescue
+            dateObject = nil
+          end
+          if dateObject != nil && dateObject <= Date.today
             unwatchedEpisodes += 1
-          elsif nextAirDate == nil || dateObject < nextAirDate
+          elsif nextAirDate == nil || (dateObject != nil && dateObject < nextAirDate)
             nextAirDate = dateObject
-            nextAirDateString = episodeInfo.firstAired
           end
         end
       end
       programmeJSON[:unwatched_episodes] = unwatchedEpisodes
-      programmeJSON[:nextAirDate] = nextAirDateString
+      if nextAirDate == nil
+        programmeJSON[:nextAirDate] = nil
+      else
+        programmeJSON[:nextAirDate] = "#{nextAirDate.year}-#{nextAirDate.month}-#{nextAirDate.day}-#{nextAirDate.hour}-#{nextAirDate.min}"
+      end
       programmes << programmeJSON
     end
 

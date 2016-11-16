@@ -6,8 +6,18 @@ var IndexProgrammeContainer = React.createClass({
     };
   },
 
+  componentWillMount: function () {
+    NProgress.start();
+  },
+
   componentDidMount: function () {
     this.getProgrammes();
+  },
+
+  componentDidUpdate: function () {
+    if (this.props.programmesCompleted) {
+      NProgress.done();
+    }
   },
 
   getProgrammes: function () {
