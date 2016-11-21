@@ -35,14 +35,29 @@
     <div id="navbar2" class="navbar-collapse collapse"
           aria-expanded="false" style="height: 1px;">
       <ul class="nav navbar-nav">
-        <li>
-          <a href="#Watch">Watch</a>
+        <li class="watch-link">
+          <% if current_page?(root_path) %>
+            <a href="javascript:void(0);" onclick="ProgrammeActions.filterWatch()">
+          <% else %>
+            <a href="/#watch">
+          <% end %>
+          Watch</a>
         </li>
-        <li>
-          <a href="#Wait">Wait</a>
+        <li class="wait-link">
+          <% if current_page?(root_path) %>
+            <a href="javascript:void(0);" onclick="ProgrammeActions.filterWait()">
+          <% else %>
+            <a href="/#wait">
+          <% end %>
+          Wait</a>
         </li>
-        <li>
-          <a href="#Ignore">Ignore</a>
+        <li class="ignore-link">
+          <% if current_page?(root_path) %>
+            <a href="javascript:void(0);" onclick="ProgrammeActions.filterIgnore()">
+          <% else %>
+            <a href="/#ignore">
+          <% end %>
+          Ignore</a>
         </li>
         <li class="visible-xs">
           <%= link_to 'Account', edit_user_registration_path %>

@@ -105,7 +105,12 @@
  }
 
  .navbar-custom .navbar-nav > li.active > a {
-     background-color: blue;
+     border-bottom: 5px solid $lilac;
+     padding-bottom: 10px;
+     padding-left: 0px;
+     margin-left: 15px;
+     padding-right: 0px;
+     margin-right: 15px;
  }
  .navbar-custom .navbar-brand {
      color: $lilac;
