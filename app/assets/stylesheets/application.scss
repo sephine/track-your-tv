@@ -105,11 +105,22 @@
  }
 
  .navbar-custom .navbar-nav > li.active > a {
-     background-color: $dark-grey;
+     background-color: blue;
  }
  .navbar-custom .navbar-brand {
      color: $lilac;
      text-shadow: none;
+ }
+
+ .header-name-link {
+   display: block;
+   max-width: 130px;
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   .caret {
+     position: relative;
+   }
  }
 
  .footer {
