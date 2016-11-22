@@ -18,14 +18,6 @@
 
 <script>
 $(document).ready(function() {
-  $('#logged-out-navbar').css('background-color', 'rgba(38, 38, 38, 0.0)');
-  $(window).scroll(function() {
-    if ($(this).scrollTop() > 20) {
-      $('#logged-out-navbar').css('background-color', 'rgba(38, 38, 38, 0.8)');
-    } else {
-      $('#logged-out-navbar').css('background-color', 'rgba(38, 38, 38, 0.0)');
-    }
-  })
   $('.arrow-wrap').click(function(e) {
     e.preventDefault();
     var length = $('#howItWorks').offset().top;

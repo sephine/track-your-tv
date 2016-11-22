@@ -5,8 +5,7 @@
 $circle-length: 4em;
 
 .intro-image {
-  margin-top: -51px;
-  height: 100%;
+  height: calc(100% - 51px);
   overflow: hidden;
   position: relative;
   background-position: center;

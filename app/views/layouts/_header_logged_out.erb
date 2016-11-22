@@ -37,5 +37,28 @@
   </div>
 </nav>
 <div class="header-filler"></div>
+<% if current_page?(welcome_path) %>
+  <p class="alert hidden"><%= notice %><%= alert %></p>
+<% else %>
+  <% if notice %>
+    <p class="alert alert-success alert-custom"><%= notice %></p>
+  <% end %>
+  <% if alert %>
+    <p class="alert alert-danger alert-custom"><%= alert %></p>
+  <% end %>
+<% end %>
 
 <%= react_component('AuthPickerContainer') %>
+
+<script>
+$(document).ready(function() {
+  $('#logged-out-navbar').css('background-color', 'rgba(38, 38, 38, 1.0)');
+  $(window).scroll(function() {
+    if ($(this).scrollTop() > 50) {
+      $('#logged-out-navbar').css('background-color', 'rgba(38, 38, 38, 0.8)');
+    } else {
+      $('#logged-out-navbar').css('background-color', 'rgba(38, 38, 38, 1.0)');
+    }
+  })
+});
+</script>
