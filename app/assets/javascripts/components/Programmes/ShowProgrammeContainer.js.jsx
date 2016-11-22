@@ -7,6 +7,7 @@ var ShowProgrammeContainer = React.createClass({
     return {
       info: null,
       infoCompleted: false,
+      disabled: false
     };
   },
 
@@ -43,11 +44,15 @@ var ShowProgrammeContainer = React.createClass({
     data.episodes = episodeObject;
     this.setState({
       info: data,
-      infoCompleted: true
+      infoCompleted: true,
+      disabled: false
     });
   },
 
   trackProgramme: function (image) {
+    this.setState({
+      disabled: true
+    });
     var data = {
       "series_id": this.props.seriesID,
       "image": image
@@ -57,18 +62,65 @@ var ShowProgrammeContainer = React.createClass({
       url: "/tracked_programmes/create",
       data: data,
       success: function(msg) {
-        this.state.info.tracked = true;
-        this.setState({
-          info: this.state.info
-        });
+        this.getProgrammeInfo(this.props.seriesID);
       }.bind(this),
       error: function(msg) {
         alert("Error: failed to track series");
+        this.getProgrammeInfo(this.props.seriesID);
       }.bind(this)
     });
   },
 
-  updateEpisode: function (episodes, watched) {
+  deleteProgramme: function (image) {
+    this.setState({
+      disabled: true
+    });
+    var data = {
+      "series_id": this.props.seriesID
+    }
+    $.ajax({
+      type: "DELETE",
+      url: "/tracked_programmes/delete",
+      data: data,
+      success: function(msg) {
+        this.getProgrammeInfo(this.props.seriesID);
+      }.bind(this),
+      error: function(msg) {
+        alert("Error: failed to delete series");
+        this.getProgrammeInfo(this.props.seriesID);
+      }.bind(this)
+    });
+  },
+
+  updateProgramme: function (image, ignored) {
+    this.setState({
+      disabled: true
+    });
+    var data = {
+      "series_id": this.props.seriesID,
+      "image": image,
+      "ignored": ignored
+    }
+    $.ajax({
+      type: "PATCH",
+      url: "/tracked_programmes/update",
+      data: data,
+      success: function(msg) {
+        this.getProgrammeInfo(this.props.seriesID);
+      }.bind(this),
+      error: function(msg) {
+        alert("Error: failed to track series");
+        this.getProgrammeInfo(this.props.seriesID);
+      }.bind(this)
+    });
+  },
+
+  updateEpisode: function (episodes, watched, refresh) {
+    if (refresh) {
+      this.setState({
+        disabled: true
+      });
+    }
     var episodeArray = []
     for (let episode of episodes) {
       episodeArray.append({
@@ -81,10 +133,13 @@ var ShowProgrammeContainer = React.createClass({
       "episode_array": episodeArray
     }
     $.ajax({
-      type: "POST",
+      type: "PUT",
       url: "/watched_episodes/update",
       data: data,
       success: function(msg) {
+        if (refresh) {
+          this.getProgrammeInfo(this.props.seriesID);
+        }
         console.log("update episode success");
       }.bind(this),
       error: function(msg) {
@@ -99,7 +154,10 @@ var ShowProgrammeContainer = React.createClass({
       <div>
         <ShowProgramme info={this.state.info}
             infoCompleted={this.state.infoCompleted}
+            disabled={this.state.disabled}
             onTrackClicked={this.trackProgramme}
+            updateProgramme={this.updateProgramme}
+            onDeleteClicked={this.deleteProgramme}
             onEpisodeClicked={this.updateEpisode} />
       </div>
     );

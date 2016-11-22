@@ -1,21 +1,45 @@
 var ProgrammeInfo = React.createClass({
   propTypes: {
     info: React.PropTypes.object.isRequired,
-    onTrackClicked: React.PropTypes.func.isRequired
-  },
-
-  getInitialState: function () {
-    return {
-      trackingRequested: false
-    };
+    disabled: React.PropTypes.bool.isRequired,
+    onTrackClicked: React.PropTypes.func.isRequired,
+    updateProgramme: React.PropTypes.func.isRequired,
+    onDeleteClicked: React.PropTypes.func.isRequired,
+    onEpisodeClicked: React.PropTypes.func.isRequired
   },
 
   handleTrackClicked: function () {
-    this.setState({
-      trackingRequested: true
-    });
     var sortedPosters = this.sortPosters();
     this.props.onTrackClicked(sortedPosters.length > 0 ? sortedPosters[0].thumbnail : "");
+  },
+
+  handleIgnoreClicked: function () {
+    var sortedPosters = this.sortPosters();
+    var image = sortedPosters.length > 0 ? sortedPosters[0].thumbnail : "";
+    var ignored = !this.props.info.ignored
+    this.props.updateProgramme(image, ignored);
+  },
+
+  handleDeleteClicked: function () {
+    this.props.onDeleteClicked();
+  },
+
+  handleAllWatchedClicked: function (e) {
+    this.updateEpisodes(true);
+  },
+
+  handleNoneWatchedClicked: function (e) {
+    this.updateEpisodes(false);
+  },
+
+  updateEpisodes: function (watched) {
+    episodeArray = [];
+    for (let seasonNumber of Object.keys(this.props.info.episodes)) {
+      for (let data of Object.values(this.props.info.episodes[seasonNumber])) {
+        episodeArray.append({id: data.tvdb_ref});
+      }
+    }
+    this.props.onEpisodeClicked(episodeArray, watched, true);
   },
 
   sortPosters: function () {
@@ -61,7 +85,13 @@ var ProgrammeInfo = React.createClass({
           </div>
           <span className="col-xs-3 hidden-sm" />
           <div className="col-xs-12 col-sm-5 col-md-6 col-lg-7">
-            <h2>{this.props.info.seriesName}</h2>
+            <h2>
+              {this.props.info.seriesName}
+              {this.props.info.ignored &&
+                  <span style={{color: 'red'}}>&nbsp;(Ignored)</span>}
+              {!this.props.info.ignored && this.props.info.tracked &&
+                  <span style={{color: 'green'}}>&nbsp;(Tracked)</span>}
+            </h2>
             {this.props.info.genre != null && this.props.info.genre != "" &&
                 <p><b>{this.props.info.genre}</b></p>}
             {whereToWatch != null &&
@@ -71,9 +101,16 @@ var ProgrammeInfo = React.createClass({
             {this.props.info.overview != null && this.props.info.overview != "" &&
                 <p>{this.props.info.overview.truncateOnWord(500)}</p>}
             {!this.props.info.tracked &&
-                <button className="btn btn-default" disabled={this.state.trackingRequested} onClick={this.handleTrackClicked}>Track</button>}
+                <button className="btn btn-default" disabled={this.props.disabled} onClick={this.handleTrackClicked}>Track</button>}
             {this.props.info.tracked &&
-                <h4 style={{color: 'green'}}>Tracked</h4>}
+                <div className="btn-group" role="group">
+                  <button type="button" className="btn btn-default" disabled={this.props.disabled} onClick={this.handleAllWatchedClicked}>All Watched</button>
+                  <button type="button" className="btn btn-default" disabled={this.props.disabled} onClick={this.handleNoneWatchedClicked}>None Watched</button>
+                  <button type="button" className="btn btn-default" disabled={this.props.disabled} onClick={this.handleIgnoreClicked}>
+                    {this.props.info.ignored? "Remove Ignore" : "Ignore"}
+                  </button>
+                  <button type="button" className="btn btn-default" disabled={this.props.disabled} onClick={this.handleDeleteClicked}>Delete</button>
+                </div>}
           </div>
           <span className="hidden-xs col-sm-1 col-md-1" />
         </div>

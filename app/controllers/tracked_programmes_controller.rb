@@ -5,6 +5,7 @@ class TrackedProgrammesController < ApplicationController
     current_user.tracked_programmes.each do |programmeObject|
       programmeJSON = programmeObject.programme_info.as_json(:only => [:tvdb_ref, :seriesName, :status])
       programmeJSON[:image] = programmeObject[:image]
+      programmeJSON[:ignored] = programmeObject[:ignored]
       unwatchedEpisodes = 0
       nextAirDate = nil
       lastUnwatchedAirDate = nil
@@ -73,6 +74,7 @@ class TrackedProgrammesController < ApplicationController
       search = current_user.tracked_programmes.where(programme_info_id: programmeObject[:id])
       if search.length > 0
         programmeJSON[:image] = search[0][:image]
+        programmeJSON[:ignored] = search[0][:ignored]
         programmeJSON[:tracked] = true
         search = search[0].watched_episodes.each do |watched_episode|
           logger.debug(watched_episode.episode_info.inspect)
@@ -99,15 +101,60 @@ class TrackedProgrammesController < ApplicationController
 
   def create
     search = ProgrammeInfo.where(tvdb_ref: params[:series_id])
-    success = true
+    success = false
     if search.length > 0
       programme = current_user.tracked_programmes.new({
         programme_info_id: search[0].id,
-        image: params[:image]
+        image: params[:image],
+        ignored: false
       });
-      success = false if !programme.save
+      success = true if programme.save
+    end
+
+    if success
+      respond_to do |format|
+        format.json { render json: nil, status: :ok }
+      end
     else
-      success = false
+      respond_to do |format|
+        format.json { render json: nil, status: 400 }
+      end
+    end
+  end
+
+  def update
+    search = ProgrammeInfo.where(tvdb_ref: params[:series_id])
+    success = false
+    if search.length > 0
+      search = current_user.tracked_programmes.where(programme_info_id: search[0].id)
+      if search.length > 0
+        updated = search[0].update({
+          image: params[:image],
+          ignored: params[:ignored]
+        });
+        success = true if updated
+      end
+    end
+
+    if success
+      respond_to do |format|
+        format.json { render json: nil, status: :ok }
+      end
+    else
+      respond_to do |format|
+        format.json { render json: nil, status: 400 }
+      end
+    end
+  end
+
+  def delete
+    search = ProgrammeInfo.where(tvdb_ref: params[:series_id])
+    success = false
+    if search.length > 0
+      search = current_user.tracked_programmes.where(programme_info_id: search[0].id)
+      if search.length > 0
+        success = true if search[0].destroy
+      end
     end
 
     if success

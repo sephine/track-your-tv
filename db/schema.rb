@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161114062617) do
+ActiveRecord::Schema.define(version: 20161122001125) do
 
   create_table "episode_infos", force: :cascade do |t|
     t.integer  "tvdb_ref"
@@ -69,6 +69,7 @@ ActiveRecord::Schema.define(version: 20161114062617) do
     t.datetime "updated_at",        null: false
     t.string   "image"
     t.integer  "programme_info_id"
+    t.boolean  "ignored"
     t.index ["programme_info_id"], name: "index_tracked_programmes_on_programme_info_id"
     t.index ["user_id"], name: "index_tracked_programmes_on_user_id"
   end

@@ -1,6 +1,7 @@
 var SeasonList = React.createClass({
   propTypes: {
     info: React.PropTypes.object.isRequired,
+    disabled: React.PropTypes.bool.isRequired,
     onEpisodeClicked: React.PropTypes.func.isRequired
   },
 
@@ -43,7 +44,7 @@ var SeasonList = React.createClass({
     this.setState({
       checkboxState: this.state.checkboxState
     });
-    this.props.onEpisodeClicked([{id: episodeID}], watched);
+    this.props.onEpisodeClicked([{id: episodeID}], watched, false);
   },
 
   handleSeasonCheckboxChange: function (e) {
@@ -58,7 +59,7 @@ var SeasonList = React.createClass({
     this.setState({
       checkboxState: this.state.checkboxState
     });
-    this.props.onEpisodeClicked(episodeArray, watched);
+    this.props.onEpisodeClicked(episodeArray, watched, false);
   },
 
   createSortedSeasons: function () {

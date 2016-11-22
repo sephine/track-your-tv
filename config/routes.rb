@@ -8,7 +8,6 @@ Rails.application.routes.draw do
   get '/:id', to: 'programmes#show', constraints: {id: /\d+/}
   get '/:id/:name', to: 'programmes#show', constraints: {id: /\d+/}
   get '/search', to: 'programmes#search'
-  get '/programmes/index', to: 'programmes#index'
   get '/welcome', to: 'welcome#index'
 
   #JSON
@@ -17,7 +16,9 @@ Rails.application.routes.draw do
   get '/tracked_programmes/show', to: 'tracked_programmes#show'
   get '/tracked_programmes/index', to: 'tracked_programmes#index'
   post 'tracked_programmes/create', to: 'tracked_programmes#create'
-  post 'watched_episodes/update', to: 'watched_episodes#update'
+  patch 'tracked_programmes/update', to: 'tracked_programmes#update'
+  delete 'tracked_programmes/delete', to: 'tracked_programmes#delete'
+  put 'watched_episodes/update', to: 'watched_episodes#update'
 
   as :user do
     get 'login' => 'users/sessions#new', :as => :new_user_session

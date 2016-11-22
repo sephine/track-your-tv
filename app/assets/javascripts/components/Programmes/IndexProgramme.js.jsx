@@ -18,10 +18,9 @@ var IndexProgramme = React.createClass({
   createProgrammeElements: function () {
     var elements = [];
     for (let programme of this.props.programmes) {
-      if ((programme.unwatched_episodes != 0 && this.props.showOnly == "watch") ||
-          (programme.unwatched_episodes == 0 &&
-            ((programme.status == "Ended" && this.props.showOnly == "ignore") ||
-            (programme.status != "Ended" && this.props.showOnly == "wait")))) {
+      if ((this.props.showOnly == "watch" && programme.unwatched_episodes != 0 && !programme.ignored) ||
+          (this.props.showOnly == "wait" && programme.status != "Ended" && !programme.ignored && programme.unwatched_episodes == 0 ) ||
+          (this.props.showOnly == "ignore" && (programme.ignored || (programme.status == "Ended" && programme.unwatched_episodes == 0)))) {
         elements.append(programme);
       }
     }

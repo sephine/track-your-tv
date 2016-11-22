@@ -39,6 +39,7 @@ var IndexProgrammeContainer = React.createClass({
     $('.watch-link').addClass("active");
     $('.wait-link').removeClass("active");
     $('.ignore-link').removeClass("active");
+    window.location.hash = "#watch"
     this.setState({
       showOnly: "watch"
     });
@@ -48,6 +49,7 @@ var IndexProgrammeContainer = React.createClass({
     $('.watch-link').removeClass("active");
     $('.wait-link').addClass("active");
     $('.ignore-link').removeClass("active");
+    window.location.hash = "#wait"
     this.setState({
       showOnly: "wait"
     });
@@ -57,6 +59,7 @@ var IndexProgrammeContainer = React.createClass({
     $('.watch-link').removeClass("active");
     $('.wait-link').removeClass("active");
     $('.ignore-link').addClass("active");
+    window.location.hash = "#ignore"
     this.setState({
       showOnly: "ignore"
     });

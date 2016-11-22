@@ -7,10 +7,13 @@ var ProgrammeElement = React.createClass({
     var item = this.props.info;
     var name = item.seriesName
     var hyphenName = name.split(" ").join("-").toLowerCase();
-    var labelText = item.unwatched_episodes;
-    var labelClass = "label label-success"
-    if (item.unwatched_episodes == 0) {
-      if (item.nextAirDate != null) {
+    var labelText = null;
+    var labelClass = null;
+    if (!item.ignored) {
+      if (item.unwatched_episodes != 0) {
+        labelText = item.unwatched_episodes;
+        labelClass = "label label-success"
+      } else if (item.nextAirDate != null) {
         var splitDate = item.nextAirDate.split("-");
         var dateObject = new Date(splitDate[0], splitDate[1]-1, splitDate[2], splitDate[3], splitDate[4]);
         labelText = dateObject.relative().split(" from now")[0];
@@ -18,8 +21,6 @@ var ProgrammeElement = React.createClass({
       } else if (item.status == "Ended") {
         labelText = "ended"
         labelClass = "label label-danger"
-      } else {
-        labelText = null;
       }
     }
     return (
