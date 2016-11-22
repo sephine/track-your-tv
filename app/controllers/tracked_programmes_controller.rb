@@ -1,3 +1,5 @@
+require 'thetvdb'
+
 class TrackedProgrammesController < ApplicationController
 
   def index
