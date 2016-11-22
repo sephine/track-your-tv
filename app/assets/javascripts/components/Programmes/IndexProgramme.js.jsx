@@ -107,7 +107,11 @@ var IndexProgramme = React.createClass({
       var elements = this.createProgrammeElements();
       if (elements.length == 0) {
         return (
-          <h1>No programmes added yet</h1>
+          <div className="programme-list">
+            <div className="container" style={{'text-align': 'center'}}>
+              <h3>No programmes added to this category yet</h3>
+            </div>
+          </div>
         );
       } else {
         return (
