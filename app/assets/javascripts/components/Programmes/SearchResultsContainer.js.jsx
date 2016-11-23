@@ -6,6 +6,7 @@ var SearchResultsContainer = React.createClass({
   getInitialState: function () {
     return {
       results: [],
+      count: 0,
       completed: false
     };
   },
@@ -17,17 +18,23 @@ var SearchResultsContainer = React.createClass({
   performSearch: function (searchText) {
     $.ajax({
       type: "GET",
-      url: "/programme_infos/full_search",
+      url: "/programme_infos/search",
       data: {
         "search_text": searchText,
       },
       success: function(msg) {
-        console.log('SUCCESS');
-        console.log(msg);
         if (msg.hasOwnProperty('data')) {
-          this.sortResults(msg.data);
+          console.log(msg);
+          this.setState({
+            count: msg.data.length,
+            completed: true
+          });
+          for (let item of msg.data) {
+            this.getProgrammeInfo(item.id);
+          }
         } else {
           this.setState({
+            count: 0,
             completed: true
           });
         }
@@ -39,20 +46,47 @@ var SearchResultsContainer = React.createClass({
     });
   },
 
-  sortResults: function(results) {
-    results.sort(function(a, b) {
-      if (a.posters.length != 0 && b.posters.length == 0) {
-        return -1;
-      } else if (a.posters.length == 0 && b.posters.length != 0) {
-        return 1;
-      } else {
-        return b.ratingCount - a.ratingCount;
+  getProgrammeInfo: function (seriesID) {
+    $.ajax({
+      type: "GET",
+      url: "/programme_infos/show",
+      data: {
+        "series_id": seriesID,
+      },
+      success: function(msg) {
+        console.log(msg);
+        this.insertIntoResults(msg);
+      }.bind(this),
+      error: function() {
+        console.log("GET SERIES FAILURE!");
+        alert("Error: failed to get series info");
       }
     });
-    this.setState({
-      results: results,
-      completed: true
-    });
+  },
+
+  insertIntoResults: function(data) {
+    for (var i = 0; i < this.state.results.length; i++) {
+      var series = this.state.results[i];
+      var inserted = false;
+      if ((series.posters.length == 0 && data.posters.length > 0) ||
+          (((series.posters.length == 0 && data.posters.length == 0) ||
+          (series.posters.length > 0 && data.posters.length > 0)) &&
+          series.siteRatingCount < data.siteRatingCount)) {
+        var newResults = this.state.results.slice(0, i);
+        newResults.append(data);
+        newResults.append(this.state.results.slice(i, this.state.results.length));
+        this.setState({
+          results: newResults
+        });
+        inserted = true;
+        break;
+      }
+    }
+    if (!inserted) {
+      this.setState({
+        results: this.state.results.append(data)
+      });
+    }
   },
 
   render: function () {
@@ -60,6 +94,7 @@ var SearchResultsContainer = React.createClass({
       <div>
         <SearchResults searchText={this.props.searchText}
             results={this.state.results}
+            count={this.state.count}
             completed={this.state.completed} />
       </div>
     );

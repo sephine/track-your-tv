@@ -52,22 +52,17 @@ class TrackedProgrammesController < ApplicationController
   def show
     search = ProgrammeInfo.where(tvdb_ref: params[:series_id])
     programmeObject = nil
-    programmeJSON = nil
     success = true
     if search.length > 0
       programmeObject = search[0]
-      programmeJSON = search[0].as_json(:except => [:id, :lastUpdated, :created_at, :updated_at])
     else
       programmeObject = ProgrammeInfo.create_from_tvdb(params[:series_id])
-      if programmeObject != nil
-        programmeJSON = programmeObject.as_json(:except => [:id, :lastUpdated, :created_at, :updated_at])
-      else
-        success = false
-      end
+      success = false if programmeObject == nil
     end
 
-    if programmeObject != nil
-      logger.debug(programmeObject.episode_infos.inspect)
+    programmeJSON = nil
+    if success
+      programmeJSON = programmeObject.as_json(:except => [:id, :lastUpdated, :created_at, :updated_at])
       programmeJSON[:episodes] = programmeObject.episode_infos.as_json(:except => [:id, :programme_info_id,  :created_at, :updated_at])
       programmeJSON[:episodes].each do |episode|
         episode[:watched] = false

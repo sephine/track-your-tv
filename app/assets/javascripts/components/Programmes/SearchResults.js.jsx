@@ -2,6 +2,7 @@ var SearchResults = React.createClass({
   propTypes: {
     searchText: React.PropTypes.string.isRequired,
     results: React.PropTypes.array.isRequired,
+    count: React.PropTypes.number.isRequired,
     completed: React.PropTypes.bool.isRequired
   },
 
@@ -11,9 +12,8 @@ var SearchResults = React.createClass({
   },
 
   componentDidUpdate: function () {
-    if (this.props.completed) {
-      NProgress.done();
-    }
+    var proportionDone = this.props.results.length/this.props.count;
+    NProgress.set(proportionDone);
   },
 
   componentWillUnmount: function() {
@@ -88,8 +88,7 @@ var SearchResults = React.createClass({
   },
 
   createThumbnails: function () {
-    if (this.props.results.length == 0) {
-      if (this.props.completed) {
+    if (this.props.completed && this.props.count == 0) {
         return (
           <div className="all-results">
             <div className="container" style={{'text-align': 'center'}}>
@@ -97,9 +96,8 @@ var SearchResults = React.createClass({
             </div>
           </div>
         );
-      } else {
-        return null;
-      }
+    } else if (!this.props.completed || this.props.results.length < this.props.count) {
+      return null;
     }
 
     var _this = this;

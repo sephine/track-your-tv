@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   #JSON
   get '/programme_infos/search', to: 'programme_infos#search'
-  get '/programme_infos/full_search', to: 'programme_infos#full_search'
+  get '/programme_infos/show', to: 'programme_infos#show'
   get '/tracked_programmes/show', to: 'tracked_programmes#show'
   get '/tracked_programmes/index', to: 'tracked_programmes#index'
   post 'tracked_programmes/create', to: 'tracked_programmes#create'
