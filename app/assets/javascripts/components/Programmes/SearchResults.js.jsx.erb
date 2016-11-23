@@ -130,7 +130,7 @@ var SearchResults = React.createClass({
                 </div>}
             {!bestThumbnail &&
                 <div className="no-image-div thumbnail">
-                  <img src="/assets/NoThumbnailSearchImage.jpg" alt="no image" className="no-image-img" />
+                  <%= image_tag "NoThumbnailSearchImage.jpg", alt: "no image" %>
                   <div className="no-image-title">
                     <h4>{item.seriesName}</h4>
                   </div>

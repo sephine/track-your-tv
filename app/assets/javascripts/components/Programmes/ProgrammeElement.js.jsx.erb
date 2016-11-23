@@ -37,7 +37,7 @@ var ProgrammeElement = React.createClass({
               </div>}
           {(item.image == null || item.image == "") &&
               <div className="no-image-div thumbnail">
-                <img src="/assets/NoThumbnailSearchImage.jpg" alt="no image" className="no-image-img" />
+                <%= image_tag "NoThumbnailSearchImage.jpg", alt: "no image" %>
                 <div className="no-image-title">
                   <h4>{name}</h4>
                 </div>
