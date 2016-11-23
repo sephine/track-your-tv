@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 20161122001125) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "episode_infos", force: :cascade do |t|
     t.integer  "tvdb_ref"
     t.integer  "episode_number"
@@ -22,8 +25,8 @@ ActiveRecord::Schema.define(version: 20161122001125) do
     t.integer  "programme_info_id"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
-    t.index ["programme_info_id"], name: "index_episode_infos_on_programme_info_id"
-    t.index ["tvdb_ref"], name: "index_episode_infos_on_tvdb_ref", unique: true
+    t.index ["programme_info_id"], name: "index_episode_infos_on_programme_info_id", using: :btree
+    t.index ["tvdb_ref"], name: "index_episode_infos_on_tvdb_ref", unique: true, using: :btree
   end
 
   create_table "posters", force: :cascade do |t|
@@ -33,8 +36,8 @@ ActiveRecord::Schema.define(version: 20161122001125) do
     t.integer  "programme_info_id"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
-    t.index ["programme_info_id"], name: "index_posters_on_programme_info_id"
-    t.index ["tvdb_ref"], name: "index_posters_on_tvdb_ref", unique: true
+    t.index ["programme_info_id"], name: "index_posters_on_programme_info_id", using: :btree
+    t.index ["tvdb_ref"], name: "index_posters_on_tvdb_ref", unique: true, using: :btree
   end
 
   create_table "programme_infos", force: :cascade do |t|
@@ -53,7 +56,7 @@ ActiveRecord::Schema.define(version: 20161122001125) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.integer  "ratingCount"
-    t.index ["tvdb_ref"], name: "index_programme_infos_on_tvdb_ref", unique: true
+    t.index ["tvdb_ref"], name: "index_programme_infos_on_tvdb_ref", unique: true, using: :btree
   end
 
   create_table "tokens", force: :cascade do |t|
@@ -70,8 +73,8 @@ ActiveRecord::Schema.define(version: 20161122001125) do
     t.string   "image"
     t.integer  "programme_info_id"
     t.boolean  "ignored"
-    t.index ["programme_info_id"], name: "index_tracked_programmes_on_programme_info_id"
-    t.index ["user_id"], name: "index_tracked_programmes_on_user_id"
+    t.index ["programme_info_id"], name: "index_tracked_programmes_on_programme_info_id", using: :btree
+    t.index ["user_id"], name: "index_tracked_programmes_on_user_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -88,8 +91,8 @@ ActiveRecord::Schema.define(version: 20161122001125) do
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "name"
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
   create_table "watched_episodes", force: :cascade do |t|
@@ -98,8 +101,14 @@ ActiveRecord::Schema.define(version: 20161122001125) do
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
     t.integer  "episode_info_id"
-    t.index ["episode_info_id"], name: "index_watched_episodes_on_episode_info_id"
-    t.index ["tracked_programme_id"], name: "index_watched_episodes_on_tracked_programme_id"
+    t.index ["episode_info_id"], name: "index_watched_episodes_on_episode_info_id", using: :btree
+    t.index ["tracked_programme_id"], name: "index_watched_episodes_on_tracked_programme_id", using: :btree
   end
 
+  add_foreign_key "episode_infos", "programme_infos"
+  add_foreign_key "posters", "programme_infos"
+  add_foreign_key "tracked_programmes", "programme_infos"
+  add_foreign_key "tracked_programmes", "users"
+  add_foreign_key "watched_episodes", "episode_infos"
+  add_foreign_key "watched_episodes", "tracked_programmes"
 end
