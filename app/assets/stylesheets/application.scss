@@ -67,6 +67,15 @@
    }
  }
 
+ @media (max-width: 340px) {
+   .navbar-search-form {
+     width: 230px;
+     .form-control {
+       width: 230px;
+     }
+   }
+ }
+
  #search-icon {
    position: absolute;
    border: none;
@@ -115,6 +124,12 @@
  .navbar-custom .navbar-brand {
      color: $lilac;
      text-shadow: none;
+ }
+
+ @media (max-width: 460px) {
+   .navbar-brand {
+     display: none;
+   }
  }
 
  .header-name-link {
