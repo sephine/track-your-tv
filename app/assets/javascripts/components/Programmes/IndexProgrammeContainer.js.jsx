@@ -39,7 +39,9 @@ var IndexProgrammeContainer = React.createClass({
     $('.watch-link').addClass("active");
     $('.wait-link').removeClass("active");
     $('.ignore-link').removeClass("active");
-    window.location.hash = "#watch"
+    if (window.location.hash != "" && window.location.hash != "#watch") {
+      window.location.hash = "#watch"
+    }
     this.setState({
       showOnly: "watch"
     });
