@@ -2,7 +2,9 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-$circle-length: 4em;
+@import "colors";
+
+$circle-length: 40px;
 
 .intro-image {
   height: calc(100% - 51px);
@@ -10,20 +12,39 @@ $circle-length: 4em;
   position: relative;
   background-position: center;
   background-size: cover;
-  background-image: url(http://thetvdb.com/banners/fanart/original/78901-95.jpg);
+  background-image: url('/assets/CoverImage.jpg');
+  background-color: #909090;
+  text-align: center;
 }
 
-.howItWorks_image {
-  height: 1000px;
-  background-color: white;
-  padding-top: 50px;
+.intro-text {
+  position: relative;
+  top: calc(50% - 120px);
+  h1 {
+    color: $brand-color;
+  }
+  h2 {
+    color: white;
+    margin-bottom: 40px;
+  }
+}
+
+.intro-sign-up {
+  padding: 10px;
+  font-size: 1.4em;
+  border-radius: 10%;
+  color: white;
+  background-color: $brand-color;
+  &:hover, &:active, &:focus {
+    color: white;
+  }
 }
 
 .arrow-wrap {
   position:absolute;
   z-index:1;
-  left:50%;
-  bottom: $circle-length;
+  left:calc(50% - 20px); //must be changed with $circle-length
+  bottom: 20px;
   width: $circle-length;
   height: $circle-length;
   //background-color: transparent;
@@ -45,6 +66,12 @@ $circle-length: 4em;
   span {
     color: white;
     font-size: $circle-length*0.4;
-    line-height: $circle-length*0.6;
+    line-height: $circle-length;
   }
+}
+
+.howItWorks {
+  height: 1000px;
+  background-color: white;
+  padding-top: 50px;
 }

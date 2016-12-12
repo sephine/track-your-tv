@@ -97,7 +97,7 @@
      color: white;
      text-shadow: none;
      &:hover {
-       color: $lilac;
+       color: $brand-color;
      }
      &:focus {
        background-color: transparent;
@@ -105,7 +105,7 @@
  }
 
  .navbar-custom .navbar-nav > li.active > a {
-     border-bottom: 5px solid $lilac;
+     border-bottom: 5px solid $brand-color;
      padding-bottom: 10px;
      padding-left: 0px;
      margin-left: 15px;
@@ -113,7 +113,7 @@
      margin-right: 15px;
  }
  .navbar-custom .navbar-brand {
-     color: $lilac;
+     color: $brand-color;
      text-shadow: none;
  }
 
