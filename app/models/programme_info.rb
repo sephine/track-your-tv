@@ -32,4 +32,29 @@ class ProgrammeInfo < ApplicationRecord
     return nil
   end
 
+  def update_from_tvdb
+    response = TheTVDB.series(self.tvdb_ref)
+    if response.include?('data')
+      data = response['data']
+      self.update({
+        seriesName: data['seriesName'],
+        status: data['status'],
+        firstAired: data['firstAired'],
+        network: data['network'],
+        runtime: data['runtime'],
+        genre: data['genre'].join(", "),
+        overview: data['overview'],
+        lastUpdated: data['lastUpdated'],
+        airsDayOfWeek: data['airsDayOfWeek'],
+        airsTime: data['airsTime'],
+        imdbID: data['imdbId'],
+        ratingCount: data['siteRatingCount']
+      });
+      Poster.update_from_tvdb(self)
+      EpisodeInfo.update_from_tvdb(self)
+      return self
+    end
+    return nil
+  end
+
 end
