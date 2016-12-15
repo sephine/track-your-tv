@@ -22,7 +22,7 @@ var SearchBoxContainer = React.createClass({
         }
       }.bind(this),
       error: function() {
-        alert("Error: failed to perform search on input.");
+        this.setState({results: []});
       }
     });
   },
