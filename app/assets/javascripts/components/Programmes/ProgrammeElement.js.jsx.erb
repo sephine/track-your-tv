@@ -6,7 +6,7 @@ var ProgrammeElement = React.createClass({
   render: function () {
     var item = this.props.info;
     var name = item.seriesName
-    var hyphenName = name.split(" ").join("-").toLowerCase();
+    var hyphenName = name.replaceAll(/[\.?!]/g, "").split(" ").join("-").toLowerCase();
     var labelText = null;
     var labelClass = null;
     if (!item.ignored) {

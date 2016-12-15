@@ -59,7 +59,7 @@ var SearchBox = React.createClass({
   createListItems: function () {
     var _this = this;
     return this.props.results.map(function(data, index){
-      var hyphenName = data.seriesName.split(" ").join("-").toLowerCase();
+      var hyphenName = data.seriesName.replaceAll(/[\.?!]/g, "").split(" ").join("-").toLowerCase();
       return (
         <li key={"search-result-id-"+index}>
           <a href={"/" + data.id + "/" + hyphenName}

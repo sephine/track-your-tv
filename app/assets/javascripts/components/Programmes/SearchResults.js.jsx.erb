@@ -60,7 +60,7 @@ var SearchResults = React.createClass({
 
         var hyphenName = "";
         if (item.seriesName != null) {
-          hyphenName = item.seriesName.split(" ").join("-").toLowerCase();
+          hyphenName = item.seriesName.replaceAll(/[\.?!]/g, "").split(" ").join("-").toLowerCase();
         }
         return (
           <div className="top-pick">
@@ -121,7 +121,7 @@ var SearchResults = React.createClass({
 
       var hyphenName = "";
       if (item.seriesName != null) {
-        hyphenName = item.seriesName.split(" ").join("-").toLowerCase();
+        hyphenName = item.seriesName.replaceAll(/[\.?!]/g, "").split(" ").join("-").toLowerCase();
       }
       return (
         <div className="col-xs-4 col-sm-3 col-md-2"
