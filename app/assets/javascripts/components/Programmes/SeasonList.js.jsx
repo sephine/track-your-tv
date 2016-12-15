@@ -155,11 +155,12 @@ var SeasonList = React.createClass({
         </div>
       </a>
       {this.props.info.tracked &&
-          <input className="episode-checkbox"
-              id={"checkbox-" + seasonNumber + "-" + episodeID}
-              type="checkbox"
-              checked={this.state.checkboxState[seasonNumber][episodeID]}
-              onChange={this.handleEpisodeCheckboxChange} />}
+          <label className="episode-checkbox" for={"checkbox-" + seasonNumber + "-" + episodeID}>
+            <input id={"checkbox-" + seasonNumber + "-" + episodeID}
+                type="checkbox"
+                checked={this.state.checkboxState[seasonNumber][episodeID]}
+                onChange={this.handleEpisodeCheckboxChange} />
+          </label>}
       </div>
     );
   },

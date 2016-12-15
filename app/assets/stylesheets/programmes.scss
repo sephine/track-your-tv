@@ -68,11 +68,15 @@
 }
 
 .episode-checkbox {
-  height: 14px;
-  width: 14px;
   position: absolute;
-  top: 9px;
-  right: 16px;
+  top: 0px;
+  right: 0px;
+  padding: 9px 15px 10px 10px;
+  margin-bottom: 0px;
+  input {
+    height: 14px;
+    width: 14px;
+  }
 }
 
 .thumbnail-label {
