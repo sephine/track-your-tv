@@ -44,6 +44,16 @@ class TheTVDB
     response
   end
 
+  def self.update(start_time)
+    token_text = get_token.text
+    headers = {"Authorization" => "Bearer #{token_text}", 'Content-Type' => 'application/json'}
+    epochStart = start_time.to_i
+    query = {fromTime: epochStart}
+    response = get("/updated/query", {query: query, headers: headers})
+    raise AuthorizationError, 'TheTVDB: Not Authorized' if response.code == 401
+    response
+  end
+
   class << self
     private
       def get_token

@@ -103,7 +103,7 @@ var IndexProgramme = React.createClass({
   },
 
   render: function () {
-    if (this.props.programmesCompleted) {
+    if (this.props.programmesCompleted && this.props.programmes != null) {
       var elements = this.createProgrammeElements();
       if (elements.length == 0) {
         return (
