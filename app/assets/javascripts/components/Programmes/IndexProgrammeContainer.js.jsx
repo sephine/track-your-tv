@@ -80,9 +80,6 @@ var IndexProgrammeContainer = React.createClass({
       }.bind(this),
       error: function() {
         alert("Error: failed to get series list");
-        this.setState({
-          programmesCompleted: true
-        });
       }
     });
   },
