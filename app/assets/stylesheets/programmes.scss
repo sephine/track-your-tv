@@ -25,11 +25,11 @@
 .search-header {
   background-color: $light-grey;
   position: fixed;
-  height: 50px;
+  min-height: 50px;
   width: 100%;
   z-index: 99;
-  h3 {
-    line-height: 15px;
+  h4 {
+    line-height: 30px;
   }
 }
 
