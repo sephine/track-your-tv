@@ -62,6 +62,24 @@ var SeasonList = React.createClass({
     this.props.onEpisodeClicked(episodeArray, watched, false);
   },
 
+  handleAllWatchedClicked: function (e) {
+    this.updateAllEpisodes(true);
+  },
+
+  handleNoneWatchedClicked: function (e) {
+    this.updateAllEpisodes(false);
+  },
+
+  updateAllEpisodes: function (watched) {
+    episodeArray = [];
+    for (let seasonNumber of Object.keys(this.props.info.episodes)) {
+      for (let data of Object.values(this.props.info.episodes[seasonNumber])) {
+        episodeArray.append({id: data.tvdb_ref});
+      }
+    }
+    this.props.onEpisodeClicked(episodeArray, watched, true);
+  },
+
   createSortedSeasons: function () {
     var _this = this;
     var sortedSeasonNumbers = Object.keys(this.props.info.episodes).sort(function (a, b) {
@@ -177,6 +195,11 @@ var SeasonList = React.createClass({
     return (
       <div className="episode-list">
         <div className="container">
+          {this.props.info.tracked &&
+              <div className="btn-group" role="group" style={{"margin-bottom": "10px"}}>
+                <button type="button" className="btn btn-default" disabled={this.props.disabled} onClick={this.handleAllWatchedClicked}>All Watched</button>
+                <button type="button" className="btn btn-default" disabled={this.props.disabled} onClick={this.handleNoneWatchedClicked}>None Watched</button>
+              </div>}
           <div className="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
             {this.createSortedSeasons()}
           </div>

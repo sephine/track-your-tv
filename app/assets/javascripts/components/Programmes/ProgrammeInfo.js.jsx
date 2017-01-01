@@ -4,8 +4,7 @@ var ProgrammeInfo = React.createClass({
     disabled: React.PropTypes.bool.isRequired,
     onTrackClicked: React.PropTypes.func.isRequired,
     updateProgramme: React.PropTypes.func.isRequired,
-    onDeleteClicked: React.PropTypes.func.isRequired,
-    onEpisodeClicked: React.PropTypes.func.isRequired
+    onDeleteClicked: React.PropTypes.func.isRequired
   },
 
   handleTrackClicked: function () {
@@ -22,24 +21,6 @@ var ProgrammeInfo = React.createClass({
 
   handleDeleteClicked: function () {
     this.props.onDeleteClicked();
-  },
-
-  handleAllWatchedClicked: function (e) {
-    this.updateEpisodes(true);
-  },
-
-  handleNoneWatchedClicked: function (e) {
-    this.updateEpisodes(false);
-  },
-
-  updateEpisodes: function (watched) {
-    episodeArray = [];
-    for (let seasonNumber of Object.keys(this.props.info.episodes)) {
-      for (let data of Object.values(this.props.info.episodes[seasonNumber])) {
-        episodeArray.append({id: data.tvdb_ref});
-      }
-    }
-    this.props.onEpisodeClicked(episodeArray, watched, true);
   },
 
   sortPosters: function () {
@@ -104,8 +85,6 @@ var ProgrammeInfo = React.createClass({
                 <button className="btn btn-default" disabled={this.props.disabled} onClick={this.handleTrackClicked}>Track</button>}
             {this.props.info.tracked &&
                 <div className="btn-group" role="group">
-                  <button type="button" className="btn btn-default" disabled={this.props.disabled} onClick={this.handleAllWatchedClicked}>All Watched</button>
-                  <button type="button" className="btn btn-default" disabled={this.props.disabled} onClick={this.handleNoneWatchedClicked}>None Watched</button>
                   <button type="button" className="btn btn-default" disabled={this.props.disabled} onClick={this.handleIgnoreClicked}>
                     {this.props.info.ignored? "Remove Ignore" : "Ignore"}
                   </button>
