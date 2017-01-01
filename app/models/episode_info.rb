@@ -3,6 +3,17 @@ class EpisodeInfo < ApplicationRecord
   has_many :watched_episodes, inverse_of: :episode_info, dependent: :destroy
   validates :programme_info, :tvdb_ref, presence: true
   validates :tvdb_ref, uniqueness: true
+  scope :aired, -> { where('"firstAired" != ? AND "firstAired" <= ?', "", Date.today) }
+  scope :will_air, -> { where('"firstAired" != ? AND "firstAired" > ?', "", Date.today) }
+
+  def watchable?
+    firstAired != "" && firstAired != nil && Date.parse(firstAired) <= Date.today
+  end
+
+  def self.next_air_date
+    next_episode = self.will_air.order('"firstAired" asc').first
+    next_episode == nil ? nil : next_episode.firstAired
+  end
 
   def self.create_from_tvdb(programme_info)
     response = TheTVDB.episodes(programme_info.tvdb_ref)

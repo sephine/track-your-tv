@@ -27,7 +27,7 @@ var IndexProgramme = React.createClass({
 
     if (this.props.showOnly == "watch") {
       elements.sort(function (a, b) {
-        if (a.lastUnwatchedAirDate == null && b.lastUnwatchedAirDate == null) {
+        if (a.lastUpdated == null && b.lastUpdated == null) {
           if (a.seriesName < b.seriesName) {
             return -1;
           } else if (a.seriesName > b.seriesName) {
@@ -35,15 +35,13 @@ var IndexProgramme = React.createClass({
           } else {
             return 0;
           }
-        } else if (a.lastUnwatchedAirDate != null && b.lastUnwatchedAirDate == null) {
+        } else if (a.lastUpdated != null && b.lastUpdated == null) {
           return -1;
-        } else if (a.lastUnwatchedAirDate == null && b.lastUnwatchedAirDate != null) {
+        } else if (a.lastUpdated == null && b.lastUpdated != null) {
           return 1;
         } else {
-          var aSplitDate = a.lastUnwatchedAirDate.split("-");
-          var aDateObject = new Date(aSplitDate[0], aSplitDate[1]-1, aSplitDate[2], aSplitDate[3], aSplitDate[4]);
-          var bSplitDate = b.lastUnwatchedAirDate.split("-");
-          var bDateObject = new Date(bSplitDate[0], bSplitDate[1]-1, bSplitDate[2], bSplitDate[3], bSplitDate[4]);
+          var aDateObject = Date.parse(a.lastUpdated)
+          var bDateObject = Date.parse(b.lastUpdated)
           if (aDateObject < bDateObject) {
             return 1;
           } else if (aDateObject > bDateObject) {
@@ -68,10 +66,8 @@ var IndexProgramme = React.createClass({
         } else if (a.nextAirDate == null && b.nextAirDate != null) {
           return 1;
         } else {
-          var aSplitDate = a.nextAirDate.split("-");
-          var aDateObject = new Date(aSplitDate[0], aSplitDate[1]-1, aSplitDate[2], aSplitDate[3], aSplitDate[4]);
-          var bSplitDate = b.nextAirDate.split("-");
-          var bDateObject = new Date(bSplitDate[0], bSplitDate[1]-1, bSplitDate[2], bSplitDate[3], bSplitDate[4]);
+          var aDateObject = Date.parse(a.nextAirDate)
+          var bDateObject = Date.parse(b.nextAirDate)
           if (aDateObject < bDateObject) {
             return -1;
           } else if (aDateObject > bDateObject) {

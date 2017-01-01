@@ -26,7 +26,9 @@ var SeasonList = React.createClass({
     for (let seasonNumber of Object.keys(nextProps.info.episodes)) {
       var episodes = {};
       for (let epObj of Object.values(nextProps.info.episodes[seasonNumber])) {
-        episodes[epObj.tvdb_ref] = epObj.watched;
+        if (epObj.watchable) {
+          episodes[epObj.tvdb_ref] = epObj.watched;
+        }
       }
       newCheckboxState[seasonNumber] = episodes;
     }
@@ -53,8 +55,10 @@ var SeasonList = React.createClass({
     watched = e.target.checked;
     episodeArray = [];
     for (let data of Object.values(this.props.info.episodes[seasonNumber])) {
-      episodeArray.append({id: data.tvdb_ref});
-      this.state.checkboxState[seasonNumber][data.tvdb_ref] = watched;
+      if (data.watchable) {
+        episodeArray.append({id: data.tvdb_ref});
+        this.state.checkboxState[seasonNumber][data.tvdb_ref] = watched;
+      }
     }
     this.setState({
       checkboxState: this.state.checkboxState
@@ -73,6 +77,7 @@ var SeasonList = React.createClass({
   },
 
   createSeason: function (seasonNumber, index) {
+    var watchable = Object.values(this.state.checkboxState[seasonNumber]).length != 0;
     var watched = this.allSeasonWatched(seasonNumber);
     var aClass = index == 0 ? "" : "collapsed";
     var divClass = index == 0 ? "panel-collapse collapse in" : "panel-collapse collapse"
@@ -86,7 +91,7 @@ var SeasonList = React.createClass({
               {seasonNumber == 0 &&
                   "Specials"}
             </a>
-            {this.props.info.tracked &&
+            {this.props.info.tracked && watchable &&
                 <div className="season-checkbox">
                   <span className="text-muted">Mark as watched &nbsp;</span>
                   <input type="checkbox"
@@ -128,15 +133,20 @@ var SeasonList = React.createClass({
 
   createEpisode: function (seasonNumber, episodeID, index) {
     var data = this.props.info.episodes[seasonNumber][episodeID];
-    var splitDate = data.firstAired.split("-");
-    var dateObject = new Date(splitDate[0], splitDate[1]-1, splitDate[2]);
-    var formattedDate = dateObject.medium();
-    var dateString = null;
-    if (dateObject <= new Date()) {
-      dateString = <span style={{color: 'green'}}>{"First Aired: " + formattedDate}</span>
+    dateString = null;
+    if (data.firstAired == "" || data.firstAired == null) {
+      dateString = <span style={{color: 'grey'}}>{"Air Date Unknown"}</span>;
     } else {
-      dateString = <span style={{color: 'red'}}>{"Will Air: " + formattedDate}</span>
+      var splitDate = data.firstAired.split("-");
+      var dateObject = new Date(splitDate[0], splitDate[1]-1, splitDate[2]);
+      var formattedDate = dateObject.medium();
+      if (dateObject <= new Date()) {
+        dateString = <span style={{color: 'green'}}>{"First Aired: " + formattedDate}</span>;
+      } else {
+        dateString = <span style={{color: 'red'}}>{"Will Air: " + formattedDate}</span>;
+      }
     }
+
     return (
       <div className="episode-section" key={"episode-section-" + index}>
       <a className="list-group-item collapsed" style={{'paddingRight': '40px'}} data-toggle="collapse" href={"#season" + seasonNumber + "episodecollapse" + index}>
@@ -147,14 +157,14 @@ var SeasonList = React.createClass({
         <div id={"season" + seasonNumber + "episodecollapse" + index} className="panel-collapse collapse" role="tabpanel">
           {data.firstAired == "" && data.overview == null &&
               "No details available yet"}
-          {data.firstAired != "" &&
+          {(data.firstAired != "" || data.overview != null) &&
               dateString}
           <br />
           {data.overview != null &&
               data.overview}
         </div>
       </a>
-      {this.props.info.tracked &&
+      {this.props.info.tracked && data.watchable &&
           <label className="episode-checkbox" for={"checkbox-" + seasonNumber + "-" + episodeID}>
             <input id={"checkbox-" + seasonNumber + "-" + episodeID}
                 type="checkbox"

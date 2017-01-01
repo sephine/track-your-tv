@@ -123,13 +123,11 @@ var ShowProgrammeContainer = React.createClass({
     }
     var episodeArray = []
     for (let episode of episodes) {
-      episodeArray.append({
-        "tvdb_ref": episode.id,
-        "watched": watched,
-      });
+      episodeArray.append(episode.id);
     }
     var data = {
       "series_id": this.props.seriesID,
+      "watched": watched,
       "episode_array": episodeArray
     }
     $.ajax({

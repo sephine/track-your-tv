@@ -15,7 +15,7 @@ var ProgrammeElement = React.createClass({
         labelClass = "label label-success"
       } else if (item.nextAirDate != null) {
         var splitDate = item.nextAirDate.split("-");
-        var dateObject = new Date(splitDate[0], splitDate[1]-1, splitDate[2], splitDate[3], splitDate[4]);
+        var dateObject = new Date(splitDate[0], splitDate[1]-1, splitDate[2]);
         labelText = dateObject.relative().split(" from now")[0];
         labelClass = "label label-info"
       } else if (item.status == "Ended") {

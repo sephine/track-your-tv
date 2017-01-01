@@ -8,39 +8,22 @@ class TrackedProgrammesController < ApplicationController
       programmeJSON = programmeObject.programme_info.as_json(:only => [:tvdb_ref, :seriesName, :status])
       programmeJSON[:image] = programmeObject[:image]
       programmeJSON[:ignored] = programmeObject[:ignored]
-      unwatchedEpisodes = 0
-      nextAirDate = nil
-      lastUnwatchedAirDate = nil
-      programmeObject.programme_info.episode_infos.each do |episodeInfo|
-        search = programmeObject.watched_episodes.where(episode_info_id: episodeInfo.id)
-        if search.length == 0 && episodeInfo.firstAired != nil && episodeInfo.firstAired != ""
-          dateObject = nil
-          begin
-            dateObject = DateTime.parse(episodeInfo.firstAired + " " + programmeObject.programme_info.airsTime)
-          rescue
-            dateObject = nil
-          end
-          if dateObject != nil && dateObject <= Date.today
-            unwatchedEpisodes += 1
-            if lastUnwatchedAirDate == nil || (dateObject != nil && dateObject > lastUnwatchedAirDate)
-              lastUnwatchedAirDate = dateObject
-            end
-          elsif nextAirDate == nil || (dateObject != nil && dateObject < nextAirDate)
-            nextAirDate = dateObject
-          end
-        end
-      end
+
+      airedEpisodes = programmeObject.programme_info.episode_infos.aired.count
+      logger.debug("AIRED EPISODES")
+      logger.debug(airedEpisodes)
+      watchedEpisodes = programmeObject.watched_episodes.count
+      logger.debug("WATCHED EPISODES")
+      logger.debug(watchedEpisodes)
+      unwatchedEpisodes = airedEpisodes - watchedEpisodes
       programmeJSON[:unwatched_episodes] = unwatchedEpisodes
-      if nextAirDate == nil
-        programmeJSON[:nextAirDate] = nil
-      else
-        programmeJSON[:nextAirDate] = "#{nextAirDate.year}-#{nextAirDate.month}-#{nextAirDate.day}-#{nextAirDate.hour}-#{nextAirDate.min}"
-      end
-      if lastUnwatchedAirDate == nil
-        programmeJSON[:lastUnwatchedAirDate] = nil
-      else
-        programmeJSON[:lastUnwatchedAirDate] = "#{lastUnwatchedAirDate.year}-#{lastUnwatchedAirDate.month}-#{lastUnwatchedAirDate.day}-#{lastUnwatchedAirDate.hour}-#{lastUnwatchedAirDate.min}"
-      end
+
+      nextAirDate = programmeObject.programme_info.episode_infos.next_air_date
+      programmeJSON[:nextAirDate] = nextAirDate
+
+      lastUpdated = programmeObject.watched_episodes.last_updated
+      programmeJSON[:lastUpdated] = lastUpdated
+
       programmes << programmeJSON
     end
 
@@ -55,7 +38,7 @@ class TrackedProgrammesController < ApplicationController
     success = true
     if search.length > 0
       programmeObject = search[0]
-      programmeObject.update_from_tvdb #TODO: REMOVE!
+      #programmeObject.update_from_tvdb #TODO: REMOVE
     else
       programmeObject = ProgrammeInfo.create_from_tvdb(params[:series_id])
       success = false if programmeObject == nil
@@ -64,8 +47,9 @@ class TrackedProgrammesController < ApplicationController
     programmeJSON = nil
     if success
       programmeJSON = programmeObject.as_json(:except => [:id, :lastUpdated, :created_at, :updated_at])
-      programmeJSON[:episodes] = programmeObject.episode_infos.as_json(:except => [:id, :programme_info_id,  :created_at, :updated_at])
+      programmeJSON[:episodes] = programmeObject.episode_infos.as_json(:except => [:programme_info_id,  :created_at, :updated_at])
       programmeJSON[:episodes].each do |episode|
+        episode[:watchable] = false
         episode[:watched] = false
       end
       programmeJSON[:posters] = programmeObject.posters.as_json(:only => [:rating_average, :thumbnail])
@@ -74,13 +58,12 @@ class TrackedProgrammesController < ApplicationController
         programmeJSON[:image] = search[0][:image]
         programmeJSON[:ignored] = search[0][:ignored]
         programmeJSON[:tracked] = true
-        search = search[0].watched_episodes.each do |watched_episode|
-          logger.debug(watched_episode.episode_info.inspect)
-          programmeJSON[:episodes].each do |episode|
-            if episode['tvdb_ref'] == watched_episode.episode_info[:tvdb_ref]
-              episode[:watched] = true
-              break
-            end
+        watched_episodes = search[0].watched_episodes
+        watched_set = search[0].watched_episodes.map {|x| x[:episode_info_id]}.to_set
+        programmeJSON[:episodes].each do |episode|
+          if episode['firstAired'] != nil && episode['firstAired'] != "" && Date.parse(episode['firstAired']) <= Date.today
+            episode[:watchable] = true
+            episode[:watched] = watched_set.include?(episode['id'])
           end
         end
       else
