@@ -16,7 +16,7 @@ class WatchedEpisodesController < ApplicationController
           watchedEpisodeSet = watchedEpisodes.map {|x| x.episode_info_id}.to_set
           success = true
           episodeInfos.each do |episode|
-            if episode.watchable? && !watchedEpisodeSet.include?(episode.id)
+            if !watchedEpisodeSet.include?(episode.id)
               watchedEpisode = trackedProgramme.watched_episodes.new({
                 episode_info_id: episode.id,
                 watched: true
@@ -29,9 +29,7 @@ class WatchedEpisodesController < ApplicationController
           end
         else
           success = true
-          watchedEpisodes.each do |episode|
-            episode.destroy
-          end
+          watchedEpisodes.destroy_all
         end
       end
     end

@@ -26,9 +26,7 @@ var SeasonList = React.createClass({
     for (let seasonNumber of Object.keys(nextProps.info.episodes)) {
       var episodes = {};
       for (let epObj of Object.values(nextProps.info.episodes[seasonNumber])) {
-        if (epObj.watchable) {
-          episodes[epObj.tvdb_ref] = epObj.watched;
-        }
+        episodes[epObj.tvdb_ref] = epObj.watched;
       }
       newCheckboxState[seasonNumber] = episodes;
     }
@@ -55,10 +53,8 @@ var SeasonList = React.createClass({
     watched = e.target.checked;
     episodeArray = [];
     for (let data of Object.values(this.props.info.episodes[seasonNumber])) {
-      if (data.watchable) {
-        episodeArray.append({id: data.tvdb_ref});
-        this.state.checkboxState[seasonNumber][data.tvdb_ref] = watched;
-      }
+      episodeArray.append({id: data.tvdb_ref});
+      this.state.checkboxState[seasonNumber][data.tvdb_ref] = watched;
     }
     this.setState({
       checkboxState: this.state.checkboxState
@@ -77,7 +73,6 @@ var SeasonList = React.createClass({
   },
 
   createSeason: function (seasonNumber, index) {
-    var watchable = Object.values(this.state.checkboxState[seasonNumber]).length != 0;
     var watched = this.allSeasonWatched(seasonNumber);
     var aClass = index == 0 ? "" : "collapsed";
     var divClass = index == 0 ? "panel-collapse collapse in" : "panel-collapse collapse"
@@ -91,7 +86,7 @@ var SeasonList = React.createClass({
               {seasonNumber == 0 &&
                   "Specials"}
             </a>
-            {this.props.info.tracked && watchable &&
+            {this.props.info.tracked &&
                 <div className="season-checkbox">
                   <span className="text-muted">Mark as watched &nbsp;</span>
                   <input type="checkbox"
@@ -164,7 +159,7 @@ var SeasonList = React.createClass({
               data.overview}
         </div>
       </a>
-      {this.props.info.tracked && data.watchable &&
+      {this.props.info.tracked &&
           <label className="episode-checkbox" for={"checkbox-" + seasonNumber + "-" + episodeID}>
             <input id={"checkbox-" + seasonNumber + "-" + episodeID}
                 type="checkbox"
