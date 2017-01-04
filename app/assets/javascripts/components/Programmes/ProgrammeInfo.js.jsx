@@ -68,7 +68,8 @@ var ProgrammeInfo = React.createClass({
                 updateProgramme={this.props.updateProgramme}
                 ignored={this.props.info.ignored}/>
           </div>
-          <span className="col-xs-2 hidden-sm" />
+          <span className="col-xs-2 visible-xs" />
+          <span className="col-xs-12 visible-xs" style={{"height": "10px"}} />
           <div className="col-xs-12 col-sm-5 col-md-6 col-lg-7">
             <h2>
               {this.props.info.seriesName}
