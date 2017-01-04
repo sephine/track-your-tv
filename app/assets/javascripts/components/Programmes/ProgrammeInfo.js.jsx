@@ -60,15 +60,15 @@ var ProgrammeInfo = React.createClass({
     return (
       <div className="series-info">
         <div className="container">
-          <span className="col-xs-3 col-sm-1 col-md-1" />
-          <div className="col-xs-6 col-sm-5 col-md-4 col-lg-3">
+          <span className="col-xs-2 col-sm-1 col-md-1" />
+          <div className="col-xs-8 col-sm-5 col-md-4 col-lg-3">
             <PosterCarousel posters={sortedPosters}
                 allowSelection={this.props.info.tracked}
                 chosenPoster={this.props.info.image}
                 updateProgramme={this.props.updateProgramme}
                 ignored={this.props.info.ignored}/>
           </div>
-          <span className="col-xs-3 hidden-sm" />
+          <span className="col-xs-2 hidden-sm" />
           <div className="col-xs-12 col-sm-5 col-md-6 col-lg-7">
             <h2>
               {this.props.info.seriesName}
