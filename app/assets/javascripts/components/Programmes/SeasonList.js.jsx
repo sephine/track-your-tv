@@ -178,7 +178,7 @@ var SeasonList = React.createClass({
         </div>
       </a>
       {this.props.info.tracked &&
-          <label className="episode-checkbox" for={"checkbox-" + seasonNumber + "-" + episodeID}>
+          <label className="episode-checkbox">
             <input id={"checkbox-" + seasonNumber + "-" + episodeID}
                 type="checkbox"
                 checked={this.state.checkboxState[seasonNumber][episodeID]}
@@ -196,7 +196,7 @@ var SeasonList = React.createClass({
       <div className="episode-list">
         <div className="container">
           {this.props.info.tracked &&
-              <div className="btn-group" role="group" style={{"margin-bottom": "10px"}}>
+              <div className="btn-group" role="group" style={{"marginBottom": "10px"}}>
                 <button type="button" className="btn btn-default" disabled={this.props.disabled} onClick={this.handleAllWatchedClicked}>All Watched</button>
                 <button type="button" className="btn btn-default" disabled={this.props.disabled} onClick={this.handleNoneWatchedClicked}>None Watched</button>
               </div>}

@@ -14,8 +14,8 @@ var ProgrammeInfo = React.createClass({
 
   handleIgnoreClicked: function () {
     var sortedPosters = this.sortPosters();
-    var image = sortedPosters.length > 0 ? sortedPosters[0].thumbnail : "";
-    var ignored = !this.props.info.ignored
+    var image = this.props.info.image;
+    var ignored = !this.props.info.ignored;
     this.props.updateProgramme(image, ignored);
   },
 
@@ -62,7 +62,11 @@ var ProgrammeInfo = React.createClass({
         <div className="container">
           <span className="col-xs-3 col-sm-1 col-md-1" />
           <div className="col-xs-6 col-sm-5 col-md-4 col-lg-3">
-            <PosterCarousel posters={sortedPosters} />
+            <PosterCarousel posters={sortedPosters}
+                allowSelection={this.props.info.tracked}
+                chosenPoster={this.props.info.image}
+                updateProgramme={this.props.updateProgramme}
+                ignored={this.props.info.ignored}/>
           </div>
           <span className="col-xs-3 hidden-sm" />
           <div className="col-xs-12 col-sm-5 col-md-6 col-lg-7">

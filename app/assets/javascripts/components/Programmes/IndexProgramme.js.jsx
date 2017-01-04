@@ -104,7 +104,7 @@ var IndexProgramme = React.createClass({
       if (elements.length == 0) {
         return (
           <div className="programme-list">
-            <div className="container" style={{'text-align': 'center'}}>
+            <div className="container" style={{'textAlign': 'center'}}>
               <h3>No programmes added to this category yet</h3>
             </div>
           </div>
