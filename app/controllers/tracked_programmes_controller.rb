@@ -1,4 +1,5 @@
 require 'thetvdb'
+require 'automatic_update' #TEMP REMOVE
 
 class TrackedProgrammesController < ApplicationController
 
@@ -30,12 +31,12 @@ class TrackedProgrammesController < ApplicationController
   end
 
   def show
+    response = AutomaticUpdate.update_all #TEMP REMOVE
     search = ProgrammeInfo.where(tvdb_ref: params[:series_id])
     programmeObject = nil
     success = true
     if search.length > 0
       programmeObject = search[0]
-      programmeObject.update_from_tvdb #TODO: REMOVE
     else
       programmeObject = ProgrammeInfo.create_from_tvdb(params[:series_id])
       success = false if programmeObject == nil

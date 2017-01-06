@@ -1,0 +1,2 @@
+class ThetvdbUpdate < ApplicationRecord
+end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161122001125) do
+ActiveRecord::Schema.define(version: 20170105223450) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,6 +57,12 @@ ActiveRecord::Schema.define(version: 20161122001125) do
     t.datetime "updated_at",    null: false
     t.integer  "ratingCount"
     t.index ["tvdb_ref"], name: "index_programme_infos_on_tvdb_ref", unique: true, using: :btree
+  end
+
+  create_table "thetvdb_updates", force: :cascade do |t|
+    t.integer  "update_start"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "tokens", force: :cascade do |t|
