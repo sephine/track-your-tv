@@ -15,7 +15,9 @@ var ShowProgramme = React.createClass({
   },
 
   componentDidUpdate: function () {
-    if (this.props.infoCompleted) {
+    if (this.props.disabled) {
+      NProgress.start();
+    } else if (this.props.infoCompleted && !this.props.disabled) {
       NProgress.done();
     }
   },

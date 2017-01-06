@@ -92,10 +92,12 @@ var ShowProgrammeContainer = React.createClass({
     });
   },
 
-  updateProgramme: function (image, ignored) {
-    this.setState({
-      disabled: true
-    });
+  updateProgramme: function (image, ignored, disable) {
+    if (disable) {
+      this.setState({
+        disabled: true
+      });
+    }
     var data = {
       "series_id": this.props.seriesID,
       "image": image,

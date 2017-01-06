@@ -76,7 +76,7 @@ var PosterCarousel = React.createClass({
   },
 
   handleSelection: function (e) {
-    this.props.updateProgramme(this.props.posters[this.state.currentIndex].thumbnail, this.props.ignored);
+    this.props.updateProgramme(this.props.posters[this.state.currentIndex].thumbnail, this.props.ignored, false);
     this.setState({
       selectedIndex: this.state.currentIndex
     });

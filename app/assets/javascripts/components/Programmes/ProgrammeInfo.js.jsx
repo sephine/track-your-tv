@@ -16,7 +16,7 @@ var ProgrammeInfo = React.createClass({
     var sortedPosters = this.sortPosters();
     var image = this.props.info.image;
     var ignored = !this.props.info.ignored;
-    this.props.updateProgramme(image, ignored);
+    this.props.updateProgramme(image, ignored, true);
   },
 
   handleDeleteClicked: function () {
