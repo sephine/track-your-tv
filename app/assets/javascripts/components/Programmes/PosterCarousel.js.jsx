@@ -91,14 +91,17 @@ var PosterCarousel = React.createClass({
         <div className="carousel-inner" role="listbox">
           {this.state.items}
         </div>
-        <a className="left carousel-control" href="#poster-carousel" role="button" onClick={this.handleSlidePrev} data-slide="prev">
-          <span className="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-          <span className="sr-only">Previous</span>
-        </a>
-        <a className="right carousel-control" href="#poster-carousel" role="button" onClick={this.handleSlideNext} data-slide="next">
-          <span className="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-          <span className="sr-only">Next</span>
-        </a>
+        {this.props.posters.length > 1 &&
+            <div>
+              <a className="left carousel-control" href="#poster-carousel" role="button" onClick={this.handleSlidePrev} data-slide="prev">
+                <span className="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span className="sr-only">Previous</span>
+              </a>
+              <a className="right carousel-control" href="#poster-carousel" role="button" onClick={this.handleSlideNext} data-slide="next">
+                <span className="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span className="sr-only">Next</span>
+              </a>
+            </div>}
         {this.props.allowSelection && this.state.currentIndex == this.state.selectedIndex &&
             <button type="button" className="btn btn-default" style={{color: 'green'}} disabled={true} onClick={this.handleSelection}>Selected</button>}
         {this.props.allowSelection && this.state.currentIndex != this.state.selectedIndex &&

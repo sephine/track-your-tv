@@ -7,6 +7,18 @@ var ProgrammeInfo = React.createClass({
     onDeleteClicked: React.PropTypes.func.isRequired
   },
 
+  getInitialState: function () {
+    return {
+      expanded: false
+    };
+  },
+
+  handleMoreHideClicked: function (e) {
+    this.setState({
+      expanded: !this.state.expanded
+    });
+  },
+
   handleTrackClicked: function () {
     var sortedPosters = this.sortPosters();
     this.props.onTrackClicked(sortedPosters.length > 0 ? sortedPosters[0].thumbnail : "");
@@ -84,8 +96,22 @@ var ProgrammeInfo = React.createClass({
                 whereToWatch}
             {this.props.info.firstAired != null && this.props.info.firstAired != "" &&
                 <p>{firstAiredText}</p>}
-            {this.props.info.overview != null && this.props.info.overview != "" &&
-                <p>{this.props.info.overview.truncateOnWord(500)}</p>}
+            {this.props.info.overview != null && this.props.info.overview != "" && this.props.info.overview.length < 350 &&
+                <p>
+                  {this.props.info.overview}
+                </p>}
+            {this.props.info.overview != null && this.props.info.overview.length >= 350 && !this.state.expanded &&
+                <p>
+                  {this.props.info.overview.truncateOnWord(350)}
+                  &nbsp;
+                  <a href="javascript:void(0);" onClick={this.handleMoreHideClicked}>more</a>
+                </p>}
+            {this.props.info.overview != null && this.props.info.overview.length >= 350 && this.state.expanded &&
+                <p>
+                  {this.props.info.overview}
+                  &nbsp;
+                  <a href="javascript:void(0);" onClick={this.handleMoreHideClicked}>hide</a>
+                </p>}
             {!this.props.info.tracked &&
                 <button className="btn btn-default" disabled={this.props.disabled} onClick={this.handleTrackClicked}>Track</button>}
             {this.props.info.tracked &&
