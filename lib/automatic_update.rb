@@ -1,3 +1,5 @@
+require 'thetvdb'
+
 class AutomaticUpdate
   def self.update_all
     epoch_start = ThetvdbUpdate.all.first.update_start
