@@ -10,6 +10,12 @@
   </head>
 
   <body>
+    <noscript>
+      <div style="border: 1px solid; padding: 10px">
+        To use this website you'll need to enable JavaScript in your web browser.
+      </div>
+    </noscript>
+    
     <% if user_signed_in? %>
       <%= render 'layouts/header_logged_in' %>
     <% else %>
