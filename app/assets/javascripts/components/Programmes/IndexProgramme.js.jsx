@@ -105,7 +105,8 @@ var IndexProgramme = React.createClass({
         return (
           <div className="programme-list">
             <div className="container" style={{'textAlign': 'center'}}>
-              <h3>No programmes added to this category yet</h3>
+              <h3>No shows added to this category yet.</h3>
+              <h4 className="text-muted">Add more by searching above.</h4>
             </div>
           </div>
         );
