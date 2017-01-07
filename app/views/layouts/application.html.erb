@@ -6,6 +6,7 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/favicon.ico" />
     <meta name='viewport' content='width=device-width, initial-scale=1.0' >
   </head>
 
@@ -15,7 +16,7 @@
         To use this website you'll need to enable JavaScript in your web browser.
       </div>
     </noscript>
-    
+
     <% if user_signed_in? %>
       <%= render 'layouts/header_logged_in' %>
     <% else %>
