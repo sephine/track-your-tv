@@ -10,7 +10,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <%= link_to 'TV Tracker', root_path, class: "navbar-brand dissapearing-brand" %>
+      <%= link_to 'TrackYourTV', root_path, class: "navbar-brand dissapearing-brand" %>
     </div>
     <div id="navbar1" class="navbar-right navbar-collapse collapse"
           aria-expanded="false" style="height: 1px; margin-right: -15px;">
@@ -83,10 +83,18 @@
   <p class="alert hidden"><%= notice %><%= alert %></p>
 <% else %>
   <% if notice %>
-    <p class="alert alert-success alert-custom"><%= notice %></p>
+    <div class="alert alert-success alert-custom">
+      <div class="container">
+        <%= notice %>
+      </div>
+    </div>
   <% end %>
   <% if alert %>
-    <p class="alert alert-danger alert-custom"><%= alert %></p>
+    <div class="alert alert-danger alert-custom">
+      <div class="container">
+        <%= alert %>
+      </div>
+    </div>
   <% end %>
 <% end %>
 
