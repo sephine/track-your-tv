@@ -53,7 +53,7 @@ var PosterCarousel = React.createClass({
       return (
         <div key={"item-id-"+index}
             className={activeClass}>
-          <img src={"http://thetvdb.com/banners/" + data.thumbnail} alt={"Poster " + index} style={{width: '100%'}} />
+          <img src={"https://thetvdb.com/banners/" + data.thumbnail} alt={"Poster " + index} style={{width: '100%'}} />
         </div>
       );
     });

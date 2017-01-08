@@ -70,7 +70,7 @@ var SearchResults = React.createClass({
                 <a href={"/" + item.tvdb_ref + "/" + hyphenName}
                     id={"search-result-id-"+i}>
                   <div className="thumbnail">
-                    <img src={"http://thetvdb.com/banners/" + bestThumbnail} alt={item.seriesName} />
+                    <img src={"https://thetvdb.com/banners/" + bestThumbnail} alt={item.seriesName} />
                   </div>
                 </a>
               </div>
@@ -130,7 +130,7 @@ var SearchResults = React.createClass({
               id={"search-result-id-"+index}>
             {bestThumbnail &&
                 <div className="thumbnail">
-                  <img src={"http://thetvdb.com/banners/" + bestThumbnail} alt={item.seriesName} />
+                  <img src={"https://thetvdb.com/banners/" + bestThumbnail} alt={item.seriesName} />
                 </div>}
             {!bestThumbnail &&
                 <div className="no-image-div thumbnail">

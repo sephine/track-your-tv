@@ -29,7 +29,7 @@ var ProgrammeElement = React.createClass({
             id={"programme-element-"+item.tvdb_ref}>
           {item.image != null && item.image != "" &&
               <div className="thumbnail">
-                <img src={"http://thetvdb.com/banners/" + item.image} alt={name} />
+                <img src={"https://thetvdb.com/banners/" + item.image} alt={name} />
                 {labelText != null &&
                     <div className="thumbnail-label">
                       <h4><span className={labelClass}>{labelText}</span></h4>
