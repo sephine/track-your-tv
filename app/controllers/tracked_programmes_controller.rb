@@ -3,8 +3,6 @@ require 'thetvdb'
 class TrackedProgrammesController < ApplicationController
 
   def index
-    ProgrammeInfo.delay.temp
-
     programmes = []
     current_user.tracked_programmes.each do |programmeObject|
       programmeJSON = programmeObject.programme_info.as_json(:only => [:tvdb_ref, :seriesName, :status])
@@ -25,6 +23,8 @@ class TrackedProgrammesController < ApplicationController
 
       programmes << programmeJSON
     end
+
+    ProgrammeInfo.delay.temp #TODO REMOVE!!
 
     respond_to do |format|
       format.json { render :json => programmes }
