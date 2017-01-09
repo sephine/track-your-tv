@@ -5,6 +5,10 @@ class ProgrammeInfo < ApplicationRecord
   validates :tvdb_ref, presence: true
   validates :tvdb_ref, uniqueness: true
 
+  def self.temp()
+    puts "Sidekiq is working!!"
+  end
+
   def self.create_from_tvdb(series_id)
     response = TheTVDB.series(series_id)
     if response.include?('data')
