@@ -24,8 +24,6 @@ class TrackedProgrammesController < ApplicationController
       programmes << programmeJSON
     end
 
-    ProgrammeInfo.delay.temp #TODO REMOVE!!
-
     respond_to do |format|
       format.json { render :json => programmes }
     end
