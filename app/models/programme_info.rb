@@ -7,6 +7,7 @@ class ProgrammeInfo < ApplicationRecord
 
   def self.temp()
     puts "Sidekiq is working!!"
+    result = ProgrammeInfo.all
   end
 
   def self.create_from_tvdb(series_id)
