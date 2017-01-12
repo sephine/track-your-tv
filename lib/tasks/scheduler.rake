@@ -1,4 +1,4 @@
-require 'automatic_update'
+require 'background_work'
 
 task :update_database => :environment do
   puts "Automatic database update..."
