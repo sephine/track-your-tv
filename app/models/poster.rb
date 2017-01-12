@@ -1,3 +1,5 @@
+require 'background_work'
+
 class Poster < ApplicationRecord
   belongs_to :programme_info
   validates :programme_info, :tvdb_ref, presence: true
@@ -13,6 +15,7 @@ class Poster < ApplicationRecord
           thumbnail: item['thumbnail'],
           rating_average: item['ratingsInfo']['average']
         })
+        BackgroundWork.delay.upload_image_to_s3(item['id'].to_s, item['thumbnail'])
       end
     end
   end
