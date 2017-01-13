@@ -1,6 +1,6 @@
 require 'thetvdb'
 
-class BackgroundWork
+class AutomaticUpdate
   #calls update in thetvdb api to find all series that have been
   #updated in the timeframe and updates them in the database.
   def self.check_for_updates
@@ -29,11 +29,5 @@ class BackgroundWork
     thetvdb_update.save
 
     updated
-  end
-
-  def self.upload_image_to_s3(tvdb_ref, thumbnail)
-    download = open('https://thetvdb.com/banners/' + thumbnail)
-    obj = S3_BUCKET.object(tvdb_ref)
-    obj.upload_file(download)
   end
 end

@@ -15,7 +15,6 @@ class Poster < ApplicationRecord
           thumbnail: item['thumbnail'],
           rating_average: item['ratingsInfo']['average']
         })
-        BackgroundWork.delay.upload_image_to_s3(item['id'].to_s, item['thumbnail'])
       end
     end
   end
