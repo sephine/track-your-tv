@@ -41,6 +41,10 @@ var ProgrammeElement = React.createClass({
                 <div className="no-image-title">
                   <h4>{name}</h4>
                 </div>
+                {labelText != null &&
+                    <div className="thumbnail-label">
+                      <h4><span className={labelClass}>{labelText}</span></h4>
+                    </div>}
               </div>}
         </a>
       </div>
