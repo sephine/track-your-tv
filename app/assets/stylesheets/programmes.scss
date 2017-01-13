@@ -13,9 +13,9 @@
 }
 
 .no-image-title {
-  top: 0%;
+  top: 5%;
   left: 10%;
-  height: 90%;
+  height: 85%;
   width: 80%;
   position: absolute;
   word-wrap: break-word;
@@ -83,6 +83,12 @@
   position: absolute;
   top: -15px;
   right: 10px;
+}
+
+.no-image-label {
+  position: absolute;
+  top: -16px;
+  right: -6px;
 }
 
 #poster-carousel {
