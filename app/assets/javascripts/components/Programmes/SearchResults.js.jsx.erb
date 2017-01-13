@@ -50,11 +50,11 @@ var SearchResults = React.createClass({
       let item = this.props.results[i];
       if (item.tvdb_ref == topPickID && item.posters.length != 0) {
         var bestRating = -1
-        var bestThumbnail;
+        var bestImage;
         for (let poster of item.posters) {
           if (poster.rating_average > bestRating) {
             bestRating = poster.rating_average;
-            bestThumbnail = poster.thumbnail;
+            bestImage = poster.url != null ? poster.url : "https://thetvdb.com/banners/" + poster.thumbnail;
           }
         }
 
@@ -70,7 +70,7 @@ var SearchResults = React.createClass({
                 <a href={"/" + item.tvdb_ref + "/" + hyphenName}
                     id={"search-result-id-"+i}>
                   <div className="thumbnail">
-                    <img src={"https://thetvdb.com/banners/" + bestThumbnail} alt={item.seriesName} />
+                    <img src={bestImage} alt={item.seriesName} />
                   </div>
                 </a>
               </div>
@@ -111,11 +111,11 @@ var SearchResults = React.createClass({
         return null;
       }
       var bestRating = -1
-      var bestThumbnail;
+      var bestImage;
       for (let poster of item.posters) {
         if (poster.rating_average > bestRating) {
           bestRating = poster.rating_average;
-          bestThumbnail = poster.thumbnail;
+          bestImage = poster.url != null ? poster.url : "https://thetvdb.com/banners/" + poster.thumbnail;
         }
       }
 
@@ -128,11 +128,11 @@ var SearchResults = React.createClass({
             key={"search-result-id-"+index}>
           <a href={"/" + item.tvdb_ref + "/" + hyphenName}
               id={"search-result-id-"+index}>
-            {bestThumbnail &&
+            {bestImage &&
                 <div className="thumbnail">
-                  <img src={"https://thetvdb.com/banners/" + bestThumbnail} alt={item.seriesName} />
+                  <img src={bestImage} alt={item.seriesName} />
                 </div>}
-            {!bestThumbnail &&
+            {!bestImage &&
                 <div className="no-image-div thumbnail">
                   <%= image_tag "NoThumbnailSearchImage.jpg", alt: "no image" %>
                   <div className="no-image-title">

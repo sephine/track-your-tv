@@ -6,7 +6,11 @@ class TrackedProgrammesController < ApplicationController
     programmes = []
     current_user.tracked_programmes.each do |programmeObject|
       programmeJSON = programmeObject.programme_info.as_json(:only => [:tvdb_ref, :seriesName, :status])
-      programmeJSON[:image] = programmeObject[:image]
+      search = Poster.where(tvdb_ref: programmeObject[:image])
+      if search.length > 0
+        programmeJSON[:image_url] = search[0].url != nil ? \
+            search[0].url : "https://thetvdb.com/banners/" + search[0].thumbnail
+      end
       programmeJSON[:ignored] = programmeObject[:ignored]
 
       airedEpisodes = programmeObject.programme_info.episode_infos.aired.count
@@ -47,7 +51,7 @@ class TrackedProgrammesController < ApplicationController
       programmeJSON[:episodes].each do |episode|
         episode[:watched] = false
       end
-      programmeJSON[:posters] = programmeObject.posters.as_json(:only => [:rating_average, :thumbnail])
+      programmeJSON[:posters] = programmeObject.posters.as_json(:only => [:tvdb_ref, :rating_average, :thumbnail, :url])
       search = current_user.tracked_programmes.where(programme_info_id: programmeObject[:id])
       if search.length > 0
         programmeJSON[:image] = search[0][:image]

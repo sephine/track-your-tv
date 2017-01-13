@@ -23,7 +23,7 @@ class ProgrammeInfosController < ApplicationController
     programmeJSON = nil
     if success
       programmeJSON = programmeObject.as_json(:only => [:tvdb_ref, :seriesName, :genre, :overview, :ratingCount])
-      programmeJSON[:posters] = programmeObject.posters.as_json(:only => [:rating_average, :thumbnail])
+      programmeJSON[:posters] = programmeObject.posters.as_json(:only => [:rating_average, :thumbnail, :url])
     end
 
     respond_to do |format|

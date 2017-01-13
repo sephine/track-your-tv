@@ -21,7 +21,7 @@ var ProgrammeInfo = React.createClass({
 
   handleTrackClicked: function () {
     var sortedPosters = this.sortPosters();
-    this.props.onTrackClicked(sortedPosters.length > 0 ? sortedPosters[0].thumbnail : "");
+    this.props.onTrackClicked(sortedPosters.length > 0 ? sortedPosters[0].tvdb_ref : "");
   },
 
   handleIgnoreClicked: function () {

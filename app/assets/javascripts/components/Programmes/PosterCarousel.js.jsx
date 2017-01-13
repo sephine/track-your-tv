@@ -10,22 +10,22 @@ var PosterCarousel = React.createClass({
   getInitialState: function () {
     return {
       currentIndex: 0,
-      selectedIndex: 0,
+      selectedIndex: null,
       items: []
     };
   },
 
   componentWillMount: function () {
-    var chosenIndex = 0;
+    var chosenIndex = null;
     for (let i = 0; i < this.props.posters.length; i++) {
-      if (this.props.posters[i].thumbnail == this.props.chosenPoster) {
+      if (this.props.posters[i].tvdb_ref == this.props.chosenPoster) {
         chosenIndex = i;
         break;
       }
     }
-    var newItems = this.createItems(chosenIndex);
+    var newItems = this.createItems(chosenIndex != null ? chosenIndex : 0);
     this.setState({
-      currentIndex: chosenIndex,
+      currentIndex: chosenIndex != null ? chosenIndex : 0,
       selectedIndex: chosenIndex,
       items: newItems
     })
@@ -33,9 +33,9 @@ var PosterCarousel = React.createClass({
 
   componentWillReceiveProps: function(nextProps) {
     if (nextProps.chosenPoster != this.props.chosenPoster) {
-      var chosenIndex = 0;
+      var chosenIndex = null;
       for (let i = 0; i < nextProps.posters.length; i++) {
-        if (nextProps.posters[i].thumbnail == nextProps.chosenPoster) {
+        if (nextProps.posters[i].tvdb_ref == nextProps.chosenPoster) {
           chosenIndex = i;
           break;
         }
@@ -50,10 +50,11 @@ var PosterCarousel = React.createClass({
     var _this = this;
     return this.props.posters.map(function(data, index){
       var activeClass = index == startIndex ? "item active" : "item";
+      imageSrc = data.url != null ? data.url : "https://thetvdb.com/banners/" + data.thumbnail;
       return (
         <div key={"item-id-"+index}
             className={activeClass}>
-          <img src={"https://thetvdb.com/banners/" + data.thumbnail} alt={"Poster " + index} style={{width: '100%'}} />
+          <img src={imageSrc} alt={"Poster " + index} style={{width: '100%'}} />
         </div>
       );
     });
@@ -76,7 +77,7 @@ var PosterCarousel = React.createClass({
   },
 
   handleSelection: function (e) {
-    this.props.updateProgramme(this.props.posters[this.state.currentIndex].thumbnail, this.props.ignored, false);
+    this.props.updateProgramme(this.props.posters[this.state.currentIndex].tvdb_ref, this.props.ignored, false);
     this.setState({
       selectedIndex: this.state.currentIndex
     });

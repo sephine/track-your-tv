@@ -71,7 +71,7 @@ var ShowProgrammeContainer = React.createClass({
     });
   },
 
-  deleteProgramme: function (image) {
+  deleteProgramme: function () {
     this.setState({
       disabled: true
     });

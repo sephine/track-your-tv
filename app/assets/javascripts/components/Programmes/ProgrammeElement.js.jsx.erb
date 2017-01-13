@@ -27,15 +27,15 @@ var ProgrammeElement = React.createClass({
       <div className="col-xs-4 col-sm-3 col-md-2">
         <a href={"/" + item.tvdb_ref + "/" + hyphenName}
             id={"programme-element-"+item.tvdb_ref}>
-          {item.image != null && item.image != "" &&
+          {item.image_url != null && item.image_url != "" &&
               <div className="thumbnail">
-                <img src={"https://thetvdb.com/banners/" + item.image} alt={name} />
+                <img src={item.image_url} alt={name} />
                 {labelText != null &&
                     <div className="thumbnail-label">
                       <h4><span className={labelClass}>{labelText}</span></h4>
                     </div>}
               </div>}
-          {(item.image == null || item.image == "") &&
+          {(item.image_url == null || item.image_url == "") &&
               <div className="no-image-div thumbnail">
                 <%= image_tag "NoThumbnailSearchImage.jpg", alt: "no image" %>
                 <div className="no-image-title">

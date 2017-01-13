@@ -71,7 +71,7 @@ var SearchResultsContainer = React.createClass({
       if ((series.posters.length == 0 && data.posters.length > 0) ||
           (((series.posters.length == 0 && data.posters.length == 0) ||
           (series.posters.length > 0 && data.posters.length > 0)) &&
-          series.siteRatingCount < data.siteRatingCount)) {
+          series.ratingCount < data.ratingCount)) {
         var newResults = this.state.results.slice(0, i);
         newResults.append(data);
         newResults.append(this.state.results.slice(i, this.state.results.length));
