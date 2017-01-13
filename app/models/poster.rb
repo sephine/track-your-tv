@@ -1,5 +1,3 @@
-require 'background_work'
-
 class Poster < ApplicationRecord
   belongs_to :programme_info
   validates :programme_info, :tvdb_ref, presence: true
@@ -35,6 +33,8 @@ class Poster < ApplicationRecord
         to_delete << current if delete
       end
       to_delete.each do |poster_to_delete|
+        obj = S3_BUCKET.objects[poster_to_delete.tvdb_ref.to_s]
+        obj.delete
         poster_to_delete.destroy
       end
 
@@ -42,16 +42,23 @@ class Poster < ApplicationRecord
         search = Poster.where(tvdb_ref: item['id'])
         if search.length > 0
           posterObject = search[0]
+          originalThumbnail = posterObject.thumbnail
           posterObject.update({
             thumbnail: item['thumbnail'],
             rating_average: item['ratingsInfo']['average']
           })
+          if posterObject.thumbnail != originalThumbnail
+            obj = S3_BUCKET.objects[posterObject.tvdb_ref.to_s]
+            obj.delete
+            UploadImageWorker.perform_async(posterObject.id)
+          end
         else
-          programme_info.posters.create({
+          poster = programme_info.posters.create({
             tvdb_ref: item['id'],
             thumbnail: item['thumbnail'],
             rating_average: item['ratingsInfo']['average']
           })
+          UploadImageWorker.perform_async(poster.id)
         end
       end
     end

@@ -20,7 +20,7 @@ class AutomaticUpdate
     search = ProgrammeInfo.where(tvdb_ref: tvdb_refs_to_check)
     updated = []
     search.each do |programme_info|
-      programme_info.update_from_tvdb
+      UpdateProgrammeWorker.perform_async(programme_info.id)
       updated << [programme_info.tvdb_ref, programme_info.seriesName]
     end
 

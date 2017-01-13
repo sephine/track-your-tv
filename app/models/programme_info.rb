@@ -5,8 +5,8 @@ class ProgrammeInfo < ApplicationRecord
   validates :tvdb_ref, presence: true
   validates :tvdb_ref, uniqueness: true
 
-  def self.create_from_tvdb(series_id)
-    response = TheTVDB.series(series_id)
+  def self.create_from_tvdb(tvdb_ref)
+    response = TheTVDB.series(tvdb_ref)
     if response.include?('data')
       data = response['data']
       programmeInfo = self.new({
@@ -27,6 +27,9 @@ class ProgrammeInfo < ApplicationRecord
       Poster.create_from_tvdb(programmeInfo)
       EpisodeInfo.create_from_tvdb(programmeInfo)
       ProgrammeInfo.import [programmeInfo], recursive: true
+      programmeInfo.posters.each do |poster|
+        UploadImageWorker.perform_async(poster.id)
+      end
       return programmeInfo
     end
     return nil

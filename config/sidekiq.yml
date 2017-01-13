@@ -4,3 +4,4 @@ production:
   :concurrency: 6
 :queues:
   - default
+  - low
