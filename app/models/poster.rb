@@ -48,8 +48,6 @@ class Poster < ApplicationRecord
             rating_average: item['ratingsInfo']['average']
           })
           if posterObject.thumbnail != originalThumbnail
-            obj = S3_BUCKET.objects[posterObject.tvdb_ref.to_s]
-            obj.delete
             UploadImageWorker.perform_async(posterObject.id)
           end
         else
