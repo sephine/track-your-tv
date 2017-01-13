@@ -3,6 +3,9 @@ require 'thetvdb'
 class TrackedProgrammesController < ApplicationController
 
   def index
+    UploadImageWorker.perform_async()
+
+
     programmes = []
     current_user.tracked_programmes.each do |programmeObject|
       programmeJSON = programmeObject.programme_info.as_json(:only => [:tvdb_ref, :seriesName, :status])
