@@ -74,11 +74,16 @@ var ProgrammeInfo = React.createClass({
         <div className="container">
           <span className="col-xs-2 col-sm-1 col-md-1" />
           <div className="col-xs-8 col-sm-5 col-md-4 col-lg-3">
-            <PosterCarousel posters={sortedPosters}
-                allowSelection={this.props.info.tracked}
-                chosenPoster={this.props.info.image}
-                updateProgramme={this.props.updateProgramme}
-                ignored={this.props.info.ignored}/>
+            {sortedPosters.length > 0 &&
+                <PosterCarousel posters={sortedPosters}
+                    allowSelection={this.props.info.tracked}
+                    chosenPoster={this.props.info.image}
+                    updateProgramme={this.props.updateProgramme}
+                    ignored={this.props.info.ignored}/>}
+            {sortedPosters.length == 0 &&
+                <div className="image-sizer" style={{"border": "1px solid black", "opacity": 0.2}}>
+                  <%= image_tag "NoThumbnailSearchImage.jpg", alt: "no image" %>
+                </div>}
           </div>
           <span className="col-xs-2 visible-xs" />
           <span className="col-xs-12 visible-xs" style={{"height": "10px"}} />
