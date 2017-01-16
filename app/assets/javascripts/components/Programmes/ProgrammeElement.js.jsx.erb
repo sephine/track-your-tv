@@ -29,7 +29,9 @@ var ProgrammeElement = React.createClass({
             id={"programme-element-"+item.tvdb_ref}>
           {item.image_url != null && item.image_url != "" &&
               <div className="thumbnail">
-                <img src={item.image_url} alt={name} />
+                <div className="image-sizer">
+                  <img src={item.image_url} alt={name} />
+                </div>
                 {labelText != null &&
                     <div className="thumbnail-label">
                       <h4><span className={labelClass}>{labelText}</span></h4>
@@ -37,7 +39,9 @@ var ProgrammeElement = React.createClass({
               </div>}
           {(item.image_url == null || item.image_url == "") &&
               <div className="no-image-div thumbnail">
-                <%= image_tag "NoThumbnailSearchImage.jpg", alt: "no image" %>
+                <div className="image-sizer">
+                  <%= image_tag "NoThumbnailSearchImage.jpg", alt: "no image" %>
+                </div>
                 <div className="no-image-title">
                   <h4>{name}</h4>
                 </div>

@@ -70,7 +70,9 @@ var SearchResults = React.createClass({
                 <a href={"/" + item.tvdb_ref + "/" + hyphenName}
                     id={"search-result-id-"+i}>
                   <div className="thumbnail">
-                    <img src={bestImage} alt={item.seriesName} />
+                    <div className="image-sizer">
+                      <img src={bestImage} alt={item.seriesName} />
+                    </div>
                   </div>
                 </a>
               </div>
@@ -130,11 +132,15 @@ var SearchResults = React.createClass({
               id={"search-result-id-"+index}>
             {bestImage &&
                 <div className="thumbnail">
-                  <img src={bestImage} alt={item.seriesName} />
+                  <div className="image-sizer">
+                    <img src={bestImage} alt={item.seriesName} />
+                  </div>
                 </div>}
             {!bestImage &&
                 <div className="no-image-div thumbnail">
-                  <%= image_tag "NoThumbnailSearchImage.jpg", alt: "no image" %>
+                  <div className="image-sizer">
+                    <%= image_tag "NoThumbnailSearchImage.jpg", alt: "no image" %>
+                  </div>
                   <div className="no-image-title">
                     <h4>{item.seriesName}</h4>
                   </div>

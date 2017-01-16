@@ -54,7 +54,9 @@ var PosterCarousel = React.createClass({
       return (
         <div key={"item-id-"+index}
             className={activeClass}>
-          <img src={imageSrc} alt={"Poster " + index} style={{width: '100%'}} />
+          <div className="image-sizer">
+            <img src={imageSrc} alt={"Poster " + index} />
+          </div>
         </div>
       );
     });
