@@ -68,9 +68,14 @@ var IndexProgrammeContainer = React.createClass({
   },
 
   getProgrammes: function () {
+    var data = {
+      "timezone_offset": (new Date()).getTimezoneOffset()
+    }
+    console.log((new Date()).getTimezoneOffset());
     $.ajax({
       type: "GET",
       url: "/tracked_programmes/index",
+      data: data,
       success: function(msg) {
         console.log(msg);
         this.setState({

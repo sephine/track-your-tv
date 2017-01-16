@@ -13,14 +13,23 @@ class TrackedProgrammesController < ApplicationController
       end
       programmeJSON[:ignored] = programmeObject[:ignored]
 
-      airedEpisodes = programmeObject.programme_info.episode_infos.aired.count
-      watchedEpisodes = programmeObject.programme_info.episode_infos.aired \
+      offset = params[:timezone_offset].to_i*60
+      if programmeObject.programme_info.airsTime != "" && programmeObject.programme_info.airsTime != nil
+        time = Time.parse(programmeObject.programme_info.airsTime)
+        offset += time.to_i - time.beginning_of_day.to_i
+      end
+
+      airedEpisodes = programmeObject.programme_info.episode_infos.aired(offset).count
+      watchedEpisodes = programmeObject.programme_info.episode_infos.aired(offset) \
           .joins(:watched_episodes).where('tracked_programme_id = ?', programmeObject.id).count
       unwatchedEpisodes = airedEpisodes - watchedEpisodes
       programmeJSON[:unwatched_episodes] = unwatchedEpisodes
 
-      nextAirDate = programmeObject.programme_info.episode_infos.next_air_date
-      programmeJSON[:nextAirDate] = nextAirDate
+      #the next air date of an unwatched episode.
+      nextAirDate = programmeObject.programme_info.episode_infos.where.not(
+          id: programmeObject.watched_episodes.select(:episode_info_id)).next_air_date(offset)
+      nextAirDateAndTime = DateTime.parse(nextAirDate + " " + programmeObject.programme_info.airsTime)
+      programmeJSON[:nextAirDate] = "#{nextAirDateAndTime.year}-#{nextAirDateAndTime.month}-#{nextAirDateAndTime.day}-#{nextAirDateAndTime.hour}-#{nextAirDateAndTime.min}"
 
       lastUpdated = programmeObject.watched_episodes.last_updated
       programmeJSON[:lastUpdated] = lastUpdated
