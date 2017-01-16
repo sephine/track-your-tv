@@ -28,8 +28,14 @@ class TrackedProgrammesController < ApplicationController
       #the next air date of an unwatched episode.
       nextAirDate = programmeObject.programme_info.episode_infos.where.not(
           id: programmeObject.watched_episodes.select(:episode_info_id)).next_air_date(offset)
-      nextAirDateAndTime = DateTime.parse(nextAirDate + " " + programmeObject.programme_info.airsTime)
-      programmeJSON[:nextAirDate] = "#{nextAirDateAndTime.year}-#{nextAirDateAndTime.month}-#{nextAirDateAndTime.day}-#{nextAirDateAndTime.hour}-#{nextAirDateAndTime.min}"
+      if nextAirDate != nil
+        combinedString = nextAirDate
+        if programmeObject.programme_info.airsTime != nil
+          combinedString += " " + programmeObject.programme_info.airsTime
+        end
+        nextAirDateAndTime = DateTime.parse(combinedString)
+        programmeJSON[:nextAirDate] = "#{nextAirDateAndTime.year}-#{nextAirDateAndTime.month}-#{nextAirDateAndTime.day}-#{nextAirDateAndTime.hour}-#{nextAirDateAndTime.min}"
+      end
 
       lastUpdated = programmeObject.watched_episodes.last_updated
       programmeJSON[:lastUpdated] = lastUpdated
