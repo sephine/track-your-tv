@@ -3,8 +3,8 @@ class EpisodeInfo < ApplicationRecord
   has_many :watched_episodes, inverse_of: :episode_info, dependent: :destroy
   validates :programme_info, :tvdb_ref, presence: true
   validates :tvdb_ref, uniqueness: true
-  scope :aired, -> (offset = 0) { where('"firstAired" != ? AND "firstAired" <= ?', "", Date.today - offset.seconds) }
-  scope :will_air, -> (offset = 0) { where('"firstAired" != ? AND "firstAired" > ?', "", Date.today - offset.seconds) }
+  scope :aired, -> (offset = 0) { where('"firstAired" != ? AND "firstAired" <= ?', "", DateTime.now - offset.seconds) }
+  scope :will_air, -> (offset = 0) { where('"firstAired" != ? AND "firstAired" > ?', "", DateTime.now - offset.seconds) }
 
   def self.next_air_date(offset = 0)
     next_episode = self.will_air(offset).order('"firstAired" asc').first
