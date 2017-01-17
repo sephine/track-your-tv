@@ -26,7 +26,9 @@ class ProgrammeInfo < ApplicationRecord
       });
       Poster.create_from_tvdb(programmeInfo)
       EpisodeInfo.create_from_tvdb(programmeInfo)
-      ProgrammeInfo.import [programmeInfo], recursive: true
+      ProgrammeInfo.transaction do
+        ProgrammeInfo.import [programmeInfo], recursive: true
+      end
       programmeInfo.posters.each do |poster|
         UploadImageWorker.perform_async(poster.id)
       end
