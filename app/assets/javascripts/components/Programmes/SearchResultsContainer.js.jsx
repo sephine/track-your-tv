@@ -57,9 +57,10 @@ var SearchResultsContainer = React.createClass({
         console.log(msg);
         this.insertIntoResults(msg);
       }.bind(this),
-      error: function() {
-        console.log("GET SERIES FAILURE!");
-        alert("Error: failed to get series info");
+      error: function(msg) {
+        console.log("GET SERIES FAILURE: " + seriesID);
+        console.log(msg);
+        alert("Error: failed to get series info. Please try reloading the page.");
       }
     });
   },
