@@ -19,11 +19,13 @@ $circle-length: 40px;
 
 .intro-text {
   position: relative;
-  top: calc(50% - 120px);
-  h1 {
+  top: calc(50% - 140px);
+  left: 25%;
+  width: 38%;
+  .title {
     color: $brand-color;
   }
-  h2 {
+  .description {
     color: white;
     margin-bottom: 40px;
   }
@@ -31,12 +33,31 @@ $circle-length: 40px;
 
 .intro-sign-up {
   padding: 10px;
-  font-size: 1.4em;
+  font-size: 20px;
   border-radius: 10%;
   color: white;
   background-color: $brand-color;
   &:hover, &:active, &:focus {
     color: white;
+  }
+}
+
+@media (max-width: 800px) {
+  .intro-text {
+    top: calc(50% - 105px);
+    .title {
+      font-size: 24px;//36px;
+      margin-bottom: 7px;
+    }
+    .description {
+      font-size: 20px;//30px;
+      margin-top: 14px;
+      margin-bottom: 27px;
+    }
+  }
+  .intro-sign-up {
+    font-size: 16px;
+    padding: 8px;
   }
 }
 
