@@ -14,22 +14,35 @@
     </div>
   </a>
 </div>
+
 <div id="howItWorks" class="howItWorks">
-    <div class="container">
-      <h1>This is hopefully</h1>
-      <h1>really big text that</h1>
-      <h1>will take up a lot of space</h1>
-      <h1>so that I can check where</h1>
-      <h1>the scroll button scrolls</h1>
-      <h1>down to easily.</h1>
-    </div>
+  <div class="container">
+    <% section_details =
+      [["SearchScreen.png", "Search for your favorite shows..."],
+      ["SeriesScreen.png", "...and keep track of your watched episodes."],
+      ["WatchScreen.png", "See which shows have episodes to watch..."],
+      ["WaitScreen.png", "...or how long you have to wait until the next."],
+      ["IgnoreScreen.png", "Don't want to see a show on your watch list anymore? Just click ignore and you can come back to it later."]] %>
+    <% section_details.each do |src, text| %>
+      <div class="howItWorksSection">
+        <div class="col-xs-12 col-sm-6">
+          <div class="thumbnail">
+            <img style="width: 100%;" src="https://s3-us-west-1.amazonaws.com/trackyourtv-development/<%= src %>", alt: "blah image">
+            <div class="caption">
+              <h3><%= text %></h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
 </div>
 
 <script>
 $(document).ready(function() {
   $('.arrow-wrap').click(function(e) {
     e.preventDefault();
-    var length = $('#howItWorks').offset().top;
+    var length = $('#howItWorks').offset().top - 50;
     $('html, body').animate({ scrollTop: length}, 1000);
   })
 });

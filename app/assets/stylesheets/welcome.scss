@@ -68,8 +68,6 @@ $circle-length: 40px;
   bottom: 20px;
   width: $circle-length;
   height: $circle-length;
-  //background-color: transparent;
-  //border: none;
 }
 
 .circle {
@@ -83,8 +81,8 @@ $circle-length: 40px;
 }
 
 .arrow {
-  text-align: center;
   span {
+    left: 1px;
     color: white;
     font-size: $circle-length*0.4;
     line-height: $circle-length;
@@ -92,7 +90,14 @@ $circle-length: 40px;
 }
 
 .howItWorks {
-  height: 1000px;
-  background-color: white;
-  padding-top: 50px;
+  background-color: $really-light-grey;
+  padding-top: 40px;
+  padding-bottom: 20px;
+}
+
+.howItWorksSection {
+  text-align: center;
+  h3 {
+    color: $brand-color;
+  }
 }
