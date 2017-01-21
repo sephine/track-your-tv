@@ -61,4 +61,13 @@ class Poster < ApplicationRecord
       end
     end
   end
+
+  def upload_image
+    download = open('https://thetvdb.com/banners/' + self.thumbnail)
+    obj = S3_BUCKET.object(self.tvdb_ref.to_s)
+    obj.upload_file(download)
+    self.update({
+      url: obj.public_url
+    })
+  end
 end
