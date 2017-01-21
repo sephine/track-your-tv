@@ -90,14 +90,12 @@ $circle-length: 40px;
 }
 
 .howItWorks {
-  background-color: $really-light-grey;
+  background-color: white;
   padding-top: 40px;
-  padding-bottom: 20px;
+  padding-bottom: 40px;
+  text-align: center;
 }
 
 .howItWorksSection {
-  text-align: center;
-  h3 {
-    color: $brand-color;
-  }
+  margin-top: 40px;
 }

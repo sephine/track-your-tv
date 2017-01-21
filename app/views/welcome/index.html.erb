@@ -17,32 +17,74 @@
 
 <div id="howItWorks" class="howItWorks">
   <div class="container">
-    <% section_details =
-      [["SearchScreen.png", "Search for your favorite shows..."],
-      ["SeriesScreen.png", "...and keep track of your watched episodes."],
-      ["WatchScreen.png", "See which shows have episodes to watch..."],
-      ["WaitScreen.png", "...or how long you have to wait until the next."],
-      ["IgnoreScreen.png", "Don't want to see a show on your watch list anymore? Just click ignore and you can come back to it later."]] %>
-    <% section_details.each do |src, text| %>
+    <div class="row">
+      <div class="col-sm-2"></div>
+      <div class="col-xs-12 col-sm-8">
+        <h3>With TrackYourTV you can see which shows have new episodes you haven't watched yet. Waiting for the next episode? See how long you have to wait. Ignore a show to get it off the list, you can always come back to it later.</h3>
+      </div>
+    </div>
+    <div class="row">
       <div class="howItWorksSection">
         <div class="col-xs-12 col-sm-6">
           <div class="thumbnail">
-            <img style="width: 100%;" src="https://s3-us-west-1.amazonaws.com/trackyourtv-development/<%= src %>", alt: "blah image">
-            <div class="caption">
-              <h3><%= text %></h3>
+            <img style="width: 100%;" src="https://s3-us-west-1.amazonaws.com/trackyourtv-development/UntrackedSeriesScreen.png", alt: "blah image">
+          </div>
+          <h4>&#x2460 Search for a show and track it.</h4>
+        </div>
+      </div>
+      <div class="howItWorksSection">
+        <div class="col-xs-12 col-sm-6">
+          <div class="thumbnail">
+            <img style="width: 100%;" src="https://s3-us-west-1.amazonaws.com/trackyourtv-development/SeriesScreen.png", alt: "blah image">
+          </div>
+          <h4>&#x2461 Choose a poster and mark the episodes you've watched.</h4>
+        </div>
+      </div>
+    </div>
+    <div class="howItWorksSection">
+      <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="col-xs-4 col-sm-2">
+          <div class="thumbnail">
+            <img src="https://trackyourtv-development.s3-us-west-1.amazonaws.com/1148522" alt="Bones">
+            <div class="thumbnail-label">
+              <h4><span class="label label-success">2</span></h4>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-4 col-sm-2">
+          <div class="thumbnail">
+            <img src="https://trackyourtv-development.s3-us-west-1.amazonaws.com/948056" alt="Vikings">
+            <div class="thumbnail-label">
+              <h4><span class="label label-info">1 day</span></h4>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-4 col-sm-2">
+          <div class="thumbnail">
+            <img src="https://trackyourtv-development.s3-us-west-1.amazonaws.com/80781" alt="Battlestar Galactica">
+            <div class="thumbnail-label">
+              <h4><span class="label label-danger">ended</span></h4>
             </div>
           </div>
         </div>
       </div>
-    <% end %>
+      <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="col-xs-12 col-sm-6">
+          <h4>&#x2462 See how many episodes are available to watch, how long you need to wait for another, or if the show is ended.</h4>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
+
 
 <script>
 $(document).ready(function() {
   $('.arrow-wrap').click(function(e) {
     e.preventDefault();
-    var length = $('#howItWorks').offset().top - 50;
+    var length = $('#howItWorks').offset().top - 51;
     $('html, body').animate({ scrollTop: length}, 1000);
   })
 });
