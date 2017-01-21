@@ -23,24 +23,41 @@
         <h3>With TrackYourTV you can see which shows have new episodes you haven't watched yet. Waiting for the next episode? See how long you have to wait. Ignore a show to get it off the list, you can always come back to it later.</h3>
       </div>
     </div>
-    <div class="row">
-      <div class="howItWorksSection">
-        <div class="col-xs-12 col-sm-6">
-          <div class="thumbnail">
-            <img style="width: 100%;" src="https://s3-us-west-1.amazonaws.com/<%= ENV['S3_BUCKET'] %>/UntrackedSeriesScreen.png", alt: "blah image">
+    <div class="hidden-xs">
+      <div class="row">
+        <div class="howItWorksSection">
+          <div class="col-sm-6">
+            <div class="thumbnail">
+              <img style="width: 100%;" src="https://s3-us-west-1.amazonaws.com/<%= ENV['S3_BUCKET'] %>/UntrackedSeriesScreen.png", alt: "blah image">
+            </div>
+            <h4>&#x2460 Search for a show and track it.</h4>
           </div>
-          <h4>&#x2460 Search for a show and track it.</h4>
         </div>
-      </div>
-      <div class="howItWorksSection">
-        <div class="col-xs-12 col-sm-6">
-          <div class="thumbnail">
-            <img style="width: 100%;" src="https://s3-us-west-1.amazonaws.com/<%= ENV['S3_BUCKET'] %>/SeriesScreen.png", alt: "blah image">
+        <div class="howItWorksSection">
+          <div class="col-sm-6">
+            <div class="thumbnail">
+              <img style="width: 100%;" src="https://s3-us-west-1.amazonaws.com/<%= ENV['S3_BUCKET'] %>/SeriesScreen.png", alt: "blah image">
+            </div>
+            <h4>&#x2461 Choose a poster and mark the episodes you've watched.</h4>
           </div>
-          <h4>&#x2461 Choose a poster and mark the episodes you've watched.</h4>
         </div>
       </div>
     </div>
+    <div class="visible-xs">
+      <div class="howItWorksSection">
+        <div class="thumbnail">
+          <img style="width: 100%;" src="https://s3-us-west-1.amazonaws.com/<%= ENV['S3_BUCKET'] %>/UntrackedSeriesScreen.png", alt: "blah image">
+        </div>
+        <h4>&#x2460 Search for a show and track it.</h4>
+      </div>
+      <div class="howItWorksSection">
+        <div class="thumbnail">
+          <img style="width: 100%;" src="https://s3-us-west-1.amazonaws.com/<%= ENV['S3_BUCKET'] %>/SeriesScreen.png", alt: "blah image">
+        </div>
+        <h4>&#x2461 Choose a poster and mark the episodes you've watched.</h4>
+      </div>
+    </div>
+
     <div class="howItWorksSection">
       <div class="row">
         <div class="col-sm-3"></div>
