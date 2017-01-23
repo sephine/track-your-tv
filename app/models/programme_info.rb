@@ -5,7 +5,7 @@ class ProgrammeInfo < ApplicationRecord
   validates :tvdb_ref, presence: true
   validates :tvdb_ref, uniqueness: true
 
-  def self.create_from_tvdb(tvdb_ref)
+  def self.create_from_tvdb(tvdb_ref, partial)
     response = TheTVDB.series(tvdb_ref)
     if response.include?('data')
       data = response['data']
@@ -29,8 +29,21 @@ class ProgrammeInfo < ApplicationRecord
       ProgrammeInfo.transaction do
         ProgrammeInfo.import [programmeInfo], recursive: true
       end
+
+      bestRating = -1
+      bestID = nil
       programmeInfo.posters.each do |poster|
-        UploadImageWorker.perform_async(poster.id)
+        if poster.rating_average > bestRating
+          bestRating = poster.rating_average
+          bestID = poster.id
+        end
+      end
+      programmeInfo.posters.each do |poster|
+        if poster.id == bestID || !partial
+          poster.upload_image
+        else
+          UploadImageWorker.perform_async(poster.id)
+        end
       end
       return programmeInfo
     end

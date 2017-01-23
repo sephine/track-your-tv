@@ -58,7 +58,7 @@ class TrackedProgrammesController < ApplicationController
     if search.length > 0
       programmeObject = search[0]
     else
-      programmeObject = ProgrammeInfo.create_from_tvdb(params[:series_id])
+      programmeObject = ProgrammeInfo.create_from_tvdb(params[:series_id], false)
       success = false if programmeObject == nil
     end
 
