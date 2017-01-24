@@ -9,25 +9,25 @@ class ProgrammeInfo < ApplicationRecord
     response = TheTVDB.series(tvdb_ref)
     if response.include?('data')
       data = response['data']
-      programmeInfo = self.new({
-        tvdb_ref: data['id'],
-        seriesName: data['seriesName'],
-        status: data['status'],
-        firstAired: data['firstAired'],
-        network: data['network'],
-        runtime: data['runtime'],
-        genre: data['genre'].join(", "),
-        overview: data['overview'],
-        lastUpdated: data['lastUpdated'],
-        airsDayOfWeek: data['airsDayOfWeek'],
-        airsTime: data['airsTime'],
-        imdbID: data['imdbId'],
-        ratingCount: data['siteRatingCount']
-      });
-      Poster.create_from_tvdb(programmeInfo)
-      EpisodeInfo.create_from_tvdb(programmeInfo)
+      programmeInfo = nil
       ProgrammeInfo.transaction do
-        ProgrammeInfo.import [programmeInfo], recursive: true
+        programmeInfo = self.create({
+          tvdb_ref: data['id'],
+          seriesName: data['seriesName'],
+          status: data['status'],
+          firstAired: data['firstAired'],
+          network: data['network'],
+          runtime: data['runtime'],
+          genre: data['genre'].join(", "),
+          overview: data['overview'],
+          lastUpdated: data['lastUpdated'],
+          airsDayOfWeek: data['airsDayOfWeek'],
+          airsTime: data['airsTime'],
+          imdbID: data['imdbId'],
+          ratingCount: data['siteRatingCount']
+        });
+        Poster.create_from_tvdb(programmeInfo)
+        EpisodeInfo.create_from_tvdb(programmeInfo) unless partial
       end
 
       bestRating = -1

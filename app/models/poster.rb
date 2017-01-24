@@ -7,13 +7,15 @@ class Poster < ApplicationRecord
     response = TheTVDB.posters(programme_info.tvdb_ref)
     if response.include?('data')
       data = response['data']
+      posters = []
       data.each do |item|
-        programme_info.posters.build({
+        posters << programme_info.posters.build({
           tvdb_ref: item['id'],
           thumbnail: item['thumbnail'],
           rating_average: item['ratingsInfo']['average']
         })
       end
+      Poster.import posters
     end
   end
 
@@ -74,7 +76,7 @@ class Poster < ApplicationRecord
     obj = S3_BUCKET.object(self.tvdb_ref.to_s)
     obj.upload_file(download)
     download.unlink
-    
+
     self.update({
       url: obj.public_url
     })

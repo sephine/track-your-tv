@@ -65,7 +65,13 @@ class TrackedProgrammesController < ApplicationController
     programmeJSON = nil
     if success
       programmeJSON = programmeObject.as_json(:except => [:id, :lastUpdated, :created_at, :updated_at])
-      programmeJSON[:episodes] = programmeObject.episode_infos.as_json(:except => [:programme_info_id,  :created_at, :updated_at])
+
+      episodes = programmeObject.episode_infos
+      if episodes.length == 0
+        EpisodeInfo.create_from_tvdb(programmeObject)
+        episodes = programmeObject.episode_infos
+      end
+      programmeJSON[:episodes] = episodes.as_json(:except => [:programme_info_id,  :created_at, :updated_at])
       programmeJSON[:episodes].each do |episode|
         episode[:watched] = false
       end

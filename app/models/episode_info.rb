@@ -15,14 +15,18 @@ class EpisodeInfo < ApplicationRecord
     response = TheTVDB.episodes(programme_info.tvdb_ref)
     if response.include?('data')
       data = response['data']
+      episodes = []
       data.each do |item|
         if item.is_a?(Array)
           item.each do |real_item|
-            create_from_tvdb_single_episode(programme_info, real_item)
+            episodes << create_from_tvdb_single_episode(programme_info, real_item)
           end
         else
-          create_from_tvdb_single_episode(programme_info, item)
+          episodes << create_from_tvdb_single_episode(programme_info, item)
         end
+      end
+      EpisodeInfo.transaction do
+        EpisodeInfo.import episodes
       end
     end
   end
