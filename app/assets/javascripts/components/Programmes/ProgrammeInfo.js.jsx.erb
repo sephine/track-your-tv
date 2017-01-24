@@ -82,7 +82,7 @@ var ProgrammeInfo = React.createClass({
                     ignored={this.props.info.ignored}/>}
             {sortedPosters.length == 0 &&
                 <div className="image-sizer" style={{"border": "1px solid black", "opacity": 0.2}}>
-                  <%= image_tag "NoThumbnailSearchImage.jpg", alt: "no image" %>
+                  <%= image_tag "https://s3-us-west-1.amazonaws.com/" + ENV['S3_BUCKET'] + "/NoThumbnailSearchImage.jpg", alt: "No Image Available" %>
                 </div>}
           </div>
           <span className="col-xs-2 visible-xs" />

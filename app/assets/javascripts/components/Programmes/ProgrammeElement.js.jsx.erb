@@ -30,7 +30,7 @@ var ProgrammeElement = React.createClass({
           {item.image_url != null && item.image_url != "" &&
               <div className="thumbnail">
                 <div className="image-sizer">
-                  <img src={item.image_url} alt={name} />
+                  <img src={item.image_url} alt={"Image for " + name} />
                 </div>
                 {labelText != null &&
                     <div className="thumbnail-label">
@@ -40,7 +40,7 @@ var ProgrammeElement = React.createClass({
           {(item.image_url == null || item.image_url == "") &&
               <div className="no-image-div thumbnail">
                 <div className="image-sizer">
-                  <%= image_tag "NoThumbnailSearchImage.jpg", alt: "no image" %>
+                  <%= image_tag "https://s3-us-west-1.amazonaws.com/" + ENV['S3_BUCKET'] + "/NoThumbnailSearchImage.jpg", alt: "No Image Available" %>
                 </div>
                 <div className="no-image-title">
                   <h4>{name}</h4>

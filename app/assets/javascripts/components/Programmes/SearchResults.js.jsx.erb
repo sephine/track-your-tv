@@ -73,7 +73,7 @@ var SearchResults = React.createClass({
                     id={"search-result-id-"+i}>
                   <div className="thumbnail">
                     <div className="image-sizer">
-                      <img src={bestImage} alt={item.seriesName} />
+                      <img src={bestImage} alt={"Image for " + item.seriesName} />
                     </div>
                   </div>
                 </a>
@@ -135,13 +135,13 @@ var SearchResults = React.createClass({
             {bestImage &&
                 <div className="thumbnail">
                   <div className="image-sizer">
-                    <img src={bestImage} alt={item.seriesName} />
+                    <img src={bestImage} alt={"Image for " + item.seriesName} />
                   </div>
                 </div>}
             {!bestImage &&
                 <div className="no-image-div thumbnail">
                   <div className="image-sizer">
-                    <%= image_tag "NoThumbnailSearchImage.jpg", alt: "no image" %>
+                    <%= image_tag "https://s3-us-west-1.amazonaws.com/" + ENV['S3_BUCKET'] + "/NoThumbnailSearchImage.jpg", alt: "No Image Availabe" %>
                   </div>
                   <div className="no-image-title">
                     <h4>{item.seriesName}</h4>
