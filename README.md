@@ -1,24 +1,6 @@
-# README
+TrackYourTV
+===============
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+TrackYourTV is a website for tracking which episodes of shows you have watched and when the next episode is coming out.
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+It uses TheTVDB API to get the release dates of all the shows, images etc. It is coded in Rails and React, uses Heroku, postgreSQL and Amazon S3.
