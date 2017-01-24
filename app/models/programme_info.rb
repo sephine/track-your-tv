@@ -39,7 +39,7 @@ class ProgrammeInfo < ApplicationRecord
         end
       end
       programmeInfo.posters.each do |poster|
-        if poster.id == bestID || !partial
+        if poster.id == bestID
           poster.upload_image
         else
           UploadImageWorker.perform_async(poster.id)
