@@ -16,7 +16,9 @@ var SearchResults = React.createClass({
       NProgress.done();
     } else {
       var proportionDone = this.props.results.length/this.props.count;
-      NProgress.set(proportionDone);
+      if (proportionDone > NProgress.status) {
+        NProgress.set(proportionDone);
+      }
     }
   },
 
