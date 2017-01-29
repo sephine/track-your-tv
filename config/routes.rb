@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get '/:id/:name', to: 'programmes#show', constraints: {id: /\d+/}
   get '/search', to: 'programmes#search'
   get '/welcome', to: 'welcome#index'
+  get '/.well-known/acme-challenge/:id' => 'welcome#letsencrypt'
 
   #JSON
   get '/programme_infos/search', to: 'programme_infos#search'
