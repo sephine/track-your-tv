@@ -30,6 +30,7 @@ gem 'sidekiq'
 gem 'rack-timeout'
 gem 'aws-sdk'
 gem 'activerecord-import'
+gem 'bugsnag'
 gem 'rails-assets-reflux', source: 'https://rails-assets.org'
 gem 'rails-assets-sugarjs', source: 'https://rails-assets.org'
 
