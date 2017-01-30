@@ -3,4 +3,5 @@ task :update_all_database => :environment do
   ProgrammeInfo.all.each do |programme_info|
     UpdateProgrammeWorker.perform_async(programme_info.id)
   end
+  puts "...done."
 end
