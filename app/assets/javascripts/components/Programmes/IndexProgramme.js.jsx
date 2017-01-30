@@ -107,8 +107,13 @@ var IndexProgramme = React.createClass({
         return (
           <div className="programme-list">
             <div className="container" style={{'textAlign': 'center'}}>
-              <h3>No shows added to this category yet.</h3>
-              <h4 className="text-muted">Add more by searching above.</h4>
+              {this.props.showOnly == "watch" &&
+                  <h3>The Watch screen contains all shows that have unwatched episodes. For each show it will display the number of unwatched episodes.</h3>}
+              {this.props.showOnly == "wait" &&
+                  <h3>The Wait screen contains the shows you are up to date with. For each show it will display how long the wait is for the next episode, if that information is available.</h3>}
+              {this.props.showOnly == "ignore" &&
+                  <h3>The Ignore screen contains all shows that you have chosen to ignore or that have ended and are not expected to bring out new episodes.</h3>}
+              <h4 className="text-muted">No shows added to this category yet, add more by searching above.</h4>
             </div>
           </div>
         );
