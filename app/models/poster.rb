@@ -35,7 +35,7 @@ class Poster < ApplicationRecord
         to_delete << current if delete
       end
       to_delete.each do |poster_to_delete|
-        obj = S3_BUCKET.objects[poster_to_delete.tvdb_ref.to_s]
+        obj = S3_BUCKET.object(poster_to_delete.tvdb_ref.to_s)
         obj.delete
         poster_to_delete.destroy
       end
