@@ -1,49 +1,29 @@
 var PosterCarousel = React.createClass({
   propTypes: {
     posters: React.PropTypes.array.isRequired,
-    allowSelection: React.PropTypes.bool.isRequired,
     chosenPoster: React.PropTypes.string,
-    updateProgramme: React.PropTypes.func.isRequired,
-    ignored: React.PropTypes.bool.isRequired
+    onImageChanged: React.PropTypes.func.isRequired
   },
 
   getInitialState: function () {
     return {
-      currentIndex: 0,
-      selectedIndex: null,
       items: []
     };
   },
 
   componentWillMount: function () {
-    var chosenIndex = null;
+    var chosenIndex = 0;
     for (let i = 0; i < this.props.posters.length; i++) {
       if (this.props.posters[i].tvdb_ref == this.props.chosenPoster) {
         chosenIndex = i;
         break;
       }
     }
-    var newItems = this.createItems(chosenIndex != null ? chosenIndex : 0);
+    this.props.onImageChanged(this.props.posters[chosenIndex].tvdb_ref);
+    var newItems = this.createItems(chosenIndex);
     this.setState({
-      currentIndex: chosenIndex != null ? chosenIndex : 0,
-      selectedIndex: chosenIndex,
       items: newItems
     })
-  },
-
-  componentWillReceiveProps: function(nextProps) {
-    if (nextProps.chosenPoster != this.props.chosenPoster) {
-      var chosenIndex = null;
-      for (let i = 0; i < nextProps.posters.length; i++) {
-        if (nextProps.posters[i].tvdb_ref == nextProps.chosenPoster) {
-          chosenIndex = i;
-          break;
-        }
-      }
-      this.setState({
-        selectedIndex: chosenIndex
-      })
-    }
   },
 
   createItems: function (startIndex) {
@@ -65,24 +45,13 @@ var PosterCarousel = React.createClass({
   handleSlidePrev: function (e) {
     var idx = $('.carousel-inner .item.active').index();
     var newIdx = idx == 0 ? this.props.posters.length-1 : idx-1;
-    this.setState({
-      currentIndex: newIdx
-    });
+    this.props.onImageChanged(this.props.posters[newIdx].tvdb_ref);
   },
 
   handleSlideNext: function (e) {
     var idx = $('.carousel-inner .item.active').index();
     var newIdx = idx == this.props.posters.length-1 ? 0 : idx+1;
-    this.setState({
-      currentIndex: newIdx
-    });
-  },
-
-  handleSelection: function (e) {
-    this.props.updateProgramme(this.props.posters[this.state.currentIndex].tvdb_ref, this.props.ignored, false);
-    this.setState({
-      selectedIndex: this.state.currentIndex
-    });
+    this.props.onImageChanged(this.props.posters[newIdx].tvdb_ref);
   },
 
   render: function () {
@@ -105,10 +74,6 @@ var PosterCarousel = React.createClass({
                 <span className="sr-only">Next</span>
               </a>
             </div>}
-        {this.props.allowSelection && this.state.currentIndex == this.state.selectedIndex &&
-            <button type="button" className="btn btn-default" style={{color: 'green'}} disabled={true} onClick={this.handleSelection}>Selected</button>}
-        {this.props.allowSelection && this.state.currentIndex != this.state.selectedIndex &&
-            <button type="button" className="btn btn-default" onClick={this.handleSelection}>Select</button>}
       </div>
     );
   }

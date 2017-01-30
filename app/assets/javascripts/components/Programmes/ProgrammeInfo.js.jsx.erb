@@ -9,8 +9,18 @@ var ProgrammeInfo = React.createClass({
 
   getInitialState: function () {
     return {
-      expanded: false
+      expanded: false,
+      current_image: ""
     };
+  },
+
+  handleImageChanged: function (new_image) {
+    if (this.props.info.tracked) {
+      this.props.updateProgramme(new_image, this.props.info.ignored, false);
+    }
+    this.setState({
+      current_image: new_image
+    });
   },
 
   handleMoreHideClicked: function (e) {
@@ -20,8 +30,7 @@ var ProgrammeInfo = React.createClass({
   },
 
   handleTrackClicked: function () {
-    var sortedPosters = this.sortPosters();
-    this.props.onTrackClicked(sortedPosters.length > 0 ? sortedPosters[0].tvdb_ref : "");
+    this.props.onTrackClicked(this.state.current_image);
   },
 
   handleIgnoreClicked: function () {
@@ -76,10 +85,8 @@ var ProgrammeInfo = React.createClass({
           <div className="col-xs-8 col-sm-5 col-md-4 col-lg-3">
             {sortedPosters.length > 0 &&
                 <PosterCarousel posters={sortedPosters}
-                    allowSelection={this.props.info.tracked}
                     chosenPoster={this.props.info.image}
-                    updateProgramme={this.props.updateProgramme}
-                    ignored={this.props.info.ignored}/>}
+                    onImageChanged={this.handleImageChanged} />}
             {sortedPosters.length == 0 &&
                 <div className="image-sizer" style={{"border": "1px solid black", "opacity": 0.2}}>
                   <%= image_tag "https://s3-us-west-1.amazonaws.com/" + ENV['S3_BUCKET'] + "/NoThumbnailSearchImage.jpg", alt: "No Image Available" %>
