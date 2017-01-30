@@ -106,7 +106,7 @@ var SeasonList = React.createClass({
             </a>
             {this.props.info.tracked &&
                 <div className="season-checkbox">
-                  <span className="text-muted">Mark as watched &nbsp;</span>
+                  <span className="text-muted">Mark season as watched &nbsp;</span>
                   <input type="checkbox"
                       id={"checkbox-" + seasonNumber}
                       checked={watched}
@@ -197,8 +197,8 @@ var SeasonList = React.createClass({
         <div className="container">
           {this.props.info.tracked &&
               <div className="btn-group" role="group" style={{"marginBottom": "10px"}}>
-                <button type="button" className="btn btn-default" disabled={this.props.disabled} onClick={this.handleAllWatchedClicked}>All Watched</button>
-                <button type="button" className="btn btn-default" disabled={this.props.disabled} onClick={this.handleNoneWatchedClicked}>None Watched</button>
+                <button type="button" className="btn btn-default" disabled={this.props.disabled} onClick={this.handleAllWatchedClicked}>Mark All Watched</button>
+                <button type="button" className="btn btn-default" disabled={this.props.disabled} onClick={this.handleNoneWatchedClicked}>Mark All Unwatched</button>
               </div>}
           <div className="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
             {this.createSortedSeasons()}
