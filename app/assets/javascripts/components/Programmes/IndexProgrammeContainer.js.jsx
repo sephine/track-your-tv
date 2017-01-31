@@ -1,6 +1,10 @@
 var IndexProgrammeContainer = React.createClass({
   mixins: [Reflux.listenToMany(ProgrammeActions)],
 
+  propTypes: {
+    filterText: React.PropTypes.string.isRequired
+  },
+
   getInitialState: function () {
     return {
       programmes: null,
@@ -11,18 +15,7 @@ var IndexProgrammeContainer = React.createClass({
 
   componentWillMount: function () {
     NProgress.start();
-    if (window.location.hash) {
-      var hash = window.location.hash.substring(1);
-      if (hash == "wait") {
-        this.onFilterWait();
-      } else if (hash == "ignore") {
-        this.onFilterIgnore();
-      } else {
-        this.onFilterWatch();
-      }
-    } else {
-      this.onFilterWatch();
-    }
+    this.onFilterChange(this.props.filterText);
   },
 
   componentDidMount: function () {
@@ -35,35 +28,22 @@ var IndexProgrammeContainer = React.createClass({
     }
   },
 
-  onFilterWatch: function () {
-    $('.watch-link').addClass("active");
-    $('.wait-link').removeClass("active");
-    $('.ignore-link').removeClass("active");
-    if (window.location.hash != "" && window.location.hash != "#watch") {
-      window.location.hash = "#watch"
+  onFilterChange: function (new_filter) {
+    if (new_filter == "watch") {
+      $('.watch-link').addClass("active");
+      $('.wait-link').removeClass("active");
+      $('.ignore-link').removeClass("active");
+    } else if (new_filter == "wait") {
+      $('.watch-link').removeClass("active");
+      $('.wait-link').addClass("active");
+      $('.ignore-link').removeClass("active");
+    } else if (new_filter == "ignore") {
+      $('.watch-link').removeClass("active");
+      $('.wait-link').removeClass("active");
+      $('.ignore-link').addClass("active");
     }
     this.setState({
-      showOnly: "watch"
-    });
-  },
-
-  onFilterWait: function () {
-    $('.watch-link').removeClass("active");
-    $('.wait-link').addClass("active");
-    $('.ignore-link').removeClass("active");
-    window.location.hash = "#wait"
-    this.setState({
-      showOnly: "wait"
-    });
-  },
-
-  onFilterIgnore: function () {
-    $('.watch-link').removeClass("active");
-    $('.wait-link').removeClass("active");
-    $('.ignore-link').addClass("active");
-    window.location.hash = "#ignore"
-    this.setState({
-      showOnly: "ignore"
+      showOnly: new_filter
     });
   },
 

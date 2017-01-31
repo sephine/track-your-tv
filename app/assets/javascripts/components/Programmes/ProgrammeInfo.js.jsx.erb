@@ -15,7 +15,7 @@ var ProgrammeInfo = React.createClass({
   },
 
   handleImageChanged: function (new_image) {
-    if (this.props.info.tracked) {
+    if (this.props.info.tracked && new_image != this.props.info.image) {
       this.props.updateProgramme(new_image, this.props.info.ignored, false);
     }
     this.setState({

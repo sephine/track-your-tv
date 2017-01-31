@@ -10,7 +10,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <%= link_to 'TrackYourTV', root_path, class: "navbar-brand dissapearing-brand" %>
+      <%= link_to 'TrackYourTV', "/watch", class: "navbar-brand dissapearing-brand" %>
     </div>
     <div id="navbar1" class="navbar-right navbar-collapse collapse"
           aria-expanded="false" style="height: 1px; margin-right: -15px;">
@@ -36,37 +36,28 @@
           aria-expanded="false" style="height: 1px;">
       <ul class="nav navbar-nav">
         <li class="watch-link">
-          <% if current_page?(root_path) %>
-            <a href="javascript:void(0);"
-                data-toggle="collapse"
-                data-target=".navbar-collapse.in"
-                onclick="ProgrammeActions.filterWatch()">
-          <% else %>
-            <a href="/#watch">
-          <% end %>
-          Watch</a>
+          <a href="/watch"
+              class="special-link"
+              data-name="watch"
+              data-toggle="collapse"
+              data-target=".navbar-collapse.in">
+            Watch</a>
         </li>
         <li class="wait-link">
-          <% if current_page?(root_path) %>
-            <a href="javascript:void(0);"
-                data-toggle="collapse"
-                data-target=".navbar-collapse.in"
-                onclick="ProgrammeActions.filterWait()">
-          <% else %>
-            <a href="/#wait">
-          <% end %>
-          Wait</a>
+          <a href="/wait"
+              class="special-link"
+              data-name="wait"
+              data-toggle="collapse"
+              data-target=".navbar-collapse.in">
+            Wait</a>
         </li>
         <li class="ignore-link">
-          <% if current_page?(root_path) %>
-            <a href="javascript:void(0);"
-                data-toggle="collapse"
-                data-target=".navbar-collapse.in"
-                onclick="ProgrammeActions.filterIgnore()">
-          <% else %>
-            <a href="/#ignore">
-          <% end %>
-          Ignore</a>
+          <a href="/ignore"
+              class="special-link"
+              data-name="ignore"
+              data-toggle="collapse"
+              data-target=".navbar-collapse.in">
+            Ignore</a>
         </li>
         <li class="visible-xs">
           <%= link_to 'Account', edit_user_registration_path %>
@@ -108,5 +99,25 @@ $(document).ready(function() {
       $('#logged-in-navbar').css('background-color', 'rgba(38, 38, 38, 1.0)');
     }
   });
+  window.onpopstate = function(e) {
+    console.log('pop: ' + e.state);
+    if (e.state == "watch" || e.state == "wait" || e.state == "ignore") {
+      <% if current_page?("/watch") || current_page?("/wait") || current_page?("/ignore") %>
+        ProgrammeActions.filterChange(e.state);
+      <% else %>
+        location.reload();
+      <% end %>
+    }
+  };
+  $('.special-link').click(function(e) {
+    <% if current_page?("/watch") || current_page?("/wait") || current_page?("/ignore") %>
+      if (e.which == 1) {
+        e.preventDefault();
+        var filter = e.target.getAttribute('data-name');
+        history.pushState(filter, null, "/" + filter);
+        ProgrammeActions.filterChange(filter);
+      }
+    <% end %>
+  })
 });
 </script>

@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   authenticated :user do
-    root to: 'programmes#index', as: :authenticated_root
+    root to: redirect('/watch'), as: :authenticated_root
   end
   root to: redirect('/welcome')
 
@@ -8,6 +8,9 @@ Rails.application.routes.draw do
   get '/:id', to: 'programmes#show', constraints: {id: /\d+/}
   get '/:id/:name', to: 'programmes#show', constraints: {id: /\d+/}
   get '/search', to: 'programmes#search'
+  get '/watch', to: 'programmes#watch'
+  get '/wait', to: 'programmes#wait'
+  get '/ignore', to: 'programmes#ignore'
   get '/welcome', to: 'welcome#index'
   get '/.well-known/acme-challenge/:id' => 'welcome#letsencrypt'
 
