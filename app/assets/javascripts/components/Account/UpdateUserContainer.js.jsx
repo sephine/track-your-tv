@@ -26,7 +26,6 @@ var UpdateUserContainer = React.createClass({
     }
     modified_data["user[current_password]"] = data.current_password;
 
-    console.log(modified_data);
     $.ajax({
       type: "PUT",
       url: "/sign_up",
@@ -35,8 +34,6 @@ var UpdateUserContainer = React.createClass({
       },
       data: modified_data,
       success: function(msg) {
-        console.log("success message");
-        console.log(msg);
         this.setState({errors: msg});
       }.bind(this),
       error: function() {

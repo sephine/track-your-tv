@@ -90,7 +90,6 @@ var IndexProgramme = React.createClass({
         }
       });
     }
-    console.log(elements);
     return elements.map(function (programme) {
       return (
         <div key={"programme-element-"+programme.tvdb_ref}>

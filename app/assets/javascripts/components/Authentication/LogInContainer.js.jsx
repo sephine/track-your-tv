@@ -14,7 +14,6 @@ var LoginContainer = React.createClass({
       "user[password]": data.password,
       "user[remember_me]": data.remember_me
     };
-    console.log(modified_data);
     $.ajax({
       type: "POST",
       url: "/login",

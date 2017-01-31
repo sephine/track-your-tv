@@ -23,7 +23,6 @@ var ShowProgrammeContainer = React.createClass({
         "series_id": seriesID,
       },
       success: function(msg) {
-        console.log(msg);
         this.organizeEpisodes(msg);
       }.bind(this),
       error: function() {
@@ -140,7 +139,6 @@ var ShowProgrammeContainer = React.createClass({
         if (refresh) {
           this.getProgrammeInfo(this.props.seriesID);
         }
-        console.log("update episode success");
       }.bind(this),
       error: function(msg) {
         alert("Error: failed to update episodes");

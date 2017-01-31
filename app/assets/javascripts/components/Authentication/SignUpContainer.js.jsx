@@ -15,7 +15,6 @@ var SignUpContainer = React.createClass({
       "user[password]": data.password,
       "user[password_confirmation]": data.password_confirmation
     };
-    console.log(modified_data);
     $.ajax({
       type: "POST",
       url: "/sign_up",
@@ -24,7 +23,6 @@ var SignUpContainer = React.createClass({
       },
       data: modified_data,
       success: function(msg) {
-        console.log(msg);
         this.setState({errors: msg});
       }.bind(this),
       error: function() {

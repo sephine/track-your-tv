@@ -12,7 +12,6 @@ var SearchBoxContainer = React.createClass({
         "search_text": searchText,
       },
       success: function(msg) {
-        console.log(msg);
         if (msg.hasOwnProperty('data')) {
           this.setState({
             results: msg.data.slice(0, 5)

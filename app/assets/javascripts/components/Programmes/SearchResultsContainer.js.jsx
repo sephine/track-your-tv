@@ -24,7 +24,6 @@ var SearchResultsContainer = React.createClass({
       },
       success: function(msg) {
         if (msg.hasOwnProperty('data')) {
-          console.log(msg);
           this.setState({
             count: msg.data.length,
             completed: true
@@ -40,7 +39,6 @@ var SearchResultsContainer = React.createClass({
         }
       }.bind(this),
       error: function(msg) {
-        console.log(msg);
         alert("Error: failed to perform search on page load.");
       }
     });
@@ -54,12 +52,9 @@ var SearchResultsContainer = React.createClass({
         "series_id": seriesID,
       },
       success: function(msg) {
-        console.log(msg);
         this.insertIntoResults(msg);
       }.bind(this),
       error: function(msg) {
-        console.log("GET SERIES FAILURE: " + seriesID);
-        console.log(msg);
         alert("Error: failed to get series info. Please try reloading the page.");
       }
     });

@@ -25,9 +25,6 @@ var AccountContainer = React.createClass({
         headers: {
           'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         },
-        success: function(msg) {
-          console.log(msg);
-        }.bind(this),
         error: function() {
           alert("Error: failed to cancel account.");
         }

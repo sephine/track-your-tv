@@ -12,7 +12,6 @@ var ForgotPasswordContainer = React.createClass({
     var modified_data = {
       "user[email]": data.email,
     };
-    console.log(modified_data);
     $.ajax({
       type: "POST",
       url: "/users/password",
@@ -21,11 +20,9 @@ var ForgotPasswordContainer = React.createClass({
       },
       data: modified_data,
       success: function(msg) {
-        console.log(msg);
         this.setState({errors: msg});
       }.bind(this),
       error: function(msg) {
-        console.log(msg);
         alert("Error: failed to send password instructions.");
       }
     });
