@@ -13,7 +13,7 @@ class EpisodeInfo < ApplicationRecord
 
   def self.create_from_tvdb(programme_info)
     response = TheTVDB.episodes(programme_info.tvdb_ref)
-    if response.include?('data')
+    if response.include?('data') && response['data'] != nil
       data = response['data']
       episodes = []
       data.each do |item|
@@ -44,7 +44,7 @@ class EpisodeInfo < ApplicationRecord
 
   def self.update_from_tvdb(programme_info)
     response = TheTVDB.episodes(programme_info.tvdb_ref)
-    if response.include?('data')
+    if response.include?('data') && response['data'] != nil
       data = Hash.new
       response['data'].each do |item|
         if item.is_a?(Array)
