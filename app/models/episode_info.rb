@@ -21,7 +21,7 @@ class EpisodeInfo < ApplicationRecord
           item.each do |real_item|
             episodes << create_from_tvdb_single_episode(programme_info, real_item)
           end
-        else
+        elsif item != nil
           episodes << create_from_tvdb_single_episode(programme_info, item)
         end
       end
@@ -51,7 +51,7 @@ class EpisodeInfo < ApplicationRecord
           item.each do |real_item|
             data[real_item['id']] = real_item
           end
-        else
+        elsif item != nil
           data[item['id']] = item
         end
       end
