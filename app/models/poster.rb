@@ -9,10 +9,10 @@ class Poster < ApplicationRecord
       data = response['data']
       posters = []
       data.each do |item|
-        next if item['thumbnail'] == ""
+        next if item['fileName'] == ""
         posters << programme_info.posters.build({
           tvdb_ref: item['id'],
-          thumbnail: item['thumbnail'],
+          thumbnail: item['fileName'],
           rating_average: item['ratingsInfo']['average']
         })
       end
@@ -27,12 +27,10 @@ class Poster < ApplicationRecord
       to_delete = []
       programme_info.posters.each do |current|
         delete = true
-        if current.thumbnail != ""
-          data.each do |item|
-            if item['id'] == current.tvdb_ref
-              delete = false
-              break
-            end
+        data.each do |item|
+          if item['id'] == current.tvdb_ref
+            delete = false
+            break
           end
         end
         to_delete << current if delete
@@ -48,23 +46,23 @@ class Poster < ApplicationRecord
         if search.length > 0
           posterObject = search[0]
           originalThumbnail = posterObject.thumbnail
-          if item['thumbnail'] == ""
+          if item['fileName'] == ""
             posterObject.update({
               rating_average: item['ratingsInfo']['average']
             })
           else
             posterObject.update({
-              thumbnail: item['thumbnail'],
+              thumbnail: item['fileName'],
               rating_average: item['ratingsInfo']['average']
             })
           end
           if posterObject.thumbnail != originalThumbnail
             UploadImageWorker.perform_async(posterObject.id)
           end
-        elsif item['thumbnail'] != ""
+        elsif item['fileName'] != ""
           poster = programme_info.posters.create({
             tvdb_ref: item['id'],
-            thumbnail: item['thumbnail'],
+            thumbnail: item['fileName'],
             rating_average: item['ratingsInfo']['average']
           })
           UploadImageWorker.perform_async(poster.id)
