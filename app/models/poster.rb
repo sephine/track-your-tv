@@ -9,6 +9,7 @@ class Poster < ApplicationRecord
       data = response['data']
       posters = []
       data.each do |item|
+        next if item['thumbnail'] == ""
         posters << programme_info.posters.build({
           tvdb_ref: item['id'],
           thumbnail: item['thumbnail'],
@@ -45,14 +46,20 @@ class Poster < ApplicationRecord
         if search.length > 0
           posterObject = search[0]
           originalThumbnail = posterObject.thumbnail
-          posterObject.update({
-            thumbnail: item['thumbnail'],
-            rating_average: item['ratingsInfo']['average']
-          })
+          if item['thumbnail'] == ""
+            posterObject.update({
+              rating_average: item['ratingsInfo']['average']
+            })
+          else
+            posterObject.update({
+              thumbnail: item['thumbnail'],
+              rating_average: item['ratingsInfo']['average']
+            })
+          end
           if posterObject.thumbnail != originalThumbnail
             UploadImageWorker.perform_async(posterObject.id)
           end
-        else
+        elsif item['thumbnail'] != ""
           poster = programme_info.posters.create({
             tvdb_ref: item['id'],
             thumbnail: item['thumbnail'],
