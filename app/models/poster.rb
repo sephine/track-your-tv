@@ -27,10 +27,12 @@ class Poster < ApplicationRecord
       to_delete = []
       programme_info.posters.each do |current|
         delete = true
-        data.each do |item|
-          if item['id'] == current.tvdb_ref
-            delete = false
-            break
+        if current.thumbnail != ""
+          data.each do |item|
+            if item['id'] == current.tvdb_ref
+              delete = false
+              break
+            end
           end
         end
         to_delete << current if delete
